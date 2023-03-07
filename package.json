@@ -17,5 +17,9 @@
   "bugs": {
     "url": "https://github.com/GHOST-Aram/todo-ist--one/issues"
   },
-  "homepage": "https://github.com/GHOST-Aram/todo-ist--one#readme"
+  "homepage": "https://github.com/GHOST-Aram/todo-ist--one#readme",
+  "devDependencies": {
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1"
+  }
 }
