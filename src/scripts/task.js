@@ -8,11 +8,18 @@ export default class Task {
 
     //Task.duedate
     #dueDate
+    #complete = false
 
     //Task.priority
     constructor(title){
         this.title = title
-        this.isComplete = false
+    }
+    //Edit task properties
+    edit(title,description,dueDate){
+        this.title = title
+        this.#description = description
+        this.#dueDate = dueDate
+        
     }
     //return value of description
     getDescription(){
@@ -22,6 +29,15 @@ export default class Task {
     getDueDate(){
         return this.#dueDate
     }
+    //Check if complete
+    isComplete(){
+        return this.#complete
+    }
+    //Mark as complete
+    markAsComplete(){
+        this.#complete = true
+    }
+
     //initialize descripion
     setDescription(description){
         this.#description = description
