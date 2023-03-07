@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/GHOST-Aram/todo-ist--one#readme",
   "devDependencies": {
+    "tailwindcss": "^3.2.7",
     "webpack": "^5.75.0",
     "webpack-cli": "^5.0.1"
   }
