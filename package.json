@@ -1,0 +1,21 @@
+{
+  "name": "todo-ist--one",
+  "version": "1.0.0",
+  "description": "One Page App todo list",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GHOST-Aram/todo-ist--one.git"
+  },
+  "keywords": [],
+  "author": "ghost-aram <owinoojala254@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GHOST-Aram/todo-ist--one/issues"
+  },
+  "homepage": "https://github.com/GHOST-Aram/todo-ist--one#readme"
+}
