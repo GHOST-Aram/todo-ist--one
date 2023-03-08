@@ -10,3 +10,9 @@ body{
     background-clip: border-box;
     height: 100vh;
 }
+header{
+    position: fixed;
+    top: 1.5rem;
+    right: 1rem;
+    left: 1rem;
+}
