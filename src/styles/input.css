@@ -2,26 +2,34 @@
 @tailwind components;
 @tailwind utilities;
 
-body{
+body {
     background-image: url('../images/todo-bg.jpg');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
     background-clip: border-box;
     height: 100vh;
-    padding-top: 5.5rem;
+    padding-top: 5.49rem;
+    padding-left: 25vw;
 }
-header{
+aside {
+    width: 20vw;
+    position: fixed;
+    top: 7.35rem;
+    right: 1rem;
+    left: 2.5rem;
+    bottom: 1rem;
+}
+#content-container {
+    /* background-color: rgba(0, 0, 0, 0.2); */
+    /* background-color: #000; */
+    width: 97%;
+    height: 79.6vh;
+}
+header {
     position: fixed;
     top: 1.5rem;
     right: 1rem;
     left: 1.5rem;
 }
-aside{
-    width: 20vw;
-    position: fixed;
-    top: 7.25rem;
-    right: 1rem;
-    left: 2.5rem;
-    bottom: 1rem;
-}
+

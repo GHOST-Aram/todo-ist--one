@@ -2,6 +2,14 @@ export default class DOMManager {
     constructor () {
 
     }
+
+    createContainer () {
+     const div = document.createElement('div')
+     div.className = 'p-4 rounded-md'
+
+     return div
+    }
+
    createHeader () {
      const header = document.createElement('header')
      header.className = 'p-4 bg-blue-700 m-auto mx-4 rounded-top rounded-md'
@@ -31,5 +39,6 @@ export default class DOMManager {
      const contentContainer = document.querySelector('#content')
      contentContainer.appendChild(content)
    }
+
    
 }

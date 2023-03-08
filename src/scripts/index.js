@@ -1,7 +1,6 @@
 import '../styles/styles.css'
 import DOMManager from './dom_manager.js'
 
-//Content container
 const domManager = new DOMManager()
 
 
@@ -17,3 +16,8 @@ const sidebar = domManager.createSidebar()
     sidebar.appendChild(domManager.createHeading('Plansen'))
     domManager.render(sidebar)
 
+//Content container
+const container = domManager.createContainer()
+    container.classList.add('bg-blue-700')
+    container.id = 'content-container'
+    domManager.render(container)
