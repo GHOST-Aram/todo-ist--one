@@ -37,7 +37,11 @@ export default class Task {
     markAsComplete(){
         this.#complete = true
     }
-
+    //Mark as incomplete
+    markAsIncomplete(){
+        if(this.#complete)
+            this.#complete = false
+    }
     //initialize descripion
     setDescription(description){
         this.#description = description
