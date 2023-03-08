@@ -15,6 +15,7 @@ export default class TaskManager {
     //Update completed tasks
     addToCompleted(task){
         this.#completedTasks.push(task)
+        this.removeTask(task)
     }
     //Get list of completed tasks
     getCompleted(){

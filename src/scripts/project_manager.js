@@ -14,6 +14,7 @@ export default class ProjectManager {
     //Update completed projects
     addToCompleted(project){
         this.#completedProjects.push(project)
+        this.removeProject(project)
     }
     //Get list of completed projects
     getCompleted(){
