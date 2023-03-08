@@ -556,8 +556,24 @@ video {
   margin-right: 1rem;
 }
 
-.mt-8 {
-  margin-top: 2rem;
+.flex {
+  display: flex;
+}
+
+.flex-row {
+  flex-direction: row;
+}
+
+.items-stretch {
+  align-items: stretch;
+}
+
+.justify-start {
+  justify-content: flex-start;
+}
+
+.gap-8 {
+  gap: 2rem;
 }
 
 .rounded-md {
@@ -571,11 +587,6 @@ video {
 
 .p-4 {
   padding: 1rem;
-}
-
-.px-4 {
-  padding-left: 1rem;
-  padding-right: 1rem;
 }
 
 .py-8 {
@@ -617,11 +628,21 @@ body{
   background-size: cover;
   background-clip: border-box;
   height: 100vh;
+  padding-top: 5.5rem;
 }
 
 header{
   position: fixed;
   top: 1.5rem;
   right: 1rem;
-  left: 1rem;
+  left: 1.5rem;
+}
+
+aside{
+  width: 20vw;
+  position: fixed;
+  top: 7.25rem;
+  right: 1rem;
+  left: 2.5rem;
+  bottom: 1rem;
 }

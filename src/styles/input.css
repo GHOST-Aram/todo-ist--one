@@ -9,10 +9,19 @@ body{
     background-size: cover;
     background-clip: border-box;
     height: 100vh;
+    padding-top: 5.5rem;
 }
 header{
     position: fixed;
     top: 1.5rem;
     right: 1rem;
-    left: 1rem;
+    left: 1.5rem;
+}
+aside{
+    width: 20vw;
+    position: fixed;
+    top: 7.25rem;
+    right: 1rem;
+    left: 2.5rem;
+    bottom: 1rem;
 }
