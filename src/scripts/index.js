@@ -13,7 +13,6 @@ const header = domManager.createHeader()
 
 //sidebar
 const sidebar = domManager.createSidebar()
-    sidebar.appendChild(domManager.createHeading('Plansen'))
     domManager.render(sidebar)
 
 //Content container
@@ -21,3 +20,7 @@ const container = domManager.createContainer()
     container.classList.add('bg-blue-700')
     container.id = 'content-container'
     domManager.render(container)
+
+//Footer
+const footer = domManager.createFooter()
+    sidebar.appendChild(footer)

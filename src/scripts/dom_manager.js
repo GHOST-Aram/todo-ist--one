@@ -1,4 +1,5 @@
 export default class DOMManager {
+
     constructor () {
 
     }
@@ -9,7 +10,23 @@ export default class DOMManager {
 
      return div
     }
+    createFooter () {
+     const footer = document.createElement('footer')
 
+     //Horizontal line
+     const line = document.createElement('hr')
+     line.style.height = '1xp'
+     line.className = 'bg-slate-500 w-full'
+     footer.appendChild(line)
+
+     //Paragraph
+     const p = document.createElement('p')
+     p.className = 'text-sm text-slate-500 text-center py-4'
+     p.innerHTML = `Copyright &copy; ${new Date().getFullYear()}`
+     footer.appendChild(p)
+
+     return footer
+    }
    createHeader () {
      const header = document.createElement('header')
      header.className = 'p-4 bg-blue-700 m-auto mx-4 rounded-top rounded-md'
@@ -39,6 +56,5 @@ export default class DOMManager {
      const contentContainer = document.querySelector('#content')
      contentContainer.appendChild(content)
    }
-
    
 }
