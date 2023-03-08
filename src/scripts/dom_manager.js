@@ -46,6 +46,24 @@ export default class DOMManager {
 
      return logo
    }
+   createUserProfile (userName) {
+     //Profile container
+     const profile = this.createContainer()
+     profile.classList.add('flex', 'flex-row', 'justify-end', 'items-center', 'gap-4')
+     profile.id = 'profile'
+
+     //picture image
+     const pic = document.createElement('img')
+     pic.id = 'profile-picture'
+     pic.className = 'rounded-full'
+     profile.appendChild(pic)
+
+     //user name
+     const name = this.createHeading(userName)
+     profile.prepend(name)
+
+     return profile
+   }
    createSidebar () {
      const sidebar = document.createElement('aside')
      sidebar.className = 'p-4 bg-blue-700 rounded-md'

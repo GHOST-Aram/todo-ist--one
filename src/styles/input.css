@@ -21,8 +21,6 @@ aside {
     bottom: 1rem;
 }
 #content-container {
-    /* background-color: rgba(0, 0, 0, 0.2); */
-    /* background-color: #000; */
     width: 97%;
     height: 79.6vh;
 }
@@ -38,4 +36,10 @@ header {
     right: 1rem;
     left: 1.5rem;
 }
-
+#profile {
+    position: absolute;
+    right: 0;
+}
+#profile-picture {
+    width: 70px;
+}

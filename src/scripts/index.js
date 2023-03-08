@@ -24,3 +24,14 @@ const container = domManager.createContainer()
 //Footer
 const footer = domManager.createFooter()
     sidebar.appendChild(footer)
+
+//User profile
+const profile = domManager.createUserProfile('The Architech')
+    header.appendChild(profile)
+    header.classList.add('flex', 'flex-row', 'justify-between', 'items-center')
+
+    //Import profile pic
+    import('../images/profile-pic.png').then(({pic}) =>{
+        document.querySelector('#profile-picture').src = pic
+    }).catch((error)=>console.error(`Error ocuured while importing profile pic: ${error}`))
+

@@ -568,6 +568,10 @@ video {
   flex-direction: row;
 }
 
+.items-center {
+  align-items: center;
+}
+
 .items-stretch {
   align-items: stretch;
 }
@@ -576,8 +580,24 @@ video {
   justify-content: flex-start;
 }
 
+.justify-end {
+  justify-content: flex-end;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.gap-4 {
+  gap: 1rem;
+}
+
 .gap-8 {
   gap: 2rem;
+}
+
+.rounded-full {
+  border-radius: 9999px;
 }
 
 .rounded-md {
@@ -686,3 +706,11 @@ header {
   left: 1.5rem;
 }
 
+#profile {
+  position: absolute;
+  right: 0;
+}
+
+#profile-picture {
+  width: 45px;
+}
