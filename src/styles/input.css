@@ -9,8 +9,8 @@ body {
     background-size: cover;
     background-clip: border-box;
     height: 100vh;
-    padding-top: 5.49rem;
-    padding-left: 25vw;
+    /* padding-top: 5.49rem;
+    padding-left: 25vw; */
 }
 aside {
     width: 20vw;
@@ -19,11 +19,15 @@ aside {
     right: 1rem;
     left: 2.5rem;
     bottom: 1rem;
-}
-#content-container {
-    width: 97%;
+  }
+  
+  #content-container {
+    position: fixed;
+    top: 7.35rem;
+    left: 25vw;
+    right: 2rem;
     height: 79.6vh;
-}
+  }
 footer {
     position: absolute;
     bottom: 0;
