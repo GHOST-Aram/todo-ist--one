@@ -8,6 +8,8 @@ One Page App todo list
 
     /*
     DOMManager.createSidebar
+    DOMManager.createContainer
+    DOMManager.createFooter
     DOMManager.createProject
     DOMManager.createTask
     
@@ -16,6 +18,21 @@ One Page App todo list
 
     DOMManager.deleteProject
     DOMManager.deleteTask
+            -Delete from DOM
+            -Delete from lists
+
+    DOMManager.openProject
+    DOMManager.closeProject
+
+    DOMMananer.displayTasks
+    DOMManager.displayCompletedTasks
+    DOMManager.markTaskAsIncomplete
+
+    DOMManager.displayProjects
+    DOMManager.displayCompletedProjects
+    DOMManager.markProjectAsIncomplete
+
+    
 
     */
 
