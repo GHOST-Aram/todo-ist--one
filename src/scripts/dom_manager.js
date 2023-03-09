@@ -5,6 +5,21 @@ export default class DOMManager {
   constructor () {
 
   }
+  //Add Icon
+  createAddButton () {
+
+    //Button
+    const button = document.createElement('button')
+    button.className = 'bg-blue-600 rounded-full hover:bg-blue-700 transition-all'
+
+    //Icon
+    const icon = document.createElement('i')
+    icon.className = 'text-xl text-slate-200 fa-solid fa-plus font-medium'
+
+    button.appendChild(icon)
+
+    return button
+  }
   //Div Container
   createContainer () {
     const div = document.createElement('div')
@@ -59,7 +74,7 @@ export default class DOMManager {
   createProjectContainer (projectName) {
     const projCont = document.createElement('div')
       projCont.id = `${projectName.toLowerCase().replaceAll(' ', '-')}-container`
-      projCont.className = 'w-full bg-blue-600 border-t-2 border-solid border-white'
+      projCont.className = 'w-full bg-blue-600 border-t-2 border-solid border-white hover:bg-blue-700 transition-all'
 
       //Name
       const projName = document.createElement('h1')

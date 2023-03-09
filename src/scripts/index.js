@@ -38,11 +38,21 @@ const profile = domManager.createUserProfile('The Architech')
     }).catch((error)=>console.error(`Error ocuured while importing profile pic: ${error}`))
 
 //Projects header
-const heading = domManager.createHeading('My Projects')
-    heading.classList.add( 'bg-blue-600','py-4','px-4','font-medium', 'w-full')
-    // heading.classList.remove('text-slate-200')
-    heading.id = 'projects-header'
-    sidebar.appendChild(heading) 
+const projectsHeader = domManager.createContainer()
+    projectsHeader.className = 'flex flex-row items-center justify-between bg-blue-600 px-4 py-2'
+    projectsHeader.id = 'projects-header'
+
+    //Heading
+    const heading = domManager.createHeading('My Projects')
+    heading.classList.add('font-medium', 'w-full')
+    projectsHeader.appendChild(heading)
+    
+    // New project Add button
+    const addBtn = domManager.createAddButton()
+    addBtn.id = 'new-project-btn'
+    projectsHeader.appendChild(addBtn)
+    
+    sidebar.appendChild(projectsHeader) 
 
 //Default Project Container
 const defaultProjectContainer = domManager.createProjectContainer('Today')
