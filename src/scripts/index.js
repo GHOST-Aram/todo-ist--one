@@ -42,5 +42,9 @@ const heading = domManager.createHeading('My Projects')
     heading.classList.add('text-blue-700', 'bg-slate-200', 'py-1','px-1','font-medium', 'w-full', 'rounded-top', 'rounded-md')
     document.querySelector('#main-side-bar').appendChild(heading) 
 
-    const project = new Project()
-        
+//Default Project Container
+const defaultProjectContainer = domManager.createProjectContainer('Today')
+    document.querySelector('#main-side-bar').appendChild(defaultProjectContainer)
+    
+
+    
