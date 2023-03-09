@@ -75,7 +75,7 @@ export default class DOMManager {
   //Side bar
   createSidebar () {
      const sidebar = document.createElement('aside')
-     sidebar.className = 'p-4 bg-blue-700 rounded-md'
+     sidebar.className = 'p-4 bg-blue-700 rounded-md pt-16 flex flex-col gap-2'
 
      return sidebar
   }

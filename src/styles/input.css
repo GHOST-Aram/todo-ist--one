@@ -19,26 +19,24 @@ aside {
     right: 1rem;
     left: 2.5rem;
     bottom: 1rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: start;
-    gap: 4px;
-    overflow: hidden;
+    overflow: scroll;
+    
   }
   
-  #content-container {
+#content-container {
     position: fixed;
     top: 7.35rem;
     left: 25vw;
     right: 2rem;
     height: 79.6vh;
-  }
-footer {
-    position: absolute;
-    bottom: 0;
-    left: .5rem;
-    right: .5rem;
+}
+footer{
+    bottom: 1rem;
+}
+footer,#projects-header {
+    position: fixed;
+    left: 2.5rem;
+    width: 20vw;
     z-index: 100;
 }
 header {
@@ -53,4 +51,7 @@ header {
 }
 #profile-picture {
     width: 45px;
+}
+#projects-header{
+    top: 7.35rem;
 }
