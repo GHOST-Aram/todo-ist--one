@@ -15,7 +15,7 @@ export default class DOMManager {
   //Footer
   createFooter () {
     const footer = document.createElement('footer')
-      footer.className = 'border-t-2 border-solid border-white'
+      footer.className = 'border-t-2 border-solid border-white bg-blue-700'
 
   //Paragraph
   const p = document.createElement('p')
