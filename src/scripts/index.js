@@ -56,9 +56,15 @@ const projectsHeader = domManager.createContainer()
     
     sidebar.appendChild(projectsHeader) 
 
-//Default Project Container
-const defaultProjectContainer = domManager.createProjectContainer('Today')
-    sidebar.appendChild(defaultProjectContainer)
+    //Create default Project
+    const defaultProject = new Project('Today')
+        defaultProject.setDescription('Today\'s Activities')
+        projectManager.addToProjectList(defaultProject)
+
+        //Default Project Container
+        const defaultProjectContainer = domManager.createProjectContainer(defaultProject.name)
+        sidebar.appendChild(defaultProjectContainer)
+
 
 
 
@@ -83,10 +89,10 @@ window.addEventListener('load', (e) =>{
             //Add to project lists
                 projectManager.addToProjectList(project)
             })
-            console.log(projectManager.getProjects())
-        
+            
+        })
     })
-})
+    console.log(projectManager.getProjects())
 
    
     
