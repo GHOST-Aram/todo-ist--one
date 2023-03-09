@@ -64,6 +64,14 @@ window.addEventListener('load', (e) =>{
     addBtn.addEventListener('click', (e) =>{
         //project manager create new project
         domManager.displayForm()
+        //Add event listener to form
+        document.querySelector('form#project-form').addEventListener('submit', (event) =>{
+            event.preventDefault()
+            const data = domManager.getFormData()
+            console.log(data)
+            
+        })
+        
     })
 })
 
