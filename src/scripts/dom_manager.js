@@ -113,11 +113,14 @@ export default class DOMManager {
 
     return profile
   }
-  getFormData () {
-    const projectName = document.querySelector('#project-name-input')
-    const projectDescription = document.querySelector('#project-description-input')
-
-    return [projectName.value, projectDescription.value]
+  getFormData (hashFormId) {
+    const data = []
+    //Get node list
+    document.querySelectorAll(`${hashFormId} input[type=text]`).forEach(element =>{
+      //get input values and add to data array
+      data.push(element.value)
+    })
+    return data
   }
   displayForm () {
     document.querySelector('form').classList.toggle('hidden')

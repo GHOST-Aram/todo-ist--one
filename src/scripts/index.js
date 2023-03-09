@@ -67,7 +67,7 @@ window.addEventListener('load', (e) =>{
         //Add event listener to form
         document.querySelector('form#project-form').addEventListener('submit', (event) =>{
             event.preventDefault()
-            const data = domManager.getFormData()
+            const data = domManager.getFormData('#project-form')
             console.log(data)
             
         })
