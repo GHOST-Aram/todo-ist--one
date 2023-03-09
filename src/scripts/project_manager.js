@@ -19,17 +19,7 @@ export default class ProjectManager {
     addToProjectList (newProject) {
         this.#projects.push(newProject)
     }
-    //create new project
-    createNewProject(projectName, description){
-        //Create with name
-        const newProject = Project(projectName)
-        //set description
-        newProject.setDescription(description)
-        //Add to list
-        this.#projects.push(newProject)
-
-        return newProject
-    }
+   
     //Get list of completed projects
     getCompleted(){
         return this.#completedProjects
