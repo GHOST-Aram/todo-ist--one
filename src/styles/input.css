@@ -39,6 +39,11 @@ footer,#projects-header {
     width: 20vw;
     z-index: 100;
 }
+form{
+    width: 30vw;
+    left: calc(25vw - 1rem);
+    top: 7.35rem;
+}
 header {
     position: fixed;
     top: 1.5rem;

@@ -1,3 +1,5 @@
+import Project from "./project"
+
 export default class ProjectManager {
      /*
     Project manager class performs operations on Projects
@@ -8,13 +10,22 @@ export default class ProjectManager {
 
     }
     //Add to list
-    addProject(project){
-        this.#projects.push(project)
-    }
+   
     //Update completed projects
     addToCompleted(project){
         this.#completedProjects.push(project)
         this.removeProject(project)
+    }
+    //create new project
+    createNewProject(projectName, description){
+        //Create with name
+        const newProject = Project(projectName)
+        //set description
+        newProject.setDescription(description)
+        //Add to list
+        this.#projects.push(newProject)
+
+        return newProject
     }
     //Get list of completed projects
     getCompleted(){

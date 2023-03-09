@@ -58,6 +58,15 @@ const projectsHeader = domManager.createContainer()
 const defaultProjectContainer = domManager.createProjectContainer('Today')
     sidebar.appendChild(defaultProjectContainer)
 
+
+//Create new Project
+window.addEventListener('load', (e) =>{
+    addBtn.addEventListener('click', (e) =>{
+        //project manager create new project
+        domManager.displayForm()
+    })
+})
+
    
     
 

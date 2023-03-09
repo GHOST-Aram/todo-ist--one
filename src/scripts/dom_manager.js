@@ -113,6 +113,9 @@ export default class DOMManager {
 
     return profile
   }
+  displayForm () {
+    document.querySelector('form').classList.toggle('hidden')
+  }
   //Append to DOM
   render (content) {
       const contentContainer = document.querySelector('#content')
