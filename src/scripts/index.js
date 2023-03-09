@@ -1,8 +1,10 @@
 import '../styles/styles.css'
 import DOMManager from './dom_manager.js'
 import Project from './project.js'
+import ProjectManager from './project_manager'
 
 const domManager = new DOMManager()
+const projectManager = new ProjectManager()
 
 
 
@@ -67,10 +69,16 @@ window.addEventListener('load', (e) =>{
         //Add event listener to form
         document.querySelector('form#project-form').addEventListener('submit', (event) =>{
             event.preventDefault()
+            //Get data
             const data = domManager.getFormData('#project-form')
-            console.log(data)
-            
-        })
+            //Create new Project
+            const project = new Project(data[0])
+                project.setDescription(data[1])
+
+            //Add to project lists
+                projectManager.addToProjectList(project)
+            })
+            console.log(projectManager.getProjects())
         
     })
 })

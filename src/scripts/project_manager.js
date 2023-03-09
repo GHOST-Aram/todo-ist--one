@@ -16,6 +16,9 @@ export default class ProjectManager {
         this.#completedProjects.push(project)
         this.removeProject(project)
     }
+    addToProjectList (newProject) {
+        this.#projects.push(newProject)
+    }
     //create new project
     createNewProject(projectName, description){
         //Create with name
