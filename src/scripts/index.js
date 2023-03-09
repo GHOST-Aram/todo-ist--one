@@ -61,6 +61,7 @@ const defaultProjectContainer = domManager.createProjectContainer('Today')
     sidebar.appendChild(defaultProjectContainer)
 
 
+
 //Create new Project
 window.addEventListener('load', (e) =>{
     addBtn.addEventListener('click', (e) =>{
@@ -74,6 +75,10 @@ window.addEventListener('load', (e) =>{
             //Create new Project
             const project = new Project(data[0])
                 project.setDescription(data[1])
+            
+            //Project container
+            const newProjecContainer = domManager.createProjectContainer(project.name)
+                sidebar.appendChild(newProjecContainer)
 
             //Add to project lists
                 projectManager.addToProjectList(project)
