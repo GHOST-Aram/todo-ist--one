@@ -15,9 +15,7 @@ export default class DOMManager {
   //Footer
   createFooter () {
     const footer = document.createElement('footer')
-
-    //Horizontal line
-    footer.appendChild(this.createHorizontalLine())
+      footer.className = 'border-t-2 border-solid border-white'
 
   //Paragraph
   const p = document.createElement('p')
@@ -61,15 +59,12 @@ export default class DOMManager {
   createProjectContainer (projectName) {
     const projCont = document.createElement('div')
       projCont.id = `${projectName.toLowerCase().replaceAll(' ', '-')}-container`
-      projCont.className = 'w-full bg-blue-600'
-
-      //Horizontal line
-      projCont.appendChild(this.createHorizontalLine())
+      projCont.className = 'w-full bg-blue-600 border-t-2 border-solid border-white'
 
       //Name
       const projName = document.createElement('h1')
         projName.id = `${projectName.toLowerCase().replaceAll(' ', '-')}`
-        projName.className = 'py-2 text-white text-xl px-4'
+        projName.className = 'py-2 text-slate-200 text-xl px-4'
         projName.textContent = projectName
       
       //Append name
