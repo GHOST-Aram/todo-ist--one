@@ -1,5 +1,6 @@
 import '../styles/styles.css'
 import DOMManager from './dom_manager.js'
+import Project from './project.js'
 
 const domManager = new DOMManager()
 
@@ -14,6 +15,7 @@ const header = domManager.createHeader()
 //sidebar
 const sidebar = domManager.createSidebar()
     domManager.render(sidebar)
+    sidebar.id = 'main-side-bar'
 
 //Content container
 const container = domManager.createContainer()
@@ -35,3 +37,10 @@ const profile = domManager.createUserProfile('The Architech')
         document.querySelector('#profile-picture').src = pic
     }).catch((error)=>console.error(`Error ocuured while importing profile pic: ${error}`))
 
+//Side bar components
+const heading = domManager.createHeading('My Projects')
+    heading.classList.add('text-blue-700', 'bg-slate-200', 'py-1','px-1','font-medium', 'w-full', 'rounded-top', 'rounded-md')
+    document.querySelector('#main-side-bar').appendChild(heading) 
+
+    const project = new Project()
+        

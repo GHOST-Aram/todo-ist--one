@@ -10,8 +10,8 @@ One Page App todo list
     DOMManager.createSidebar
     DOMManager.createContainer
     DOMManager.createFooter
-    DOMManager.createProject
-    DOMManager.createTask
+    DOMManager.createProjectContainer
+    DOMManager.createTaskContainer
     
     DOMManager.markTaskAsComplete
     DOMManager.markProjectAsComplete

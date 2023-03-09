@@ -5,6 +5,7 @@ export default class Project extends TaskManager {
     //Project open
     #projectOpen = false
     #complete = false
+    #description = ''
     constructor(name){
         super()
         this.name = name
@@ -12,6 +13,10 @@ export default class Project extends TaskManager {
     //close project
     close(){
         this.#projectOpen = false
+    }
+    //return value of description
+    getDescription(){
+        return this.#description
     }
     //is complete
     isComplete(){
@@ -34,6 +39,11 @@ export default class Project extends TaskManager {
     open(){
         this.#projectOpen = true
     }
+    //initialize descripion
+    setDescription(description){
+        this.#description = description
+    }
+
 
 }
 
