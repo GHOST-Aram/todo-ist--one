@@ -11,6 +11,8 @@
 <body>
     <main>
         <div id="content" class="container m-auto py-8 flex flex-row justify-start items-stretch gap-8"></div>
+
+        <!-- Project form -->
         <form action="" method="post" id="project-form" class="p-4 rounded-md hidden absolute flex flex-col items-start gap-4 bg-slate-500">
             <h1 class="text-slate-200 bg-blue-700 px-4 py-2 w-full">New Project</h1>
             <input required  id="project-name-input" type="text" placeholder="Project name" class="border-b-2 focus:outline-none text-white border-solid border-blue-700 py-2 px-4 w-full bg-transparent">
@@ -21,7 +23,9 @@
                 <button type="submit"  class="bg-blue-700 hover:bg-blue-600 text-slate-200 py-2 px-4 rounded-md transition-all">Save Changes</button>
             </div>
         </form>
-        <form action="" method="post" id="task-form" class="p-4 rounded-md absolute flex flex-col items-start gap-4 bg-slate-500">
+
+        <!-- Task creation form -->
+        <form action="" method="post" id="task-form" class="p-4 rounded-md absolute hidden flex flex-col items-start gap-4 bg-slate-500">
             <h1 class="text-slate-200 bg-blue-700 px-4 py-2 w-full">New Task</h1>
             <input required  id="project-name-input" type="text" placeholder="Task title" class="border-b-2 focus:outline-none text-white border-solid border-blue-700 py-2 px-4 w-full bg-transparent">
             <input  required id="project-description-input" type="text" placeholder="Task description" class="border-b-2 focus:outline-none text-white border-solid border-blue-700 py-2 px-4 w-full bg-transparent">

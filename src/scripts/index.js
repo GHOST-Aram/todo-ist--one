@@ -5,6 +5,7 @@ import ProjectManager from './project_manager'
 import Task from './task'
 import TaskManager from './task_manager'
 
+const project = new Project()
 const domManager = new DOMManager()
 const projectManager = new ProjectManager()
 
@@ -97,12 +98,13 @@ const projectsHeader = domManager.createContainer()
     sidebar.appendChild(projectsHeader) 
 
     //Create default Project
-    const defaultProject = new Project('Today')
+    const defaultProject = new Project()
         defaultProject.setDescription('Today\'s Activities')
+        defaultProject.setName('Today')
         projectManager.addToProjectList(defaultProject)
 
         //Default Project Container
-        const defaultProjectContainer = domManager.createProjectContainer(defaultProject.name)
+        const defaultProjectContainer = domManager.createProjectContainer(defaultProject.getName())
         sidebar.appendChild(defaultProjectContainer)
 
     //Display default project
@@ -114,63 +116,77 @@ const projectsHeader = domManager.createContainer()
 
     
 //Create new Project
-window.addEventListener('load', (e) =>{
-    addBtn.addEventListener('click', (e) =>{
-        //project manager create new project
-        domManager.displayForm('#project-form')
-        //Add event listener to form
-        document.querySelector('form#project-form').addEventListener('submit', (event) =>{
-            event.preventDefault()
-            //Get data
-            const data = domManager.getFormData('#project-form')
-            //Create new Project
-            const project = new Project(data[0])
-                project.setDescription(data[1])
-            
-            //Project container
-            const newProjecContainer = domManager.createProjectContainer(project.name)
-                sidebar.appendChild(newProjecContainer)
 
-            //Add to project lists
-                projectManager.addToProjectList(project)
-            //hide project form
-                domManager.hideForm('#project-form')
-            })
-        })
-        //Close form
-        document.querySelector('button[type=button]').addEventListener('click', () =>{
+addBtn.addEventListener('click', (e) =>{
+    //project manager create new project
+    domManager.displayForm('#project-form')
+    //Add event listener to form
+    document.querySelector('form#project-form').addEventListener('submit', (event) =>{
+        event.preventDefault()
+        //Get data
+        const data = domManager.getFormData('#project-form')
+        //Create new Project
+        project.setName(data[0])
+        project.setDescription(data[1])
+        
+        //Project container
+        const newProjecContainer = domManager.createProjectContainer(project.getName())
+            sidebar.appendChild(newProjecContainer)
+
+        //Add to project lists
+            projectManager.addToProjectList(project)
+        //hide project form on submit
+            domManager.hideForm()
+
+            
+    })
+})
+//______________________________________________________________________________________________________________________
+// CREAT New tasks TASKS
+/**
+ * Display task details form
+ * Get tasks details from the form
+ * Create an instance on Task Object
+ * Add task to project task list
+ * close task form on submit
+*/
+//Display form
+document.querySelector('#new-task-btn').addEventListener('click', () =>{
+    domManager.displayForm('#task-form')
+})
+document.querySelector('form#task-form').addEventListener('submit', (e) =>{
+    e.preventDefault()
+    //get data
+    const data = domManager.getFormData('#task-form')
+    
+    // Create new task
+    const task = new Task(data[0])
+    task.setDescription([data[1]])
+    task.setDueDate(data[2])
+
+    //Add  task to project task list
+    project.addTask(task)
+    
+    //closeForm
+    domManager.hideForm()   
+    console.log(project.getTasks())
+})
+    
+    
+/**
+ * Universally hide forms 
+ */
+document.querySelectorAll('button[type=button]').forEach(
+    button =>{
+        button.addEventListener('click', () =>{
             domManager.hideForm()
         })
 
-        //NewTask
-        document.querySelector('#new-task-btn').addEventListener('click', () =>{
-            domManager.displayForm('#task-form')
-        })
-        
-        //Create task
-        document.querySelector('form#task-form').addEventListener('submit', (e) =>{
-            e.preventDefault()
-            //get data
-            const data = domManager.getFormData('#task-form')
+    }
+)
 
-            //New task
-            const task = new Task(data[0])
-            task.setDescription([data[1]])
-            task.setDueDate(data[2])
-
-            //Add to task list
-            const taskManager = new TaskManager()
-            taskManager.addTask(task)
-
-            //closeForm
-            domManager.hideForm('#task-form')
-            console.log(task)
-            
-
-        })
-    })
-
-   
     
+    
+
 
     
