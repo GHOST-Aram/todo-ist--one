@@ -142,17 +142,20 @@ export default class DOMManager {
 
     return profile
   }
-  displayForm () {
-    document.querySelector('form').classList.toggle('hidden')
+  displayForm (hashFormId) {
+    document.querySelector(hashFormId).classList.toggle('hidden')
   }
   getFormData (hashFormId) {
     const data = []
     //Get node list
-    document.querySelectorAll(`${hashFormId} input[type=text]`).forEach(element =>{
+    document.querySelectorAll(`${hashFormId} input`).forEach(element =>{
       //get input values and add to data array
       data.push(element.value)
     })
     return data
+  } 
+  hideForm(hashFormId) {
+    document.querySelector(hashFormId).classList.add('hidden')
   }
   //Append to DOM
   render (content) {

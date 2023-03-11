@@ -68,3 +68,7 @@ header {
 #task-container{
     overflow: scroll;
 }
+#task-form {
+    left: calc(40vw);
+    top: 16.8rem;
+}

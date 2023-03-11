@@ -2,6 +2,8 @@ import '../styles/styles.css'
 import DOMManager from './dom_manager.js'
 import Project from './project.js'
 import ProjectManager from './project_manager'
+import Task from './task'
+import TaskManager from './task_manager'
 
 const domManager = new DOMManager()
 const projectManager = new ProjectManager()
@@ -115,7 +117,7 @@ const projectsHeader = domManager.createContainer()
 window.addEventListener('load', (e) =>{
     addBtn.addEventListener('click', (e) =>{
         //project manager create new project
-        domManager.displayForm()
+        domManager.displayForm('#project-form')
         //Add event listener to form
         document.querySelector('form#project-form').addEventListener('submit', (event) =>{
             event.preventDefault()
@@ -131,11 +133,42 @@ window.addEventListener('load', (e) =>{
 
             //Add to project lists
                 projectManager.addToProjectList(project)
+            //hide project form
+                domManager.hideForm('#project-form')
             })
+        })
+        //Close form
+        document.querySelector('button[type=button]').addEventListener('click', () =>{
+            domManager.hideForm()
+        })
+
+        //NewTask
+        document.querySelector('#new-task-btn').addEventListener('click', () =>{
+            domManager.displayForm('#task-form')
+        })
+        
+        //Create task
+        document.querySelector('form#task-form').addEventListener('submit', (e) =>{
+            e.preventDefault()
+            //get data
+            const data = domManager.getFormData('#task-form')
+
+            //New task
+            const task = new Task(data[0])
+            task.setDescription([data[1]])
+            task.setDueDate(data[2])
+
+            //Add to task list
+            const taskManager = new TaskManager()
+            taskManager.addTask(task)
+
+            //closeForm
+            domManager.hideForm('#task-form')
+            console.log(task)
             
+
         })
     })
-    console.log(projectManager.getProjects())
 
    
     
