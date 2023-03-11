@@ -6,8 +6,46 @@ import ProjectManager from './project_manager'
 const domManager = new DOMManager()
 const projectManager = new ProjectManager()
 
+function displayProjectCredentials(project){
+    const projectHeader = domManager.createProjectHeader(project)
+        container.appendChild(projectHeader)
 
 
+        //Project description and new task btn
+        const descNBtnContainer = domManager.createContainer()
+        descNBtnContainer.className = 'flex flex-row justify-between items-center w-full'
+        //DESCRIPTION
+        const projectDescription = domManager.createProjectDescription(project.getDescription())
+        //Display description
+        descNBtnContainer.appendChild(projectDescription)
+        
+        //  New task button
+        const button = document.createElement('button')
+        button.textContent = 'New Task'
+        button.className = 'bg-slate-300 text-blue-700 py-2 px-4 rounded-md hover:bg-slate-100'
+        button.id = 'new-task-btn'
+        
+        //Display btn
+        descNBtnContainer.appendChild(button)
+        container.appendChild(descNBtnContainer)
+
+}
+
+function displayTasksContainer(){
+     //Tasks container
+     const tasksContainer = domManager.createContainer()
+     tasksContainer.classList.add('w-full', 'bg-blue-600', 'grid', 'grid-2', 'gap-4')
+     tasksContainer.id = 'task-container'
+
+     //No tasks to display
+     const par = document.createElement('p')
+     par.className = 'text-slate-200 text-center text-3xl font-medium'
+     par.id = 'no-tasks'
+     par.textContent = 'No Tasks Listed Here'
+     tasksContainer.appendChild(par)
+
+     container.appendChild(tasksContainer)
+}
 // Create and display header
 const header = domManager.createHeader()
     const logo = domManager.createLogo('Plansen')
@@ -21,7 +59,7 @@ const sidebar = domManager.createSidebar()
 
 //Content container
 const container = domManager.createContainer()
-    container.classList.add('bg-blue-700')
+    container.classList.add('bg-blue-700', 'flex','flex-col', 'items-start', 'justify-start', 'gap-2')
     container.id = 'content-container'
     domManager.render(container)
 
@@ -65,9 +103,14 @@ const projectsHeader = domManager.createContainer()
         const defaultProjectContainer = domManager.createProjectContainer(defaultProject.name)
         sidebar.appendChild(defaultProjectContainer)
 
+    //Display default project
+        displayProjectCredentials(defaultProject)
+        displayTasksContainer()
+        
+       
 
 
-
+    
 //Create new Project
 window.addEventListener('load', (e) =>{
     addBtn.addEventListener('click', (e) =>{

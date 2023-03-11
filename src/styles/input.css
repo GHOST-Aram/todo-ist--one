@@ -65,3 +65,6 @@ header {
 #projects-header{
     top: 7.35rem;
 }
+#task-container{
+    overflow: scroll;
+}

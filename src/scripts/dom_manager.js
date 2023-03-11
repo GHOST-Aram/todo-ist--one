@@ -23,7 +23,7 @@ export default class DOMManager {
   //Div Container
   createContainer () {
     const div = document.createElement('div')
-    div.className = 'p-4 rounded-md'
+    div.className = 'p-4'
 
     return div
   }
@@ -71,6 +71,7 @@ export default class DOMManager {
     return logo
   }
   //Project container
+  //used for dislay in the side bar
   createProjectContainer (projectName) {
     const projCont = document.createElement('div')
       projCont.id = `${projectName.toLowerCase().replaceAll(' ', '-')}-container`
@@ -86,6 +87,34 @@ export default class DOMManager {
       projCont.appendChild(projName)
 
       return projCont
+  }
+  //Description container
+  createProjectDescription (description) {
+    const container = this.createContainer()
+    container.classList.add('bg-blue-600','px-8', 'py-4')
+
+    //Paragraph
+    const par = document.createElement('p')
+    par.className = 'text-slate-200 text-md'
+    par.textContent = description
+
+    container.appendChild(par)
+
+    return container
+  }
+  //Project header
+  //display in the main body 
+  //Peiod is an object with period.start and period.end
+  createProjectHeader (project){
+    //Main container
+    const container = this.createContainer()
+    container.className = 'flex flex-row justify-between bg-blue-600 items-center w-full py-4 pl-8'
+    //Add Name
+    const projectTitle = this.createHeading(project.name)
+    projectTitle.classList.add('font-bold')
+    container.appendChild(projectTitle)
+
+    return container
   }
   //Side bar
   createSidebar () {
@@ -113,6 +142,9 @@ export default class DOMManager {
 
     return profile
   }
+  displayForm () {
+    document.querySelector('form').classList.toggle('hidden')
+  }
   getFormData (hashFormId) {
     const data = []
     //Get node list
@@ -121,9 +153,6 @@ export default class DOMManager {
       data.push(element.value)
     })
     return data
-  }
-  displayForm () {
-    document.querySelector('form').classList.toggle('hidden')
   }
   //Append to DOM
   render (content) {
