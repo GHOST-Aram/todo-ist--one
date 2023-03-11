@@ -110,7 +110,7 @@ export default class DOMManager {
     const container = this.createContainer()
     container.className = 'flex flex-row justify-between bg-blue-600 items-center w-full py-4 pl-8'
     //Add Name
-    const projectTitle = this.createHeading(project.getName())
+    const projectTitle = this.createHeading(project.name)
     projectTitle.classList.add('font-bold')
     container.appendChild(projectTitle)
 
@@ -154,8 +154,8 @@ export default class DOMManager {
     })
     return data
   } 
-  hideForm() {
-    document.querySelector('form').classList.add('hidden')
+  hideForm(hashFormId) {
+    document.querySelector(hashFormId).classList.add('hidden')
   }
   //Append to DOM
   render (content) {
