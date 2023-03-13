@@ -122,7 +122,7 @@ export default class DOMManager {
   //Side bar
   createSidebar () {
      const sidebar = document.createElement('aside')
-     sidebar.className = 'px-4 bg-blue-700 rounded-md py-16 flex flex-col gap-2'
+     sidebar.className = 'px-4 bg-blue-700 rounded-md py-16'
 
      return sidebar
   }

@@ -14,13 +14,12 @@ function addEventListenerToProject(){
     projects.forEach(
         element =>{
             element.addEventListener('click', (e) =>{
-                //Change value of Cont name
-                console.log(e.target)
-
+                
                 //populate DOM with project details
                 projectManager.getProjects().forEach(project =>{
                     //use project name and DOM element id to find project to display
                     if(project.name.toLowerCase().replaceAll(' ', '-') === e.target.id){
+                        //Change values
                         document.querySelector('#content-container #project-name').textContent = project.name
                         document.querySelector('#project-description p').textContent = project.getDescription()
                     }
@@ -130,6 +129,8 @@ const projectsHeader = domManager.createContainer()
         
         //Create Project list container
         const projectList = document.createElement('div')
+        projectList.className = 'flex flex-col gap-2'
+        // Append to list
         projectList.appendChild(defaultProCont)
 
         sidebar.appendChild(projectList)
