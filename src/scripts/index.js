@@ -122,26 +122,25 @@ window.addEventListener('load', (e) =>{
         document.querySelector('#hide-project-form').addEventListener('click', () =>{
             domManager.hideForm('#project-form')
         })
-        //Add event listener to form
-        document.querySelector('form#project-form').addEventListener('submit', (event) =>{
-            event.preventDefault()
-            //Get data
-            const data = domManager.getFormData('#project-form')
-            //Create new Project
-            const project = new Project(data[0])
-                project.setDescription(data[1])
-            
-            //Project container
-            const newProjecContainer = domManager.createProjectContainer(project.name)
-                sidebar.appendChild(newProjecContainer)
+    })
+    //Add event listener to form
+    document.querySelector('form#project-form').addEventListener('submit', (event) =>{
+        event.preventDefault()
+        //Get data
+        const data = domManager.getFormData('#project-form')
+        //Create new Project
+        const project = new Project(data[0])
+            project.setDescription(data[1])
+        
+        //Project container
+        const newProjecContainer = domManager.createProjectContainer(project.name)
+            sidebar.appendChild(newProjecContainer)
 
-            //Add to project lists
-                projectManager.addToProjectList(project)
-            //hide project form
-                domManager.hideForm('#project-form')
-            })
+        //Add to project lists
+            projectManager.addToProjectList(project)
+        //hide project form
+            domManager.hideForm('#project-form')
         })
-        //Close form
 
         //NewTask
         document.querySelector('#new-task-btn').addEventListener('click', () =>{
@@ -171,7 +170,6 @@ window.addEventListener('load', (e) =>{
         })
         
     })
-    console.log(project.getTasks())
 
    
     
