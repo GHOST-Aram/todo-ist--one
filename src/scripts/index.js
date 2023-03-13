@@ -18,7 +18,8 @@ function addEventListenerToProject(){
 
                 //populate DOM with project details
                 projectManager.getProjects().forEach(project =>{
-                    if(project.name.toLowerCase() === e.target.id){
+                    //use project name and DOM element id to find project to display
+                    if(project.name.toLowerCase().replaceAll(' ', '-') === e.target.id){
                         document.querySelector('#content-container #project-name').textContent = project.name
                         document.querySelector('#project-description p').textContent = project.getDescription()
                     }
@@ -122,10 +123,9 @@ const projectsHeader = domManager.createContainer()
         defaultProject.setDescription('Today\'s Activities')
         projectManager.addToProjectList(defaultProject)
 
-        //Default Project Container
-        const defaultProjectContainer = domManager.createProjectContainer(defaultProject.name)
-        sidebar.appendChild(defaultProjectContainer)
-        
+        //Update Local Storage
+        projectManager.updateLocalStorage()
+
         //Display default project
         displayProjectCredentials(defaultProject)
         displayTasksContainer()
@@ -133,9 +133,17 @@ const projectsHeader = domManager.createContainer()
        
         
 
-    
-        //Create new Project
+        
+//Create new Project
 window.addEventListener('load', (e) =>{
+    
+    //Access and display projects from localstorage
+    projectManager.accessLocalStorage().forEach(project =>{
+        let container = domManager.createProjectContainer(project.name)
+        sidebar.appendChild(container)
+    })
+
+    //Create new Project
     addBtn.addEventListener('click', (e) =>{
         //project manager create new project
         domManager.displayForm('#project-form')
@@ -153,15 +161,18 @@ window.addEventListener('load', (e) =>{
         const project = new Project(data[0])
         project.setDescription(data[1])
         
-        //Project container
+        //Display Project container
         const newProjecContainer = domManager.createProjectContainer(project.name)
         sidebar.appendChild(newProjecContainer)
         
-                //Add event listener to project
-                addEventListenerToProject()
+        //Add event listener to project
+        addEventListenerToProject()
         
         //Add to project lists
         projectManager.addToProjectList(project)
+        
+        //Update Localstorage
+        projectManager.updateLocalStorage()
         //hide project form
         domManager.hideForm('#project-form')
         })
@@ -202,7 +213,6 @@ window.addEventListener('load', (e) =>{
  * When Project is clicked, the Dom is populated with project deatails
  * */    
 
-console.log(projectManager.getProjects())
    
     
 

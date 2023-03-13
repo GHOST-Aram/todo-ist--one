@@ -9,7 +9,9 @@ export default class ProjectManager {
 
     }
     //Add to list
-   
+    accessLocalStorage () {
+        return JSON.parse(localStorage.getItem('projects'))
+    }
     //Update completed projects
     addToCompleted(project){
         this.#completedProjects.push(project)
@@ -36,5 +38,9 @@ export default class ProjectManager {
                 return true
         })
     }
+    updateLocalStorage(){
+        localStorage.setItem('projects', JSON.stringify(this.#projects))
+    }
+
 
 }

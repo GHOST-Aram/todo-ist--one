@@ -74,7 +74,7 @@ export default class DOMManager {
   //used for dislay in the side bar
   createProjectContainer (projectName) {
     const hashLink = document.createElement('a')
-    hashLink.href = `#${projectName}`
+    hashLink.href = `#${projectName.replaceAll(' ','-')}`
     const projCont = document.createElement('div')
       projCont.id = `${projectName.toLowerCase().replaceAll(' ', '-')}-container`
       projCont.className = 'w-full bg-blue-600 border-t-2 border-solid border-white hover:bg-blue-700 transition-all'
