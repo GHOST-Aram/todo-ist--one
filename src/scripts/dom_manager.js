@@ -73,6 +73,8 @@ export default class DOMManager {
   //Project container
   //used for dislay in the side bar
   createProjectContainer (projectName) {
+    const hashLink = document.createElement('a')
+    hashLink.href = `#${projectName}`
     const projCont = document.createElement('div')
       projCont.id = `${projectName.toLowerCase().replaceAll(' ', '-')}-container`
       projCont.className = 'w-full bg-blue-600 border-t-2 border-solid border-white hover:bg-blue-700 transition-all'
@@ -83,7 +85,8 @@ export default class DOMManager {
         projName.className = 'project py-2 text-slate-200 text-xl px-4'
       
       //Append name
-      projCont.appendChild(projName)
+      hashLink.appendChild(projName)
+      projCont.appendChild(hashLink)
 
       return projCont
   }

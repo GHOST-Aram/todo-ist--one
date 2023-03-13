@@ -8,6 +8,26 @@ import TaskManager from './task_manager'
 const domManager = new DOMManager()
 const projectManager = new ProjectManager()
 
+function addEventListenerToProject(){
+    const projects = document.querySelectorAll('.project')
+    projects.forEach(
+        element =>{
+            element.addEventListener('click', (e) =>{
+                //Change value of Cont name
+                console.log(e.target)
+
+                //populate DOM with project details
+                projectManager.getProjects().forEach(project =>{
+                    if(project.name.toLowerCase() === e.target.id){
+                        document.querySelector('#content-container #project-name').textContent = project.name
+                        document.querySelector('#project-description p').textContent = project.getDescription()
+                    }
+                })
+            })
+        }
+    )
+}
+
 function displayProjectCredentials(project){
     const projectHeader = domManager.createProjectHeader(project)
         container.appendChild(projectHeader)
@@ -18,7 +38,7 @@ function displayProjectCredentials(project){
         descNBtnContainer.className = 'flex flex-row justify-between items-center w-full'
         //DESCRIPTION
         const projectDescription = domManager.createProjectDescription(project.getDescription())
-        projectDescription.id = 'project-decription'
+        projectDescription.id = 'project-description'
         //Display description
         descNBtnContainer.appendChild(projectDescription)
         
@@ -105,21 +125,21 @@ const projectsHeader = domManager.createContainer()
         //Default Project Container
         const defaultProjectContainer = domManager.createProjectContainer(defaultProject.name)
         sidebar.appendChild(defaultProjectContainer)
-
-    //Display default project
+        
+        //Display default project
         displayProjectCredentials(defaultProject)
         displayTasksContainer()
         
        
-
+        
 
     
-//Create new Project
+        //Create new Project
 window.addEventListener('load', (e) =>{
     addBtn.addEventListener('click', (e) =>{
         //project manager create new project
         domManager.displayForm('#project-form')
-        //Close form on click
+        //Close form on CANCELL
         document.querySelector('#hide-project-form').addEventListener('click', () =>{
             domManager.hideForm('#project-form')
         })
@@ -131,16 +151,19 @@ window.addEventListener('load', (e) =>{
         const data = domManager.getFormData('#project-form')
         //Create new Project
         const project = new Project(data[0])
-            project.setDescription(data[1])
+        project.setDescription(data[1])
         
         //Project container
         const newProjecContainer = domManager.createProjectContainer(project.name)
-            sidebar.appendChild(newProjecContainer)
-
+        sidebar.appendChild(newProjecContainer)
+        
+                //Add event listener to project
+                addEventListenerToProject()
+        
         //Add to project lists
-            projectManager.addToProjectList(project)
+        projectManager.addToProjectList(project)
         //hide project form
-            domManager.hideForm('#project-form')
+        domManager.hideForm('#project-form')
         })
 
         //NewTask
@@ -172,6 +195,14 @@ window.addEventListener('load', (e) =>{
         
     })
 
+
+/**_____________________________________________________________________________________________________
+ *Open Project to view project details 
+ * 
+ * When Project is clicked, the Dom is populated with project deatails
+ * */    
+
+console.log(projectManager.getProjects())
    
     
 

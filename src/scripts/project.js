@@ -6,6 +6,7 @@ export default class Project extends TaskManager {
     #projectOpen = false
     #complete = false
     #description = ''
+    
     constructor(name){
         super()
         this.name = name
