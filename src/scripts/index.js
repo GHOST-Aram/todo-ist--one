@@ -18,6 +18,7 @@ function displayProjectCredentials(project){
         descNBtnContainer.className = 'flex flex-row justify-between items-center w-full'
         //DESCRIPTION
         const projectDescription = domManager.createProjectDescription(project.getDescription())
+        projectDescription.id = 'project-decription'
         //Display description
         descNBtnContainer.appendChild(projectDescription)
         

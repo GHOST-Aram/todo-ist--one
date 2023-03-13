@@ -80,7 +80,7 @@ export default class DOMManager {
       //Name
       const projName = this.createHeading(projectName)
         projName.id = `${projectName.toLowerCase().replaceAll(' ', '-')}`
-        projName.className = 'py-2 text-slate-200 text-xl px-4'
+        projName.className = 'project py-2 text-slate-200 text-xl px-4'
       
       //Append name
       projCont.appendChild(projName)
@@ -111,6 +111,7 @@ export default class DOMManager {
     //Add Name
     const projectTitle = this.createHeading(project.name)
     projectTitle.classList.add('font-bold')
+    projectTitle.id = 'project-name'
     container.appendChild(projectTitle)
 
     return container
