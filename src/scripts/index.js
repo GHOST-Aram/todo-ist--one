@@ -5,6 +5,7 @@ import ProjectManager from './project_manager'
 import Task from './task'
 import TaskManager from './task_manager'
 
+// localStorage.removeItem('projects')
 const domManager = new DOMManager()
 const projectManager = new ProjectManager()
 
@@ -123,9 +124,9 @@ const projectsHeader = domManager.createContainer()
         defaultProject.setDescription('Today\'s Activities')
         projectManager.addToProjectList(defaultProject)
 
-        //Update Local Storage
-        projectManager.updateLocalStorage()
-
+        //Display Default Project
+        const defaultProCont = domManager.createProjectContainer(defaultProject.name)
+        sidebar.appendChild(defaultProCont)
         //Display default project
         displayProjectCredentials(defaultProject)
         displayTasksContainer()
@@ -138,10 +139,16 @@ const projectsHeader = domManager.createContainer()
 window.addEventListener('load', (e) =>{
     
     //Access and display projects from localstorage
-    projectManager.accessLocalStorage().forEach(project =>{
-        let container = domManager.createProjectContainer(project.name)
-        sidebar.appendChild(container)
-    })
+    const projects = projectManager.accessLocalStorage()
+    if(Array.isArray(projects)){
+        projects.forEach(project =>{
+            let container = domManager.createProjectContainer(project.name)
+            sidebar.appendChild(container)
+        })
+    }
+    else{
+        projectManager.updateLocalStorage()
+    }
 
     //Create new Project
     addBtn.addEventListener('click', (e) =>{
