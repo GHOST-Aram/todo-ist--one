@@ -124,9 +124,15 @@ const projectsHeader = domManager.createContainer()
         defaultProject.setDescription('Today\'s Activities')
         projectManager.addToProjectList(defaultProject)
 
+        
         //Display Default Project
         const defaultProCont = domManager.createProjectContainer(defaultProject.name)
-        sidebar.appendChild(defaultProCont)
+        
+        //Create Project list container
+        const projectList = document.createElement('div')
+        projectList.appendChild(defaultProCont)
+
+        sidebar.appendChild(projectList)
         //Display default project
         displayProjectCredentials(defaultProject)
         displayTasksContainer()
@@ -141,9 +147,10 @@ window.addEventListener('load', (e) =>{
     //Access and display projects from localstorage
     const projects = projectManager.accessLocalStorage()
     if(Array.isArray(projects)){
+        projectList.innerHTML = ''
         projects.forEach(project =>{
             let container = domManager.createProjectContainer(project.name)
-            sidebar.appendChild(container)
+            projectList.appendChild(container)
         })
     }
     else{
@@ -170,7 +177,7 @@ window.addEventListener('load', (e) =>{
         
         //Display Project container
         const newProjecContainer = domManager.createProjectContainer(project.name)
-        sidebar.appendChild(newProjecContainer)
+        projectList.appendChild(newProjecContainer)
         
         //Add event listener to project
         addEventListenerToProject()
