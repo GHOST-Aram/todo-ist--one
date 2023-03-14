@@ -9,28 +9,25 @@ import TaskManager from './task_manager'
 const domManager = new DOMManager()
 const projectManager = new ProjectManager()
 
-
+window.location.hash =''
 //Create Project list container
 const projectList = document.createElement('div')
 projectList.className = 'flex flex-col gap-2'
 
 
-function addEventListenerToProject(){
-    const projects = document.querySelectorAll('.project')
-    projects.forEach(
-        element =>{
-            element.addEventListener('click', (e) =>{
-                projectManager.accessLocalStorage().forEach(project =>{
-                    if(project.name.toLowerCase().replaceAll(' ', '-') === e.target.id){//use project name and DOM element id to find project to display
-                        //Change values
-                        //populate DOM with project details
-                        document.querySelector('#content-container #project-name').textContent = project.name
-                        document.querySelector('#project-description p').textContent = project.description
-                    }
-                })
-            })
-        }
-    )
+function controlProjectDisplay () {
+    window.addEventListener('hashchange', () =>{
+        let currentProject
+        const projects = projectManager.accessLocalStorage()
+        projects.forEach(project =>{
+            if(window.location.hash.substring(1) === project.name.replaceAll(' ','-')){
+                currentProject = project
+                displayCurrentProject(currentProject)
+            }
+        })
+        
+        
+    })
 }
 function displayNewProject(project){
     
@@ -39,7 +36,7 @@ function displayNewProject(project){
     // Append to list
     projectList.appendChild(container)
     
-    addEventListenerToProject()
+    // addEventListenerToProject()
 }
 function displayProjectCredentials(project){
     const projectHeader = domManager.createProjectHeader(project)
@@ -64,21 +61,25 @@ function displayProjectCredentials(project){
         container.appendChild(descNBtnContainer)
 
     }
+//Display more an=out the project
+function displayTasksContainer(){
+    //Tasks container
+    const tasksContainer = domManager.createContainer()
+    tasksContainer.classList.add('w-full', 'bg-blue-600', 'grid', 'grid-2', 'gap-4')
+    tasksContainer.id = 'task-container'
     
-    function displayTasksContainer(){
-     //Tasks container
-     const tasksContainer = domManager.createContainer()
-     tasksContainer.classList.add('w-full', 'bg-blue-600', 'grid', 'grid-2', 'gap-4')
-     tasksContainer.id = 'task-container'
-
-     //No tasks to display
-     const par = document.createElement('p')
-     par.className = 'text-slate-200 text-center text-3xl font-medium'
-     par.id = 'no-tasks'
+    //No tasks to display
+    const par = document.createElement('p')
+    par.className = 'text-slate-200 text-center text-3xl font-medium'
+    par.id = 'no-tasks'
      par.textContent = 'No Tasks Listed Here'
      tasksContainer.appendChild(par)
-
+     
      container.appendChild(tasksContainer)
+    }
+function displayCurrentProject (project) {
+    document.querySelector('#content-container #project-name').textContent = project.name
+    document.querySelector('#project-description p').textContent = project.description
 }
 function saveProject (project) {
     projectManager.addToProjectList(project.toJSON())
@@ -207,8 +208,11 @@ window.addEventListener('load', (e) =>{
             domManager.hideForm('#task-form')
         })
     })
-    addEventListenerToProject()//Add event listener to project every time page is loaded
+    // addEventListenerToProject()//Add event listener to project every time page is loaded
 })
+controlProjectDisplay()
+window.dispatchEvent(new Event('hashchange'))
+
 
 
 /**_____________________________________________________________________________________________________
