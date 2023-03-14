@@ -15,20 +15,6 @@ const projectList = document.createElement('div')
 projectList.className = 'flex flex-col gap-2'
 
 
-function controlProjectDisplay () {
-    let currentProject
-    window.addEventListener('hashchange', () =>{
-        const projects = projectManager.accessLocalStorage()
-        projects.forEach(project =>{
-            if(window.location.hash.substring(1) === project.name.replaceAll(' ','-')){
-                currentProject = project
-                displayCurrentProject(currentProject)
-            }
-        })
-        
-        
-    })
-}
 function displayNewProject(project){
     
     //Display Default Project
@@ -41,26 +27,26 @@ function displayNewProject(project){
 function displayProjectCredentials(project){
     const projectHeader = domManager.createProjectHeader(project)
     container.appendChild(projectHeader)
-        //Project description and new task btn
-        const descNBtnContainer = domManager.createContainer()
-        descNBtnContainer.className = 'flex flex-row justify-between items-center w-full'
-        //DESCRIPTION
-        const projectDescription = domManager.createProjectDescription(project.getDescription())
-        projectDescription.id = 'project-description'
-        //Display description
-        descNBtnContainer.appendChild(projectDescription)
-        
-        //  New task button
-        const button = document.createElement('button')
-        button.textContent = 'New Task'
-        button.className = 'bg-slate-300 text-blue-700 py-2 px-4 rounded-md hover:bg-slate-100'
-        button.id = 'new-task-btn'
-        
-        //Display btn
-        descNBtnContainer.appendChild(button)
-        container.appendChild(descNBtnContainer)
-
-    }
+    //Project description and new task btn
+    const descNBtnContainer = domManager.createContainer()
+    descNBtnContainer.className = 'flex flex-row justify-between items-center w-full'
+    //DESCRIPTION
+    const projectDescription = domManager.createProjectDescription(project.getDescription())
+    projectDescription.id = 'project-description'
+    //Display description
+    descNBtnContainer.appendChild(projectDescription)
+    
+    //  New task button
+    const button = document.createElement('button')
+    button.textContent = 'New Task'
+    button.className = 'bg-slate-300 text-blue-700 py-2 px-4 rounded-md hover:bg-slate-100'
+    button.id = 'new-task-btn'
+    
+    //Display btn
+    descNBtnContainer.appendChild(button)
+    container.appendChild(descNBtnContainer)
+    
+}
 //Display more an=out the project
 function displayTasksContainer(){
     //Tasks container
@@ -72,19 +58,30 @@ function displayTasksContainer(){
     const par = document.createElement('p')
     par.className = 'text-slate-200 text-center text-3xl font-medium'
     par.id = 'no-tasks'
-     par.textContent = 'No Tasks Listed Here'
-     tasksContainer.appendChild(par)
+    par.textContent = 'No Tasks Listed Here'
+    tasksContainer.appendChild(par)
      
-     container.appendChild(tasksContainer)
+    container.appendChild(tasksContainer)
     }
 function displayCurrentProject (project) {
     document.querySelector('#content-container #project-name').textContent = project.name
     document.querySelector('#project-description p').textContent = project.description
 }
+
+//Get currenttly displaying project from localstorage
+function getCurrentProject(){
+    const projects = projectManager.accessLocalStorage()
+    const projectName = window.location.hash.substring(1).replaceAll('-', ' ')
+    if(projectName)
+        return projects.find(project => project.name === projectName)
+    else 
+        return projects.find(project => project.name === 'Today')
+}
+//Store project in local storage
 function saveProject (project) {
     projectManager.addToProjectList(project.toJSON())
     projectManager.updateLocalStorage()
-
+    
 }
 // Create and display header
 const header = domManager.createHeader()
@@ -201,14 +198,19 @@ window.addEventListener('load', (e) =>{
                 description: 'input[1]',
                 dueDate: 'input[2]',
             }
-            console.log(data)
-            //closeForm
+           //Get current project
+          
             domManager.hideForm('#task-form')
         })
     })
     // addEventListenerToProject()//Add event listener to project every time page is loaded
 })
-controlProjectDisplay()
+//Display Current project
+window.addEventListener('hashchange', () =>{
+    const currentProject = getCurrentProject()
+    console.log(currentProject)
+    displayCurrentProject(currentProject)
+})
 window.dispatchEvent(new Event('hashchange'))
 // console.log(getCurrentProject())
 
