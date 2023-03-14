@@ -9,26 +9,34 @@ import TaskManager from './task_manager'
 const domManager = new DOMManager()
 const projectManager = new ProjectManager()
 
-function addEventListenerToProject(){
-    const projects = document.querySelectorAll('.project')
-    projects.forEach(
-        element =>{
-            element.addEventListener('click', (e) =>{
-                
-                //populate DOM with project details
-                projectManager.getProjects().forEach(project =>{
-                    //use project name and DOM element id to find project to display
-                    if(project.name.toLowerCase().replaceAll(' ', '-') === e.target.id){
-                        //Change values
-                        document.querySelector('#content-container #project-name').textContent = project.name
-                        document.querySelector('#project-description p').textContent = project.getDescription()
-                    }
-                })
-            })
-        }
-    )
-}
+//Create Project list container
+const projectList = document.createElement('div')
+projectList.className = 'flex flex-col gap-2'
 
+function addEventListenerToProject(project){
+    project.addEventListener('click', (e) =>{
+        
+        //populate DOM with project details
+        projectManager.getProjects().forEach(project =>{
+            //use project name and DOM element id to find project to display
+            if(project.name.toLowerCase().replaceAll(' ', '-') === e.target.id){
+                //Change values
+                document.querySelector('#content-container #project-name').textContent = project.name
+                document.querySelector('#project-description p').textContent = project.getDescription()
+            }
+        })
+    })
+   
+        
+}
+function displayNewProject (project) {
+    //Display Default Project
+    const projectContainer = domManager.createProjectContainer(project.name)
+    projectList.appendChild(projectContainer)
+
+    addEventListenerToProject(projectContainer)
+
+}
 function displayProjectCredentials(project){
     const projectHeader = domManager.createProjectHeader(project)
         container.appendChild(projectHeader)
@@ -123,16 +131,9 @@ const projectsHeader = domManager.createContainer()
         defaultProject.setDescription('Today\'s Activities')
         projectManager.addToProjectList(defaultProject)
 
+        //Display project
+        displayNewProject(defaultProject)
         
-        //Display Default Project
-        const defaultProCont = domManager.createProjectContainer(defaultProject.name)
-        
-        //Create Project list container
-        const projectList = document.createElement('div')
-        projectList.className = 'flex flex-col gap-2'
-        // Append to list
-        projectList.appendChild(defaultProCont)
-
         sidebar.appendChild(projectList)
         //Display default project
         displayProjectCredentials(defaultProject)
@@ -150,8 +151,7 @@ window.addEventListener('load', (e) =>{
     if(Array.isArray(projects)){
         projectList.innerHTML = ''
         projects.forEach(project =>{
-            let container = domManager.createProjectContainer(project.name)
-            projectList.appendChild(container)
+            displayNewProject(project)
         })
     }
     else{
@@ -177,11 +177,7 @@ window.addEventListener('load', (e) =>{
         project.setDescription(data[1])
         
         //Display Project container
-        const newProjecContainer = domManager.createProjectContainer(project.name)
-        projectList.appendChild(newProjecContainer)
-        
-        //Add event listener to project
-        addEventListenerToProject()
+        displayNewProject(project)
         
         //Add to project lists
         projectManager.addToProjectList(project)
