@@ -20,14 +20,12 @@ function addEventListenerToProject(){
     projects.forEach(
         element =>{
             element.addEventListener('click', (e) =>{
-                console.log('clicked')
-                //populate DOM with project details
                 projectManager.accessLocalStorage().forEach(project =>{
-                    //use project name and DOM element id to find project to display
-                    if(project.name.toLowerCase().replaceAll(' ', '-') === e.target.id){
+                    if(project.name.toLowerCase().replaceAll(' ', '-') === e.target.id){//use project name and DOM element id to find project to display
                         //Change values
+                        //populate DOM with project details
                         document.querySelector('#content-container #project-name').textContent = project.name
-                        document.querySelector('#project-description p').textContent = project.getDescription()
+                        document.querySelector('#project-description p').textContent = project.description
                     }
                 })
             })
@@ -83,7 +81,7 @@ function displayProjectCredentials(project){
      container.appendChild(tasksContainer)
 }
 function saveProject (project) {
-    projectManager.addToProjectList(project)
+    projectManager.addToProjectList(project.toJSON())
     projectManager.updateLocalStorage()
 
 }
@@ -138,14 +136,14 @@ header.classList.add('flex', 'flex-row', 'justify-between', 'items-center')
 //Create default Project
 const defaultProject = new Project('Today')
     defaultProject.setDescription('Today\'s Activities')
-    projectManager.addToProjectList(defaultProject) //Add to projects
+    projectManager.addToProjectList(defaultProject.toJSON()) //Add to projects
     displayNewProject(defaultProject)
     sidebar.appendChild(projectList)
 
     //Display default project details
     displayProjectCredentials(defaultProject)
     displayTasksContainer()
-    console.log(projectManager.accessLocalStorage())
+    console.log(Reflect.ownKeys(defaultProject))
 
     
 //Create new Project
@@ -178,23 +176,12 @@ window.addEventListener('load', (e) =>{
     //Add event listener to form
     document.querySelector('form#project-form').addEventListener('submit', (event) =>{
         event.preventDefault()
-        //Get data
-        const data = domManager.getFormData('#project-form')
-        //Create new Project
-        const project = new Project(data[0])
+        const data = domManager.getFormData('#project-form')//Get data
+        const project = new Project(data[0])//Create new Project
         project.setDescription(data[1])
-        
-        //Add to project list and update localStorage
-        saveProject(project)
-        console.log('Projo')
-        console.log(projectManager.getProjects())
-        console.log('Locakls')
-        console.log(projectManager.accessLocalStorage())
-
-        //Display Project container
-        displayNewProject(project)
-        //hide project form
-        domManager.hideForm('#project-form')
+        saveProject(project) //Add to project list and update localStorage
+        displayNewProject(project)//Display Project container
+        domManager.hideForm('#project-form') //hide project form
     })
 
     //NewTask

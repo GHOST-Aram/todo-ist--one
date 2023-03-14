@@ -3,8 +3,8 @@ export default class ProjectManager {
      /*
     Project manager class performs operations on Projects
     */
-    #projects = []
-    #completedProjects = []
+   #completedProjects = []
+   #projects = []
     constructor () {
 
     }
@@ -29,6 +29,7 @@ export default class ProjectManager {
     getProjects(){
         return this.#projects
     }
+
     //remove project from list
     removeProject(project){
         this.#projects = this.#projects.filter(element => {

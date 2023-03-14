@@ -3,7 +3,6 @@ import TaskManager from "./task_manager";
 export default class Project extends TaskManager {
 
     //Project open
-    #projectOpen = false
     #complete = false
     #description = ''
     
@@ -11,10 +10,7 @@ export default class Project extends TaskManager {
         super()
         this.name = name
     }
-    //close project
-    close(){
-        this.#projectOpen = false
-    }
+   
     //return value of description
     getDescription(){
         return this.#description
@@ -23,10 +19,7 @@ export default class Project extends TaskManager {
     isComplete(){
         return this.#complete
     }
-    //Check if project is open
-    isOpen(){
-        return this.#projectOpen
-    }
+    
     //Mark as complete
     markAsComplete(){
         this.#complete = true
@@ -36,15 +29,19 @@ export default class Project extends TaskManager {
         if(this.#complete)
             this.#complete = false
     }
-    //Open project
-    open(){
-        this.#projectOpen = true
-    }
+   
     //initialize descripion
     setDescription(description){
         this.#description = description
     }
-
+    toJSON (){
+        return {
+            "name": this.name,
+            "complete": this.isComplete(),
+            "description": this.getDescription(),
+            "tasks": this.getTasks()
+        }
+    }
 
 }
 
