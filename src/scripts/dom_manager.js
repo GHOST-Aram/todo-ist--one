@@ -1,4 +1,3 @@
-import Project from "./project"
 
 export default class DOMManager {
 

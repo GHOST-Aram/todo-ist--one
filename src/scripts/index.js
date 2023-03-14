@@ -9,14 +9,20 @@ import TaskManager from './task_manager'
 const domManager = new DOMManager()
 const projectManager = new ProjectManager()
 
+
+//Create Project list container
+const projectList = document.createElement('div')
+projectList.className = 'flex flex-col gap-2'
+
+
 function addEventListenerToProject(){
     const projects = document.querySelectorAll('.project')
     projects.forEach(
         element =>{
             element.addEventListener('click', (e) =>{
-                
+                console.log('clicked')
                 //populate DOM with project details
-                projectManager.getProjects().forEach(project =>{
+                projectManager.accessLocalStorage().forEach(project =>{
                     //use project name and DOM element id to find project to display
                     if(project.name.toLowerCase().replaceAll(' ', '-') === e.target.id){
                         //Change values
@@ -28,12 +34,18 @@ function addEventListenerToProject(){
         }
     )
 }
-
+function displayNewProject(project){
+    
+    //Display Default Project
+    const container = domManager.createProjectContainer(project.name)
+    // Append to list
+    projectList.appendChild(container)
+    
+    addEventListenerToProject()
+}
 function displayProjectCredentials(project){
     const projectHeader = domManager.createProjectHeader(project)
-        container.appendChild(projectHeader)
-
-
+    container.appendChild(projectHeader)
         //Project description and new task btn
         const descNBtnContainer = domManager.createContainer()
         descNBtnContainer.className = 'flex flex-row justify-between items-center w-full'
@@ -53,9 +65,9 @@ function displayProjectCredentials(project){
         descNBtnContainer.appendChild(button)
         container.appendChild(descNBtnContainer)
 
-}
-
-function displayTasksContainer(){
+    }
+    
+    function displayTasksContainer(){
      //Tasks container
      const tasksContainer = domManager.createContainer()
      tasksContainer.classList.add('w-full', 'bg-blue-600', 'grid', 'grid-2', 'gap-4')
@@ -70,39 +82,44 @@ function displayTasksContainer(){
 
      container.appendChild(tasksContainer)
 }
+function saveProject (project) {
+    projectManager.addToProjectList(project)
+    projectManager.updateLocalStorage()
+
+}
 // Create and display header
 const header = domManager.createHeader()
     const logo = domManager.createLogo('Plansen')
     header.appendChild(logo)
     document.body.prepend(header)
 
-//sidebar
+    //sidebar
 const sidebar = domManager.createSidebar()
-    domManager.render(sidebar)
-    sidebar.id = 'main-side-bar'
+domManager.render(sidebar)
+sidebar.id = 'main-side-bar'
 
 //Content container
 const container = domManager.createContainer()
-    container.classList.add('bg-blue-700', 'flex','flex-col', 'items-start', 'justify-start', 'gap-2')
+container.classList.add('bg-blue-700', 'flex','flex-col', 'items-start', 'justify-start', 'gap-2')
     container.id = 'content-container'
     domManager.render(container)
-
-//Footer
+    
+    //Footer
 const footer = domManager.createFooter()
-    sidebar.appendChild(footer)
+sidebar.appendChild(footer)
 
 //User profile
 const profile = domManager.createUserProfile('The Architech')
-    header.appendChild(profile)
-    header.classList.add('flex', 'flex-row', 'justify-between', 'items-center')
+header.appendChild(profile)
+header.classList.add('flex', 'flex-row', 'justify-between', 'items-center')
 
-    //Import profile pic
+//Import profile pic
     import('../images/profile-pic.png').then(({default:pic}) =>{
         document.querySelector('#profile-picture').src = pic
     }).catch((error)=>console.error(`Error ocuured while importing profile pic: ${error}`))
 
-//Projects header
-const projectsHeader = domManager.createContainer()
+    //Projects header
+    const projectsHeader = domManager.createContainer()
     projectsHeader.className = 'flex flex-row items-center justify-between bg-blue-600 px-4 py-2'
     projectsHeader.id = 'projects-header'
 
@@ -118,40 +135,31 @@ const projectsHeader = domManager.createContainer()
     
     sidebar.appendChild(projectsHeader) 
 
-    //Create default Project
-    const defaultProject = new Project('Today')
-        defaultProject.setDescription('Today\'s Activities')
-        projectManager.addToProjectList(defaultProject)
+//Create default Project
+const defaultProject = new Project('Today')
+    defaultProject.setDescription('Today\'s Activities')
+    projectManager.addToProjectList(defaultProject) //Add to projects
+    displayNewProject(defaultProject)
+    sidebar.appendChild(projectList)
 
-        
-        //Display Default Project
-        const defaultProCont = domManager.createProjectContainer(defaultProject.name)
-        
-        //Create Project list container
-        const projectList = document.createElement('div')
-        projectList.className = 'flex flex-col gap-2'
-        // Append to list
-        projectList.appendChild(defaultProCont)
+    //Display default project details
+    displayProjectCredentials(defaultProject)
+    displayTasksContainer()
+    console.log(projectManager.accessLocalStorage())
 
-        sidebar.appendChild(projectList)
-        //Display default project
-        displayProjectCredentials(defaultProject)
-        displayTasksContainer()
-        
-       
-        
-
-        
+    
 //Create new Project
+// ___________________________________________________________________
 window.addEventListener('load', (e) =>{
     
     //Access and display projects from localstorage
     const projects = projectManager.accessLocalStorage()
+    console.log('Local storage on load')
+    console.log(projects)
     if(Array.isArray(projects)){
         projectList.innerHTML = ''
         projects.forEach(project =>{
-            let container = domManager.createProjectContainer(project.name)
-            projectList.appendChild(container)
+            displayNewProject(project)
         })
     }
     else{
@@ -176,50 +184,47 @@ window.addEventListener('load', (e) =>{
         const project = new Project(data[0])
         project.setDescription(data[1])
         
+        //Add to project list and update localStorage
+        saveProject(project)
+        console.log('Projo')
+        console.log(projectManager.getProjects())
+        console.log('Locakls')
+        console.log(projectManager.accessLocalStorage())
+
         //Display Project container
-        const newProjecContainer = domManager.createProjectContainer(project.name)
-        projectList.appendChild(newProjecContainer)
-        
-        //Add event listener to project
-        addEventListenerToProject()
-        
-        //Add to project lists
-        projectManager.addToProjectList(project)
-        
-        //Update Localstorage
-        projectManager.updateLocalStorage()
+        displayNewProject(project)
         //hide project form
         domManager.hideForm('#project-form')
-        })
-
-        //NewTask
-        document.querySelector('#new-task-btn').addEventListener('click', () =>{
-            domManager.displayForm('#task-form')
-            //Hide form on btn click
-            document.querySelector('#hide-task-form').addEventListener('click', () =>{
-                domManager.hideForm('#task-form')
-            })
-            //Create task
-            document.querySelector('form#task-form').addEventListener('submit', (e) =>{
-                e.preventDefault()
-                //get data
-                const data = domManager.getFormData('#task-form')
-    
-                //New task
-                const task = new Task(data[0])
-                task.setDescription([data[1]])
-                task.setDueDate(data[2])
-    
-                //Add to task list
-                const taskManager = new TaskManager()
-                taskManager.addTask(task)
-    
-                //closeForm
-                domManager.hideForm('#task-form')
-            })
-        })
-        
     })
+
+    //NewTask
+    document.querySelector('#new-task-btn').addEventListener('click', () =>{
+        domManager.displayForm('#task-form')
+        //Hide form on btn click
+        document.querySelector('#hide-task-form').addEventListener('click', () =>{
+            domManager.hideForm('#task-form')
+        })
+        //Create task
+        document.querySelector('form#task-form').addEventListener('submit', (e) =>{
+            e.preventDefault()
+            //get data
+            const data = domManager.getFormData('#task-form')
+
+            //New task
+            const task = new Task(data[0])
+            task.setDescription([data[1]])
+            task.setDueDate(data[2])
+
+            //Add to task list
+            const taskManager = new TaskManager()
+            taskManager.addTask(task)
+
+            //closeForm
+            domManager.hideForm('#task-form')
+        })
+    })
+    addEventListenerToProject()//Add event listener to project every time page is loaded
+})
 
 
 /**_____________________________________________________________________________________________________
