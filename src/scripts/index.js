@@ -143,7 +143,6 @@ const defaultProject = new Project('Today')
     //Display default project details
     displayProjectCredentials(defaultProject)
     displayTasksContainer()
-    console.log(Reflect.ownKeys(defaultProject))
 
     
 //Create new Project
@@ -152,8 +151,6 @@ window.addEventListener('load', (e) =>{
     
     //Access and display projects from localstorage
     const projects = projectManager.accessLocalStorage()
-    console.log('Local storage on load')
-    console.log(projects)
     if(Array.isArray(projects)){
         projectList.innerHTML = ''
         projects.forEach(project =>{
