@@ -1,5 +1,5 @@
 import TaskManager from "./task_manager";
-
+import Task from "./task";
 export default class Project extends TaskManager {
 
     //Project open
@@ -10,7 +10,13 @@ export default class Project extends TaskManager {
         super()
         this.name = name
     }
-   
+    createNewTask (data) {
+        const task = new Task(data.title)//instanciate task
+        task.setDescription(data.description)
+        task.setDueDate(data.dueDate)
+        
+        return task.toJSON()
+    }
     //return value of description
     getDescription(){
         return this.#description

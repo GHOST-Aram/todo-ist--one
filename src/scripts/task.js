@@ -15,10 +15,10 @@ export default class Task {
         this.title = title
     }
     //Edit task properties
-    edit(title,description,dueDate){
-        this.title = title
-        this.#description = description
-        this.#dueDate = dueDate
+    edit(data){
+        this.title = data.title
+        this.#description = this.setDescription(data.description)
+        this.#dueDate = this.setDueDate(data.dueDate)
         
     }
     //return value of description
@@ -49,5 +49,13 @@ export default class Task {
     //set due date
     setDueDate(dueDate){
         this.#dueDate = dueDate
+    }
+    toJSON () {
+        return {
+            "title": this.title,
+            "complete": this.isComplete(),
+            "description": this.getDescription(),
+            "dueDate": this.getDueDate()
+        }
     }
 }
