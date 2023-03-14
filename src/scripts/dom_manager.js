@@ -152,7 +152,7 @@ export default class DOMManager {
     //Get node list
     document.querySelectorAll(`${hashFormId} input`).forEach(element =>{
       //get input values and add to data array
-      data.push(element.value)
+      data.push(element.value.trim())
     })
     return data
   } 
