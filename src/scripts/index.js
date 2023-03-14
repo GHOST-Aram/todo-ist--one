@@ -16,8 +16,8 @@ projectList.className = 'flex flex-col gap-2'
 
 
 function controlProjectDisplay () {
+    let currentProject
     window.addEventListener('hashchange', () =>{
-        let currentProject
         const projects = projectManager.accessLocalStorage()
         projects.forEach(project =>{
             if(window.location.hash.substring(1) === project.name.replaceAll(' ','-')){
@@ -193,17 +193,15 @@ window.addEventListener('load', (e) =>{
         document.querySelector('form#task-form').addEventListener('submit', (e) =>{
             e.preventDefault()
             //get data
-            const data = domManager.getFormData('#task-form')
+            const input = domManager.getFormData('#task-form')
 
-            //New task
-            const task = new Task(data[0])
-            task.setDescription([data[1]])
-            task.setDueDate(data[2])
-
-            //Add to task list
-            const taskManager = new TaskManager()
-            taskManager.addTask(task)
-
+            //Initialize data object
+            const data = {
+                title: 'input[0]',
+                description: 'input[1]',
+                dueDate: 'input[2]',
+            }
+            console.log(data)
             //closeForm
             domManager.hideForm('#task-form')
         })
@@ -212,6 +210,7 @@ window.addEventListener('load', (e) =>{
 })
 controlProjectDisplay()
 window.dispatchEvent(new Event('hashchange'))
+// console.log(getCurrentProject())
 
 
 
