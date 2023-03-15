@@ -24,6 +24,7 @@ function displayNewProject(project){
     
     // addEventListenerToProject()
 }
+//cREATE AND APPEND TO DOM FRAMEWORK FOR DISPLAYING PROJECTS 
 function displayProjectCredentials(project){
     const projectHeader = domManager.createProjectHeader(project)
     container.appendChild(projectHeader)
@@ -47,8 +48,8 @@ function displayProjectCredentials(project){
     container.appendChild(descNBtnContainer)
     
 }
-//Display more an=out the project
-function displayTasksContainer(){
+//Display more project
+function createTasksContainer(){
     //Tasks container
     const tasksContainer = domManager.createContainer()
     tasksContainer.classList.add('w-full', 'bg-blue-600', 'grid', 'grid-2', 'gap-4')
@@ -60,8 +61,8 @@ function displayTasksContainer(){
     par.id = 'no-tasks'
     par.textContent = 'No Tasks Listed Here'
     tasksContainer.appendChild(par)
-     
-    container.appendChild(tasksContainer)
+    
+    return tasksContainer
     }
 function displayCurrentProject (project) {
     document.querySelector('#content-container #project-name').textContent = project.name
@@ -137,10 +138,13 @@ const defaultProject = new Project('Today')
     projectManager.addToProjectList(defaultProject.toJSON()) //Add to projects
     displayNewProject(defaultProject)
     sidebar.appendChild(projectList)
-
+    
     //Display default project details
     displayProjectCredentials(defaultProject)
-    displayTasksContainer()
+
+    // Tasks container
+     const tasksContainer = createTasksContainer()
+     container.appendChild(tasksContainer)
 
     
 //Create new Project
@@ -201,7 +205,9 @@ window.addEventListener('load', (e) =>{
         //Get current project and add task to project tasklist
          const currentProject = getCurrentProject()
             currentProject.tasks.push(taskJSON)//Add tasks to list
-        
+
+        // DISPLAYING TASKS
+
         
         domManager.hideForm('#task-form')
     })
