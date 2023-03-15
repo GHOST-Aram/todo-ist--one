@@ -48,22 +48,11 @@ function displayProjectCredentials(project){
     container.appendChild(descNBtnContainer)
     
 }
-//Display more project
-function createTasksContainer(){
-    //Tasks container
-    const tasksContainer = domManager.createContainer()
-    tasksContainer.classList.add('w-full', 'bg-blue-600', 'grid', 'grid-2', 'gap-4')
-    tasksContainer.id = 'task-container'
-    
-    //No tasks to display
-    const par = document.createElement('p')
-    par.className = 'text-slate-200 text-center text-3xl font-medium'
-    par.id = 'no-tasks'
-    par.textContent = 'No Tasks Listed Here'
-    tasksContainer.appendChild(par)
-    
-    return tasksContainer
-    }
+
+
+// Zreate container for a single task
+// Div contains task informatiion
+
 function displayCurrentProject (project) {
     document.querySelector('#content-container #project-name').textContent = project.name
     document.querySelector('#project-description p').textContent = project.description
@@ -143,7 +132,7 @@ const defaultProject = new Project('Today')
     displayProjectCredentials(defaultProject)
 
     // Tasks container
-     const tasksContainer = createTasksContainer()
+     const tasksContainer = domManager.createTasksContainer()
      container.appendChild(tasksContainer)
 
     
