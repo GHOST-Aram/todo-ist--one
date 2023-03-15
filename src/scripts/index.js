@@ -21,8 +21,8 @@ function displayNewProject(project){
     const container = domManager.createProjectContainer(project.name)
     // Append to list
     projectList.appendChild(container)
-    
-    // addEventListenerToProject()
+
+    //Display tasks
 }
 //Dispaly project tasks tasks
 function displayTasks(tasks) {
@@ -72,10 +72,10 @@ function getCurrentProject(){
     const projectName = window.location.hash.substring(1).replaceAll('-', ' ')
     if(projectName)
         return projects.find(project => project.name === projectName)
-    else 
+        else 
         return projects.find(project => project.name === 'Today')
-}
-
+    }
+    
 //REMOVE PROJECT
 function removeProject(projects, project){
     const filteredProjects =  projects.filter(item =>{item !== project})
@@ -88,11 +88,11 @@ function saveProject (project) {
 }
 // Create and display header
 const header = domManager.createHeader()
-    const logo = domManager.createLogo('Plansen')
-    header.appendChild(logo)
-    document.body.prepend(header)
+const logo = domManager.createLogo('Plansen')
+header.appendChild(logo)
+document.body.prepend(header)
 
-    //sidebar
+//sidebar
 const sidebar = domManager.createSidebar()
 domManager.render(sidebar)
 sidebar.id = 'main-side-bar'
@@ -100,10 +100,10 @@ sidebar.id = 'main-side-bar'
 //Content container
 const container = domManager.createContainer()
 container.classList.add('bg-blue-700', 'flex','flex-col', 'items-start', 'justify-start', 'gap-2')
-    container.id = 'content-container'
-    domManager.render(container)
-    
-    //Footer
+container.id = 'content-container'
+domManager.render(container)
+
+//Footer
 const footer = domManager.createFooter()
 sidebar.appendChild(footer)
 
@@ -113,12 +113,12 @@ header.appendChild(profile)
 header.classList.add('flex', 'flex-row', 'justify-between', 'items-center')
 
 //Import profile pic
-    import('../images/profile-pic.png').then(({default:pic}) =>{
-        document.querySelector('#profile-picture').src = pic
-    }).catch((error)=>console.error(`Error ocuured while importing profile pic: ${error}`))
+import('../images/profile-pic.png').then(({default:pic}) =>{
+    document.querySelector('#profile-picture').src = pic
+}).catch((error)=>console.error(`Error ocuured while importing profile pic: ${error}`))
 
-    //Projects header
-    const projectsHeader = domManager.createContainer()
+//Projects header
+const projectsHeader = domManager.createContainer()
     projectsHeader.className = 'flex flex-row items-center justify-between bg-blue-600 px-4 py-2'
     projectsHeader.id = 'projects-header'
 
@@ -165,7 +165,7 @@ window.addEventListener('load', (e) =>{
     else{
         projectManager.updateLocalStorage()
     }
-
+    
     //Create new Project
     addBtn.addEventListener('click', (e) =>{
         //project manager create new project
@@ -201,21 +201,21 @@ window.addEventListener('load', (e) =>{
         const input = domManager.getFormData('#task-form')
         // Create new task
         const task = new Task(input[0])
-            task.setDescription(input[1])
-            task.setDueDate(input[2])
-            const taskJSON = task.toJSON()// Covert task to JSON
-
+        task.setDescription(input[1])
+        task.setDueDate(input[2])
+        const taskJSON = task.toJSON()// Covert task to JSON
+        
         //Get current project and add task to project tasklist
         const currentProject = getCurrentProject()
-            let projects = projectManager.accessLocalStorage()
-            projects = projects.filter(project =>{project !== currentProject})//Remove current project
+        let projects = projectManager.accessLocalStorage()
+        projects = projects.filter(project =>{project !== currentProject})//Remove current project
             currentProject.tasks.push(taskJSON)//Update project.tasks
             projects.push(currentProject) //push updated project
             window.localStorage.setItem('projects', JSON.stringify(projects))//Update localstorage
 
-
-        // DISPLAY TASKS
-
+            
+            // DISPLAY TASKS
+            displayTasks(currentProject.tasks)
         
         domManager.hideForm('#task-form')
     })
@@ -225,6 +225,7 @@ window.addEventListener('load', (e) =>{
 window.addEventListener('hashchange', () =>{
     const currentProject = getCurrentProject()
     displayCurrentProject(currentProject)
+    displayTasks(currentProject.tasks)
 })
 window.dispatchEvent(new Event('hashchange'))
 
@@ -234,7 +235,7 @@ window.dispatchEvent(new Event('hashchange'))
  * When Project is clicked, the Dom is populated with project deatails
  * */    
 
-   
+
     
 
     
