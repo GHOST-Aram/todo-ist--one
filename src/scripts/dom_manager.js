@@ -151,13 +151,52 @@ export default class DOMManager {
 
     return taskDiv
   }
+  createTaskManagementBtns () {
+        //Task managment buttons
+        const btnsDiv = document.createElement('div')
+        btnsDiv.className = 'flex flex-row justify-between px-4 w-full items-center mt-8'
+        //Mark as complete
+        const markAsCompleteBtn =  document.createElement('button')
+            markAsCompleteBtn.id = 'mark-as-complete-btn'
+            markAsCompleteBtn.className = 'bg-slate-500 rounded-md py-2 px-8'
+            //Check icon
+            const checkIcon = document.createElement('i')
+              checkIcon.className = 'text-bold text-slate-200 text-lg fa-solid fa-check'
+
+            markAsCompleteBtn.appendChild(checkIcon)
+        btnsDiv.appendChild(markAsCompleteBtn)
+    
+        //Edit btn
+        const editBtn =  document.createElement('button')
+            editBtn.id = 'task-edit-btn'
+            editBtn.className = 'bg-yellow-500 rounded-md py-2 px-8'
+            //Check icon
+            const editIcon = document.createElement('i')
+            editIcon.className = 'text-bold text-slate-200 text-lg fa-solid fa-pen'
+        
+            editBtn.appendChild(editIcon)
+        btnsDiv.appendChild(editBtn)
+    
+        //delete btn
+        const deleteBtn =  document.createElement('button')
+            deleteBtn.id = 'task-delete-btn'
+            deleteBtn.className = 'bg-red-500 rounded-md py-2 px-8'
+            //Check icon
+            const deleteIcon = document.createElement('i')
+            deleteIcon.className = 'text-bold text-slate-200 text-lg fa-solid fa-trash'
+        
+            deleteBtn.appendChild(deleteIcon)
+        btnsDiv.appendChild(deleteBtn)
+
+        return btnsDiv
+  }
   //Parent cintainer to all taskContainer nodes 
   createTasksContainer () {
     //Tasks container
     const tasksContainer = this.createContainer()
     tasksContainer.classList.add('w-full', 'bg-blue-600', 'grid', 'grid-2', 'gap-4')
     tasksContainer.id = 'tasks-container'
-    
+  
     return tasksContainer
     }
   //User profile

@@ -29,6 +29,10 @@ function displayTasks(tasks) {
     if(tasks.length > 0){
         tasks.forEach(task =>{
             const taskDiv = domManager.createTaskDiv(task)
+            //Btns
+            const btns = domManager.createTaskManagementBtns()
+
+            taskDiv.appendChild(btns)
             tasksContainer.appendChild(taskDiv)
         })
     }else{
