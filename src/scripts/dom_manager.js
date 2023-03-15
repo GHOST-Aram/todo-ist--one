@@ -158,13 +158,6 @@ export default class DOMManager {
     tasksContainer.classList.add('w-full', 'bg-blue-600', 'grid', 'grid-2', 'gap-4')
     tasksContainer.id = 'tasks-container'
     
-    //No tasks to display
-    const par = document.createElement('p')
-    par.className = 'text-slate-200 text-center text-3xl font-medium'
-    par.id = 'no-tasks'
-    par.textContent = 'No Tasks Listed Here'
-    tasksContainer.appendChild(par)
-    
     return tasksContainer
     }
   //User profile

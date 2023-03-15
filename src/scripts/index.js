@@ -25,12 +25,19 @@ function displayNewProject(project){
 }
 //Dispaly project tasks tasks
 function displayTasks(tasks) {
+    tasksContainer.innerHTML = ''
     if(tasks.length > 0){
-        tasksContainer.innerHTML = ''
         tasks.forEach(task =>{
             const taskDiv = domManager.createTaskDiv(task)
             tasksContainer.appendChild(taskDiv)
         })
+    }else{
+        //No tasks to display
+        const par = document.createElement('p')
+        par.className = 'text-slate-200 text-center text-3xl font-medium'
+        par.id = 'no-tasks'
+        par.textContent = 'No Tasks to Display'
+        tasksContainer.appendChild(par)
     }
 } 
 //cREATE AND APPEND TO DOM FRAMEWORK FOR DISPLAYING PROJECTS 
@@ -137,7 +144,7 @@ const defaultProject = new Project('Today')
     projectManager.addToProjectList(defaultProject.toJSON()) //Add to projects
     displayNewProject(defaultProject)
     sidebar.appendChild(projectList)
-    
+    console.log(defaultProject)
     //Display default project details
     displayProjectCredentials(defaultProject)
 
