@@ -75,6 +75,11 @@ function getCurrentProject(){
     else 
         return projects.find(project => project.name === 'Today')
 }
+
+//REMOVE PROJECT
+function removeProject(projects, project){
+    const filteredProjects =  projects.filter(item =>{item !== project})
+}
 //Store project in local storage
 function saveProject (project) {
     projectManager.addToProjectList(project.toJSON())
@@ -150,6 +155,7 @@ window.addEventListener('load', (e) =>{
     
     //Access and display projects from localstorage
     const projects = projectManager.accessLocalStorage()
+    console.log(projects)
     if(Array.isArray(projects)){
         projectList.innerHTML = ''
         projects.forEach(project =>{
@@ -198,13 +204,17 @@ window.addEventListener('load', (e) =>{
             task.setDescription(input[1])
             task.setDueDate(input[2])
             const taskJSON = task.toJSON()// Covert task to JSON
-            console.log(taskJSON)
+
         //Get current project and add task to project tasklist
-         const currentProject = getCurrentProject()
-            currentProject.tasks.push(taskJSON)//Add tasks to list
+        const currentProject = getCurrentProject()
+            let projects = projectManager.accessLocalStorage()
+            projects = projects.filter(project =>{project !== currentProject})//Remove current project
+            currentProject.tasks.push(taskJSON)//Update project.tasks
+            projects.push(currentProject) //push updated project
+            window.localStorage.setItem('projects', JSON.stringify(projects))//Update localstorage
+
 
         // DISPLAY TASKS
-        displayTasks(currentProject.tasks)
 
         
         domManager.hideForm('#task-form')
@@ -217,9 +227,6 @@ window.addEventListener('hashchange', () =>{
     displayCurrentProject(currentProject)
 })
 window.dispatchEvent(new Event('hashchange'))
-// console.log(getCurrentProject())
-console.log(getCurrentProject())
-
 
 /**_____________________________________________________________________________________________________
  *Open Project to view project details 
