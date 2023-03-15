@@ -137,7 +137,7 @@ const projectsHeader = domManager.createContainer()
 //Create default Project
 const defaultProject = new Project('Today')
     defaultProject.setDescription('Today\'s Activities')
-    projectManager.addToProjectList(defaultProject.toJSON()) //Add to projects
+    saveProject(defaultProject) //Add to projects
     displayNewProject(defaultProject)
     sidebar.appendChild(projectList)
     
