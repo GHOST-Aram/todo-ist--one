@@ -182,38 +182,39 @@ window.addEventListener('load', (e) =>{
     //NewTask
     document.querySelector('#new-task-btn').addEventListener('click', () =>{
         domManager.displayForm('#task-form')
-        //Hide form on btn click
-        document.querySelector('#hide-task-form').addEventListener('click', () =>{
-            domManager.hideForm('#task-form')
-        })
-        //Create task
-        document.querySelector('form#task-form').addEventListener('submit', (e) =>{
-            e.preventDefault()
-            //get data
-            const input = domManager.getFormData('#task-form')
+    })
+    //Hide form on btn click
+    document.querySelector('#hide-task-form').addEventListener('click', () =>{
+        domManager.hideForm('#task-form')
+    })
+    //Create task
+    document.querySelector('#task-form').addEventListener('submit', (e) =>{
+        e.preventDefault()
+        //get data
+        const input = domManager.getFormData('#task-form')
+        // Create new task
+        const task = new Task(input[0])
+            task.setDescription(input[1])
+            task.setDueDate(input[2])
+            const taskJSON = task.toJSON()// Covert task to JSON
 
-            //Initialize data object
-            const data = {
-                title: 'input[0]',
-                description: 'input[1]',
-                dueDate: 'input[2]',
-            }
-           //Get current project
-          
-            domManager.hideForm('#task-form')
-        })
+        //Get current project and add task to project tasklist
+         const currentProject = getCurrentProject()
+            currentProject.tasks.push(taskJSON)//Add tasks to list
+        
+        
+        domManager.hideForm('#task-form')
     })
     // addEventListenerToProject()//Add event listener to project every time page is loaded
 })
 //Display Current project
 window.addEventListener('hashchange', () =>{
     const currentProject = getCurrentProject()
-    console.log(currentProject)
     displayCurrentProject(currentProject)
 })
 window.dispatchEvent(new Event('hashchange'))
 // console.log(getCurrentProject())
-
+console.log(getCurrentProject())
 
 
 /**_____________________________________________________________________________________________________
