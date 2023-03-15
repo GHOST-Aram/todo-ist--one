@@ -128,22 +128,26 @@ export default class DOMManager {
   //Child node of tasksContainer
   //Node contains information of one task only
   createTaskDiv (task) {
-    const taskDiv = this.createContainer()
-    taskDiv.classList.add('space-y-2', 'bg-slate-200', 'rounded-md', 'task')
+    const taskDiv = document.createElement('div')
+    taskDiv.classList.add('bg-slate-200', 'rounded-md', 'task', 'pb-2', 'overflow-hidden')
     //title
     const taskName = document.createElement('p')
     taskName.textContent = `${task.title}`
+    taskName.className = 'font-bold bg-blue-700 py-2 px-4 text-slate-200 rounded-t-md'
     taskDiv.appendChild(taskName)
-
-    //Duedate
-    const dueDate = document.createElement('p')
-    dueDate.textContent = `${task.dueDate}`
-    taskDiv.appendChild(dueDate)
-
+    
     //Dscription
     const description = document.createElement('p')
     description.textContent = `${task.description}`
+    description.className = 'px-4'
     taskDiv.appendChild(description)
+    
+    //Duedate
+    const dueDate = document.createElement('p')
+    dueDate.innerHTML = `<strong>Due in :</strong> ${task.dueDate}`
+    dueDate.className = 'px-4'
+    taskDiv.appendChild(dueDate)
+
 
     return taskDiv
   }

@@ -3,7 +3,6 @@ import DOMManager from './dom_manager.js'
 import Project from './project.js'
 import ProjectManager from './project_manager'
 import Task from './task'
-import TaskManager from './task_manager'
 
 // localStorage.removeItem('projects')
 const domManager = new DOMManager()
@@ -26,11 +25,13 @@ function displayNewProject(project){
 }
 //Dispaly project tasks tasks
 function displayTasks(tasks) {
-    tasksContainer.innerHTML = ''
-    tasks.forEach(task =>{
-        const taskDiv = domManager.createTaskDiv(task)
-        tasksContainer.appendChild(taskDiv)
-    })
+    if(tasks.length > 0){
+        tasksContainer.innerHTML = ''
+        tasks.forEach(task =>{
+            const taskDiv = domManager.createTaskDiv(task)
+            tasksContainer.appendChild(taskDiv)
+        })
+    }
 } 
 //cREATE AND APPEND TO DOM FRAMEWORK FOR DISPLAYING PROJECTS 
 function displayProjectCredentials(project){
@@ -72,14 +73,10 @@ function getCurrentProject(){
     const projectName = window.location.hash.substring(1).replaceAll('-', ' ')
     if(projectName)
         return projects.find(project => project.name === projectName)
-        else 
+    else 
         return projects.find(project => project.name === 'Today')
-    }
-    
-//REMOVE PROJECT
-function removeProject(projects, project){
-    const filteredProjects =  projects.filter(item =>{item !== project})
 }
+    
 //Store project in local storage
 function saveProject (project) {
     projectManager.addToProjectList(project.toJSON())
@@ -155,7 +152,6 @@ window.addEventListener('load', (e) =>{
     
     //Access and display projects from localstorage
     const projects = projectManager.accessLocalStorage()
-    console.log(projects)
     if(Array.isArray(projects)){
         projectList.innerHTML = ''
         projects.forEach(project =>{

@@ -28,6 +28,7 @@ aside {
     left: 25vw;
     right: 2rem;
     height: 79.6vh;
+    overflow: scroll;
 }
 footer{
     bottom: 1rem;
@@ -64,8 +65,10 @@ header {
 #projects-header{
     top: 7.35rem;
 }
-#task-container{
-    overflow: scroll;
+#tasks-container{
+    /* overflow: scroll; */
+    display: grid;
+    grid-template-columns: repeat( 2, 1fr);
 }
 #task-form {
     left: calc(40vw);
