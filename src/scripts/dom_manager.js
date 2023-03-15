@@ -125,11 +125,34 @@ export default class DOMManager {
 
      return sidebar
   }
+  //Child node of tasksContainer
+  //Node contains information of one task only
+  createTaskDiv (task) {
+    const taskDiv = this.createContainer()
+    taskDiv.classList.add('space-y-2', 'bg-slate-200', 'rounded-md', 'task')
+    //title
+    const taskName = document.createElement('p')
+    taskName.textContent = `${task.title}`
+    taskDiv.appendChild(taskName)
+
+    //Duedate
+    const dueDate = document.createElement('p')
+    dueDate.textContent = `${task.dueDate}`
+    taskDiv.appendChild(dueDate)
+
+    //Dscription
+    const description = document.createElement('p')
+    description.textContent = `${task.description}`
+    taskDiv.appendChild(description)
+
+    return taskDiv
+  }
+  //Parent cintainer to all taskContainer nodes 
   createTasksContainer () {
     //Tasks container
     const tasksContainer = this.createContainer()
     tasksContainer.classList.add('w-full', 'bg-blue-600', 'grid', 'grid-2', 'gap-4')
-    tasksContainer.id = 'task-container'
+    tasksContainer.id = 'tasks-container'
     
     //No tasks to display
     const par = document.createElement('p')

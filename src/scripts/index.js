@@ -24,6 +24,14 @@ function displayNewProject(project){
     
     // addEventListenerToProject()
 }
+//Dispaly project tasks tasks
+function displayTasks(tasks) {
+    tasksContainer.innerHTML = ''
+    tasks.forEach(task =>{
+        const taskDiv = domManager.createTaskDiv(task)
+        tasksContainer.appendChild(taskDiv)
+    })
+} 
 //cREATE AND APPEND TO DOM FRAMEWORK FOR DISPLAYING PROJECTS 
 function displayProjectCredentials(project){
     const projectHeader = domManager.createProjectHeader(project)
@@ -190,12 +198,13 @@ window.addEventListener('load', (e) =>{
             task.setDescription(input[1])
             task.setDueDate(input[2])
             const taskJSON = task.toJSON()// Covert task to JSON
-
+            console.log(taskJSON)
         //Get current project and add task to project tasklist
          const currentProject = getCurrentProject()
             currentProject.tasks.push(taskJSON)//Add tasks to list
 
-        // DISPLAYING TASKS
+        // DISPLAY TASKS
+        displayTasks(currentProject.tasks)
 
         
         domManager.hideForm('#task-form')
