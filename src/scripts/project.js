@@ -1,4 +1,4 @@
-import TaskManager from "./task_manager";
+import TaskManager from "./task_manager.js";
 export default class Project extends TaskManager {
 
     //Project open

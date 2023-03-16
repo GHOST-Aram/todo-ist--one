@@ -1,13 +1,12 @@
 import '../styles/styles.css'
 import DOMManager from './dom_manager.js'
 import Project from './project.js'
-import ProjectManager from './project_manager'
-import Task from './task'
+import ProjectManager from './project_manager.js'
+import Task from './task.js'
 
 // localStorage.removeItem('projects')
 const domManager = new DOMManager()
 const projectManager = new ProjectManager()
-const projects = projectManager.getProjects()
 
 window.location.hash =''
 //Create Project list container
@@ -27,7 +26,7 @@ function displayNewProject(project){
 //Dispaly project tasks tasks
 function displayTasks(tasks) {
     tasksContainer.innerHTML = ''
-    if(tasks.length > 0){
+    if(tasks && tasks.length > 0){
         tasks.forEach(task =>{
             const taskDiv = domManager.createTaskDiv(task)
             //Btns
@@ -80,7 +79,7 @@ function displayCurrentProject (project) {
 }
 
 //Get currenttly displaying project from localstorage
-function getCurrentProject(){
+function getCurrentProject(projects){
     const projectName = window.location.hash.substring(1).replaceAll('-', ' ')
     if(projectName)
         return projects.find(project => project.name === projectName)
@@ -126,7 +125,7 @@ const projectsHeader = domManager.createContainer()
     projectsHeader.className = 'flex flex-row items-center justify-between bg-blue-600 px-4 py-2'
     projectsHeader.id = 'projects-header'
 
-    //Heading
+//Heading
     const heading = domManager.createHeading('My Projects')
     heading.classList.add('font-medium', 'w-full')
     projectsHeader.appendChild(heading)
@@ -146,15 +145,16 @@ const defaultProject = new Project('Today')
     sidebar.appendChild(projectList)
     //Display default project details
     displayProjectCredentials(defaultProject)
-
+    
     // Tasks container
-     const tasksContainer = domManager.createTasksContainer()
+    const tasksContainer = domManager.createTasksContainer()
      container.appendChild(tasksContainer)
 
-    
+     
 //Create new Project
 // ___________________________________________________________________
 window.addEventListener('load', (e) =>{
+     const projects = projectManager.getProjects()
     //Display Project List
     projectList.innerHTML = ''
     projects.forEach(project =>{
@@ -203,7 +203,7 @@ window.addEventListener('load', (e) =>{
         
         
         //Get current project and add task to project tasklist
-        const currentProject = getCurrentProject()
+        const currentProject = getCurrentProject(projects)
         currentProject.addTask(task)//Update project.tasks
         projectManager.updateProject(currentProject)//Update current project
         
@@ -213,14 +213,14 @@ window.addEventListener('load', (e) =>{
         domManager.hideForm('#task-form')
     })
     // addEventListenerToProject()//Add event listener to project every time page is loaded
+    //Display Current project
+    window.addEventListener('hashchange', () =>{
+        const currentProject = getCurrentProject(projects)
+        displayCurrentProject(currentProject)
+        displayTasks(currentProject.tasks)
+    })
+    window.dispatchEvent(new Event('hashchange'))
 })
-//Display Current project
-window.addEventListener('hashchange', () =>{
-    const currentProject = getCurrentProject()
-    displayCurrentProject(currentProject)
-    displayTasks(currentProject.tasks)
-})
-window.dispatchEvent(new Event('hashchange'))
 
 /**_____________________________________________________________________________________________________
  *Open Project to view project details 

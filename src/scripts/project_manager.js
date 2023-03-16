@@ -1,6 +1,6 @@
 
-import Project from './project'
-import Task from './task'
+import Project from './project.js'
+import Task from './task.js'
 export default class ProjectManager {
      /*
     Project manager class performs operations on Projects
@@ -8,7 +8,7 @@ export default class ProjectManager {
    #completedProjects = []
    #projects = []
     constructor () {
-
+        localStorage.setItem('projectsData', this.#projects)
     }
     //Add to list
     #accessLocalStorage () {
@@ -48,14 +48,16 @@ export default class ProjectManager {
                     project.setDescription(data.description)
 
                     //Create tasks for project
-                    data.tasks.forEach(taskData => {
-                        const task = new Task(taskData.title)
-                        task.setDescription(taskData.description)
-                        task.setDueDate(taskData.dueDate)
-
-                        //Add task to project
-                        project.addTask(task)
-                    })
+                    if(data.tasks){
+                        data.tasks.forEach(taskData => {
+                            const task = new Task(taskData.title)
+                            task.setDescription(taskData.description)
+                            task.setDueDate(taskData.dueDate)
+    
+                            //Add task to project
+                            project.addTask(task)
+                        })
+                    }
                     //Add to project list
                     this.#projects.push(project)
                     
@@ -76,10 +78,10 @@ export default class ProjectManager {
 
     }
     #updateLocalStorage(){
-        const projects = this.#projects.forEach(
+        this.#projects.forEach(
             project => project.toJSON()//Convert to JSON format
         )
-        localStorage.setItem('projectsData', JSON.stringify(projects))
+        localStorage.setItem('projectsData', JSON.stringify(this.#projects))
     }
 
     //Update modified project ie when new task is added
