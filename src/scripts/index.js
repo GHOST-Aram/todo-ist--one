@@ -200,18 +200,15 @@ window.addEventListener('load', (e) =>{
         const task = new Task(input[0])
         task.setDescription(input[1])
         task.setDueDate(input[2])
-        const taskJSON = task.toJSON()// Covert task to JSON
+        
         
         //Get current project and add task to project tasklist
-        
         const currentProject = getCurrentProject()
-        projects = projects.filter(project =>{project !== currentProject})//Remove current project
-            currentProject.tasks.push(taskJSON)//Update project.tasks
-            projects.push(currentProject) //push updated project
-            window.localStorage.setItem('projects', JSON.stringify(projects))//Update localstorage
-            
-            // DISPLAY TASKS
-            displayTasks(currentProject.tasks)
+        currentProject.addTask(task)//Update project.tasks
+        projectManager.updateProject(currentProject)//Update current project
+        
+        //DISPLAY TASKS
+        displayTasks(currentProject.getTasks())
         
         domManager.hideForm('#task-form')
     })

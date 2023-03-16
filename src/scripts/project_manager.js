@@ -86,7 +86,7 @@ export default class ProjectManager {
     updateProject(project){
         //remove copy of project from projectlist
         this.#projects = this.#filterProjects(project)
-        this.project.push(project)//Push new copy
+        this.addToProjectList(project)//Push new copy
     }
 
 }

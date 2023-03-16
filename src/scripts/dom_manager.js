@@ -138,13 +138,13 @@ export default class DOMManager {
     
     //Dscription
     const description = document.createElement('p')
-    description.textContent = `${task.description}`
+    description.textContent = `${task.getDescription()}`
     description.className = 'px-4'
     taskDiv.appendChild(description)
     
     //Duedate
     const dueDate = document.createElement('p')
-    dueDate.innerHTML = `<strong>Due in :</strong> ${task.dueDate}`
+    dueDate.innerHTML = `<strong>Due in :</strong> ${task.getDueDate()}`
     dueDate.className = 'px-4'
     taskDiv.appendChild(dueDate)
 
