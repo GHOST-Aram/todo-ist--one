@@ -4,10 +4,10 @@ export default class Task {
     */
 
     //Task.description
-    #description
+    #description = ''
 
     //Task.duedate
-    #dueDate
+    #dueDate = null
     #complete = false
 
     //Task.priority

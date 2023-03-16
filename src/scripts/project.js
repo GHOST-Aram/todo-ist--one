@@ -1,5 +1,4 @@
 import TaskManager from "./task_manager";
-import Task from "./task";
 export default class Project extends TaskManager {
 
     //Project open
@@ -24,10 +23,6 @@ export default class Project extends TaskManager {
         this.#complete = true
     }
     //Mark as incomplete
-    markAsIncomplete(){
-        if(this.#complete)
-            this.#complete = false
-    }
    
     //initialize descripion
     setDescription(description){
@@ -38,7 +33,8 @@ export default class Project extends TaskManager {
             "name": this.name,
             "complete": this.isComplete(),
             "description": this.getDescription(),
-            "tasks": this.getTasks()
+            //Convert task to JSON format
+            "tasks": this.getTasks().forEach(task => task.toJSON())
         }
     }
 
