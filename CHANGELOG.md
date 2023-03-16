@@ -1,4 +1,4 @@
-# Encapsulate all data access, control,and manipulation methods in ProjectManager Class
+# Encapsulate all data access, control,and manipulation methods in ProjectManager Class. These Chnages ensure that index.js operation don't know what hapens with data after beyond its scope 
 
     1. Privatise local storage access methods
         updateLocalStorage(): -Save project data to localstorage
