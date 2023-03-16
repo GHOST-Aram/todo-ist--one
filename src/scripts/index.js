@@ -7,6 +7,7 @@ import Task from './task'
 // localStorage.removeItem('projects')
 const domManager = new DOMManager()
 const projectManager = new ProjectManager()
+const projects = projectManager.getProjects()
 
 window.location.hash =''
 //Create Project list container
@@ -80,7 +81,6 @@ function displayCurrentProject (project) {
 
 //Get currenttly displaying project from localstorage
 function getCurrentProject(){
-    const projects = projectManager.accessLocalStorage()
     const projectName = window.location.hash.substring(1).replaceAll('-', ' ')
     if(projectName)
         return projects.find(project => project.name === projectName)
@@ -88,12 +88,8 @@ function getCurrentProject(){
         return projects.find(project => project.name === 'Today')
 }
     
-//Store project in local storage
-function saveProject (project) {
-    projectManager.addToProjectList(project.toJSON())
-    projectManager.updateLocalStorage()
-    
-}
+
+
 // Create and display header
 const header = domManager.createHeader()
 const logo = domManager.createLogo('Plansen')
@@ -145,10 +141,9 @@ const projectsHeader = domManager.createContainer()
 //Create default Project
 const defaultProject = new Project('Today')
     defaultProject.setDescription('Today\'s Activities')
-    projectManager.addToProjectList(defaultProject.toJSON()) //Add to projects
+    projectManager.addToProjectList(defaultProject) //Add to projects
     displayNewProject(defaultProject)
     sidebar.appendChild(projectList)
-    console.log(defaultProject)
     //Display default project details
     displayProjectCredentials(defaultProject)
 
@@ -160,18 +155,13 @@ const defaultProject = new Project('Today')
 //Create new Project
 // ___________________________________________________________________
 window.addEventListener('load', (e) =>{
+    //Display Project List
+    projectList.innerHTML = ''
+    projects.forEach(project =>{
+        displayNewProject(project)
+    })
     
-    //Access and display projects from localstorage
-    const projects = projectManager.accessLocalStorage()
-    if(Array.isArray(projects)){
-        projectList.innerHTML = ''
-        projects.forEach(project =>{
-            displayNewProject(project)
-        })
-    }
-    else{
-        projectManager.updateLocalStorage()
-    }
+    
     
     //Create new Project
     addBtn.addEventListener('click', (e) =>{
@@ -188,7 +178,7 @@ window.addEventListener('load', (e) =>{
         const data = domManager.getFormData('#project-form')//Get data
         const project = new Project(data[0])//Create new Project
         project.setDescription(data[1])
-        saveProject(project) //Add to project list and update localStorage
+        projectManager.addToProjectList(project)//Add to project list
         displayNewProject(project)//Display Project container
         domManager.hideForm('#project-form') //hide project form
     })
@@ -213,13 +203,12 @@ window.addEventListener('load', (e) =>{
         const taskJSON = task.toJSON()// Covert task to JSON
         
         //Get current project and add task to project tasklist
+        
         const currentProject = getCurrentProject()
-        let projects = projectManager.accessLocalStorage()
         projects = projects.filter(project =>{project !== currentProject})//Remove current project
             currentProject.tasks.push(taskJSON)//Update project.tasks
             projects.push(currentProject) //push updated project
             window.localStorage.setItem('projects', JSON.stringify(projects))//Update localstorage
-
             
             // DISPLAY TASKS
             displayTasks(currentProject.tasks)
