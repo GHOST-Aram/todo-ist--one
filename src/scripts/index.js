@@ -27,6 +27,7 @@ function displayNewProject(project){
 //Dispaly project tasks tasks
 function displayTasks(tasks) {
     tasksContainer.innerHTML = ''
+    console.log('Tasks ', tasks)
     if(tasks && tasks.length > 0){
         tasks.forEach(task =>{
             const taskDiv = domManager.createTaskDiv(task)
@@ -164,10 +165,6 @@ const defaultProject = new Project('Today')
 window.addEventListener('load', (e) =>{
     //Display Project List
     renderProjects(projects)
-    displayCurrentProject()
-    
-
-
 
     //DISPLAY PROJECT CREATION FORM
     addBtn.addEventListener('click', (e) =>{
@@ -198,7 +195,7 @@ window.addEventListener('load', (e) =>{
     document.querySelector('#hide-task-form').addEventListener('click', () =>{
         domManager.hideForm('#task-form')
     })
-    //CREATE TASK
+    //CREATE TASK and submit new task
     document.querySelector('#task-form').addEventListener('submit', (e) =>{
         e.preventDefault()
         //get data
@@ -210,8 +207,8 @@ window.addEventListener('load', (e) =>{
         
         
         //Get current project and add task to project tasklist
-        const currentProject = getCurrentProject()
-        projectManager.addTask(currentProject, task)
+        let currentProject = getCurrentProject()
+        currentProject = projectManager.addTask(currentProject, task)
         
         
         //DISPLAY TASKS

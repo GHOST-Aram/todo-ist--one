@@ -19,6 +19,16 @@ export default class ProjectManager {
         }
         else return []
     }
+    addTask(project, task){
+        let modifiedProject = null
+        this.#projects.forEach(element =>{
+            if(element.name === project.name)
+                element.addTask(task)
+                modifiedProject = element
+            })
+            this.#setLocalStorage(this.#projects)
+            return modifiedProject
+    }
     //Update completed projects
     addToCompleted(project){
         this.#completedProjects.push(project)
@@ -112,12 +122,5 @@ export default class ProjectManager {
     }
 
    
-    addTask(project, task){
-        this.#projects.forEach(element =>{
-            if(element.name === project.name)
-                project.addTask(task)
-        })
-        this.#setLocalStorage(this.#projects)
-    }
     
 }
