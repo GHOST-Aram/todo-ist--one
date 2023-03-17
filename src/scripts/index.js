@@ -230,7 +230,6 @@ const defaultProject = new Project('Today')
  * When Project is clicked, the Dom is populated with project deatails
  * */    
 
-
     
 
     

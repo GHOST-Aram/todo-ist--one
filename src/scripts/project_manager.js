@@ -26,7 +26,6 @@ export default class ProjectManager {
     }
     //Add new project to projects list and save to local storage
     addToProjectList (newProject) {
-        // this.#projects.push(newProject)
         this.#updateLocalStorage(newProject)
 
     }
@@ -84,7 +83,6 @@ export default class ProjectManager {
 
     }
     #setLocalStorage(projects){
-        console.log('projects in setLocalStorage ', projects)
         if(projects.length >= 1){
             try {
                 projects.forEach(
@@ -100,8 +98,17 @@ export default class ProjectManager {
     }
     #updateLocalStorage(project){
         const projects = this.getProjects()//Pull projects from local storage
-        projects.push(project)//Add new project
-        this.#setLocalStorage(projects)//put projects back to localstorage
+        try {
+            if(!projects.find(item => item.name === project.name))
+                projects.push(project)//Add new project
+            if((projects.find(item => item.name === project.name) && project.name.trim() !== 'Today'))
+                alert(`Project named ${project.name} already exists`)            
+        } catch (error) {
+            console.error(error)
+        }
+        finally{
+            this.#setLocalStorage(projects)//put projects back to localstorage
+        }
     }
 
     //Update modified project ie when new task is added
@@ -110,5 +117,5 @@ export default class ProjectManager {
         this.#projects = this.#filterProjects(project)
         this.addToProjectList(project)//Push new copy
     }
-
+    
 }
