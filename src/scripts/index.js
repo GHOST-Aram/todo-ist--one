@@ -7,11 +7,11 @@ import Task from './task.js'
 // localStorage.clear()
 const domManager = new DOMManager()
 const projectManager = new ProjectManager()
+let projects = projectManager.getProjects()//Get projects
 
 window.location.hash =''
 //Create Project list container
 const projectList = document.createElement('div')
-const projects = projectManager.getProjects()//Get projects
 projectList.className = 'flex flex-col gap-2'
 
 
@@ -182,6 +182,7 @@ window.addEventListener('load', (e) =>{
         project.setDescription(data[1])
         projectManager.addToProjectList(project)//Add to project list
         displayNewProject(project)
+        projects = projectManager.getProjects()
         //Rerender all projects
         
         domManager.hideForm('#project-form') //hide project form
