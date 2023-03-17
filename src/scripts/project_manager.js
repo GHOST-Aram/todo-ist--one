@@ -37,6 +37,7 @@ export default class ProjectManager {
     }
     //get projects
     getProjects(){
+        this.#projects = []//Initialize to empty
         //Get project data from localstorage
         const projectData = this.#accessLocalStorage() 
         if(Array.isArray(projectData)){

@@ -4,10 +4,10 @@ import Project from './project.js'
 import ProjectManager from './project_manager.js'
 import Task from './task.js'
 
-// localStorage.removeItem('projects')
+// localStorage.clear()
 const domManager = new DOMManager()
 const projectManager = new ProjectManager()
-
+// console.log(projectManager.getProjects())
 window.location.hash =''
 //Create Project list container
 const projectList = document.createElement('div')
@@ -75,7 +75,7 @@ function displayProjectCredentials(project){
 
 function displayCurrentProject (project) {
     document.querySelector('#content-container #project-name').textContent = project.name
-    document.querySelector('#project-description p').textContent = project.description
+    document.querySelector('#project-description p').textContent = project.getDescription()
 }
 
 //Get currenttly displaying project from localstorage
@@ -136,28 +136,29 @@ const projectsHeader = domManager.createContainer()
     projectsHeader.appendChild(addBtn)
     
     sidebar.appendChild(projectsHeader) 
+    sidebar.appendChild(projectList)//Container for listing projects
 
-//Create default Project
+    //Create default Project and add to PromjectManager.Projects
 const defaultProject = new Project('Today')
     defaultProject.setDescription('Today\'s Activities')
     projectManager.addToProjectList(defaultProject) //Add to projects
-    displayNewProject(defaultProject)
-    sidebar.appendChild(projectList)
+   
+    
     //Display default project details
     displayProjectCredentials(defaultProject)
     
     // Tasks container
     const tasksContainer = domManager.createTasksContainer()
-     container.appendChild(tasksContainer)
-
-     
-//Create new Project
-// ___________________________________________________________________
-window.addEventListener('load', (e) =>{
-     const projects = projectManager.getProjects()
-    //Display Project List
-    projectList.innerHTML = ''
-    projects.forEach(project =>{
+    container.appendChild(tasksContainer)
+    
+    
+    //Create new Project
+    // ___________________________________________________________________
+    window.addEventListener('load', (e) =>{
+        const projects = projectManager.getProjects()
+        //Display Project List
+        projectList.innerHTML = ''
+        projects.forEach(project =>{
         displayNewProject(project)
     })
     
@@ -179,7 +180,7 @@ window.addEventListener('load', (e) =>{
         const project = new Project(data[0])//Create new Project
         project.setDescription(data[1])
         projectManager.addToProjectList(project)//Add to project list
-        displayNewProject(project)//Display Project container
+        // displayNewProject(project)//Display Project container
         domManager.hideForm('#project-form') //hide project form
     })
 
