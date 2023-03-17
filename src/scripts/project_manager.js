@@ -101,7 +101,7 @@ export default class ProjectManager {
         try {
             if(!projects.find(item => item.name === project.name))
                 projects.push(project)//Add new project
-            if((projects.find(item => item.name === project.name) && project.name.trim() !== 'Today'))
+            else if((projects.find(item => item.name === project.name) && project.name.trim() !== 'Today'))
                 alert(`Project named ${project.name} already exists`)            
         } catch (error) {
             console.error(error)

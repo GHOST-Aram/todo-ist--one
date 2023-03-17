@@ -87,7 +87,10 @@ function getCurrentProject(projects){
         return projects.find(project => project.name === 'Today')
 }
     
-
+function renderProjects(projects){
+    projectList.innerHTML = ''
+    projects.forEach(project => displayNewProject(project))
+}
 
 // Create and display header
 const header = domManager.createHeader()
@@ -158,10 +161,8 @@ const defaultProject = new Project('Today')
     window.addEventListener('load', (e) =>{
         const projects = projectManager.getProjects()//Get projects
         //Display Project List
-        projectList.innerHTML = ''
-        projects.forEach(project =>{//List projects on sidebar
-            displayNewProject(project)
-    })
+        renderProjects(projects)
+       
     
     
     
@@ -180,8 +181,9 @@ const defaultProject = new Project('Today')
         const project = new Project(data[0])//Create new Project
         project.setDescription(data[1])
         projectManager.addToProjectList(project)//Add to project list
-        displayNewProject(project)//Display Project container
-        console.log('Project ', project)
+
+        //Rerender all projects
+        
         domManager.hideForm('#project-form') //hide project form
     })
 
