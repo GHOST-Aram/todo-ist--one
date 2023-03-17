@@ -106,12 +106,12 @@ export default class DOMManager {
   //Project header
   //display in the main body 
   //Peiod is an object with period.start and period.end
-  createProjectHeader (project){
+  createProjectHeader (projectName){
     //Main container
     const container = this.createContainer()
     container.className = 'flex flex-row justify-between bg-blue-600 items-center w-full py-4 pl-8'
     //Add Name
-    const projectTitle = this.createHeading(project.name)
+    const projectTitle = this.createHeading(projectName)
     projectTitle.classList.add('font-bold')
     projectTitle.id = 'project-name'
     container.appendChild(projectTitle)

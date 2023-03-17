@@ -45,14 +45,14 @@ function displayTasks(tasks) {
     }
 } 
 //cREATE AND APPEND TO DOM FRAMEWORK FOR DISPLAYING PROJECTS 
-function displayProjectCredentials(project){
-    const projectHeader = domManager.createProjectHeader(project)
+function displayProjectCredentials(){
+    const projectHeader = domManager.createProjectHeader('')
     container.appendChild(projectHeader)
     //Project description and new task btn
     const descNBtnContainer = domManager.createContainer()
     descNBtnContainer.className = 'flex flex-row justify-between items-center w-full'
     //DESCRIPTION
-    const projectDescription = domManager.createProjectDescription(project.getDescription())
+    const projectDescription = domManager.createProjectDescription('')
     projectDescription.id = 'project-description'
     //Display description
     descNBtnContainer.appendChild(projectDescription)
@@ -145,7 +145,7 @@ const defaultProject = new Project('Today')
    
     
     //Display default project details
-    displayProjectCredentials(defaultProject)
+    displayProjectCredentials()
     
     // Tasks container
     const tasksContainer = domManager.createTasksContainer()
@@ -159,7 +159,7 @@ const defaultProject = new Project('Today')
         //Display Project List
         projectList.innerHTML = ''
         projects.forEach(project =>{
-        displayNewProject(project)
+            displayNewProject(project)
     })
     
     
