@@ -181,7 +181,7 @@ window.addEventListener('load', (e) =>{
         const project = new Project(data[0])//Create new Project
         project.setDescription(data[1])
         projectManager.addToProjectList(project)//Add to project list
-
+        displayNewProject(project)
         //Rerender all projects
         
         domManager.hideForm('#project-form') //hide project form
