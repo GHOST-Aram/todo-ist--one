@@ -11,6 +11,7 @@ const projectManager = new ProjectManager()
 window.location.hash =''
 //Create Project list container
 const projectList = document.createElement('div')
+const projects = projectManager.getProjects()//Get projects
 projectList.className = 'flex flex-col gap-2'
 
 
@@ -73,9 +74,11 @@ function displayProjectCredentials(){
 // Zreate container for a single task
 // Div contains task informatiion
 
-function displayCurrentProject (project) {
-    document.querySelector('#content-container #project-name').textContent = project.name
-    document.querySelector('#project-description p').textContent = project.getDescription()
+function displayCurrentProject () {
+    const currentProject = getCurrentProject(projects)
+    document.querySelector('#content-container #project-name').textContent = currentProject.name
+    document.querySelector('#project-description p').textContent = currentProject.getDescription()
+    displayTasks(currentProject.getTasks())
 }
 
 //Get currenttly displaying project from localstorage
@@ -156,16 +159,16 @@ const defaultProject = new Project('Today')
     container.appendChild(tasksContainer)
     
     
-    //PAGE ONLOAD
-    // ___________________________________________________________________
-    window.addEventListener('load', (e) =>{
-        const projects = projectManager.getProjects()//Get projects
-        //Display Project List
-        renderProjects(projects)
-       
+//PAGE ONLOAD
+// ___________________________________________________________________
+window.addEventListener('load', (e) =>{
+    //Display Project List
+    renderProjects(projects)
+    displayCurrentProject()
     
-    
-    
+
+
+
     //DISPLAY PROJECT CREATION FORM
     addBtn.addEventListener('click', (e) =>{
         domManager.displayForm('#project-form')
@@ -219,13 +222,10 @@ const defaultProject = new Project('Today')
     // addEventListenerToProject()//Add event listener to project every time page is loaded
     //Display Current project
     window.addEventListener('hashchange', () =>{
-        const currentProject = getCurrentProject(projects)
-        displayCurrentProject(currentProject)
-        displayTasks(currentProject.tasks)
+        displayCurrentProject()
     })
     window.dispatchEvent(new Event('hashchange'))
-    console.log("Projects Inde" , projects)
-    
+
 })
 
 /**_____________________________________________________________________________________________________
