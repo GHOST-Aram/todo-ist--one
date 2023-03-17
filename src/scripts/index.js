@@ -75,14 +75,14 @@ function displayProjectCredentials(){
 // Div contains task informatiion
 
 function displayCurrentProject () {
-    const currentProject = getCurrentProject(projects)
+    const currentProject = getCurrentProject()
     document.querySelector('#content-container #project-name').textContent = currentProject.name
     document.querySelector('#project-description p').textContent = currentProject.getDescription()
     displayTasks(currentProject.getTasks())
 }
 
 //Get currenttly displaying project from localstorage
-function getCurrentProject(projects){
+function getCurrentProject(){
     const projectName = window.location.hash.substring(1).replaceAll('-', ' ')
     if(projectName)
         return projects.find(project => project.name === projectName)
@@ -210,7 +210,7 @@ window.addEventListener('load', (e) =>{
         
         
         //Get current project and add task to project tasklist
-        const currentProject = getCurrentProject(projects)
+        const currentProject = getCurrentProject()
         projectManager.addTask(currentProject, task)
         
         
