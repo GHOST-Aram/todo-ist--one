@@ -7,12 +7,17 @@ export default class ProjectManager {
     */
    #completedProjects = []
    #projects = []
-    constructor () {
-        localStorage.setItem('projectsData', this.#projects)
+   constructor () {
+        this.#projects = this.getProjects()
+        this.#setLocalStorage(this.#projects)
     }
     //Add to list
     #accessLocalStorage () {
-        return JSON.parse(localStorage.getItem('projectsData'))
+        const projectData = localStorage.getItem('projectsData')
+        if(projectData){
+            return JSON.parse(projectData)
+        }
+        else return []
     }
     //Update completed projects
     addToCompleted(project){
@@ -21,8 +26,8 @@ export default class ProjectManager {
     }
     //Add new project to projects list and save to local storage
     addToProjectList (newProject) {
-        this.#projects.push(newProject)
-        this.#updateLocalStorage()
+        // this.#projects.push(newProject)
+        this.#updateLocalStorage(newProject)
 
     }
     //Filter project 
@@ -78,11 +83,25 @@ export default class ProjectManager {
 
 
     }
-    #updateLocalStorage(){
-        this.#projects.forEach(
-            project => project.toJSON()//Convert to JSON format
-        )
-        localStorage.setItem('projectsData', JSON.stringify(this.#projects))
+    #setLocalStorage(projects){
+        console.log('projects in setLocalStorage ', projects)
+        if(projects.length >= 1){
+            try {
+                projects.forEach(
+                    project => project.toJSON()//Convert to JSON format
+                )
+                localStorage.setItem('projectsData', JSON.stringify(projects))
+            } catch (error) {
+                console.error(error)
+            }
+        }
+        else 
+            localStorage.setItem('projectsData', projects)
+    }
+    #updateLocalStorage(project){
+        const projects = this.getProjects()//Pull projects from local storage
+        projects.push(project)//Add new project
+        this.#setLocalStorage(projects)//put projects back to localstorage
     }
 
     //Update modified project ie when new task is added

@@ -138,7 +138,8 @@ const projectsHeader = domManager.createContainer()
     sidebar.appendChild(projectsHeader) 
     sidebar.appendChild(projectList)//Container for listing projects
 
-    //Create default Project and add to PromjectManager.Projects
+// DEFAULT PROJECT
+//Create default Project and add to PromjectManager.Projects
 const defaultProject = new Project('Today')
     defaultProject.setDescription('Today\'s Activities')
     projectManager.addToProjectList(defaultProject) //Add to projects
@@ -152,35 +153,35 @@ const defaultProject = new Project('Today')
     container.appendChild(tasksContainer)
     
     
-    //Create new Project
+    //PAGE ONLOAD
     // ___________________________________________________________________
     window.addEventListener('load', (e) =>{
-        const projects = projectManager.getProjects()
+        const projects = projectManager.getProjects()//Get projects
         //Display Project List
         projectList.innerHTML = ''
-        projects.forEach(project =>{
+        projects.forEach(project =>{//List projects on sidebar
             displayNewProject(project)
     })
     
     
     
-    //Create new Project
+    //DISPLAY PROJECT CREATION FORM
     addBtn.addEventListener('click', (e) =>{
-        //project manager create new project
         domManager.displayForm('#project-form')
-        //Close form on CANCELL
-        document.querySelector('#hide-project-form').addEventListener('click', () =>{
-            domManager.hideForm('#project-form')
-        })
     })
-    //Add event listener to form
+    //CLOSE FORM ON CANCELL
+    document.querySelector('#hide-project-form').addEventListener('click', () =>{
+        domManager.hideForm('#project-form')
+    })
+    //SUBMIT NEW PROJECT
     document.querySelector('form#project-form').addEventListener('submit', (event) =>{
         event.preventDefault()
         const data = domManager.getFormData('#project-form')//Get data
         const project = new Project(data[0])//Create new Project
         project.setDescription(data[1])
         projectManager.addToProjectList(project)//Add to project list
-        // displayNewProject(project)//Display Project container
+        displayNewProject(project)//Display Project container
+        console.log('Project ', project)
         domManager.hideForm('#project-form') //hide project form
     })
 
