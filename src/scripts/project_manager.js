@@ -42,6 +42,7 @@ export default class ProjectManager {
         this.#projects = []//Initialize to empty
         //Get project data from localstorage
         const projectData = this.#accessLocalStorage() 
+        console.log('Project Data', projectData)
         if(Array.isArray(projectData)){
             //Create projects for every piece of data
             projectData.forEach(data => 
@@ -110,12 +111,7 @@ export default class ProjectManager {
         }
     }
 
-    //Update modified project ie when new task is added
-    updateProject(project){
-        //remove copy of project from projectlist
-        this.removeProject(project)
-        this.addToProjectList(project)//Push new copy
-    }
+   
     addTask(project, task){
         this.#projects.forEach(element =>{
             if(element.name === project.name)
