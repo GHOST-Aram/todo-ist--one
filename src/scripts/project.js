@@ -4,10 +4,13 @@ export default class Project extends TaskManager {
     //Project open
     #complete = false
     #description = ''
-    
+    #taskList = []
     constructor(name){
         super()
         this.name = name
+    }
+    addTask(task){
+        this.getTasks().push(task)
     }
     //return value of description
     getDescription(){
@@ -33,8 +36,7 @@ export default class Project extends TaskManager {
             "name": this.name,
             "complete": this.isComplete(),
             "description": this.getDescription(),
-            //Convert task to JSON format
-            "tasks": this.getTasks().forEach(task => task.toJSON())
+            "tasks": this.getTasks().map(task =>task = task.toJSON()),
         }
     }
 

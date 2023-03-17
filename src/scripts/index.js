@@ -7,7 +7,7 @@ import Task from './task.js'
 // localStorage.clear()
 const domManager = new DOMManager()
 const projectManager = new ProjectManager()
-// console.log(projectManager.getProjects())
+
 window.location.hash =''
 //Create Project list container
 const projectList = document.createElement('div')
@@ -195,7 +195,7 @@ const defaultProject = new Project('Today')
     document.querySelector('#hide-task-form').addEventListener('click', () =>{
         domManager.hideForm('#task-form')
     })
-    //Create task
+    //CREATE TASK
     document.querySelector('#task-form').addEventListener('submit', (e) =>{
         e.preventDefault()
         //get data
@@ -208,8 +208,8 @@ const defaultProject = new Project('Today')
         
         //Get current project and add task to project tasklist
         const currentProject = getCurrentProject(projects)
-        currentProject.addTask(task)//Update project.tasks
-        projectManager.updateProject(currentProject)//Update current project
+        projectManager.addTask(currentProject, task)
+        
         
         //DISPLAY TASKS
         displayTasks(currentProject.getTasks())
@@ -224,6 +224,8 @@ const defaultProject = new Project('Today')
         displayTasks(currentProject.tasks)
     })
     window.dispatchEvent(new Event('hashchange'))
+    console.log("Projects Inde" , projects)
+    
 })
 
 /**_____________________________________________________________________________________________________

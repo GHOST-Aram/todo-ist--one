@@ -31,9 +31,7 @@ export default class ProjectManager {
     }
     //Filter project 
     #filterProjects(project){
-        return this.#projects.filter(element => {
-            element.name !== project.name
-        })
+        return this.#projects.filter(element => element.name !== project.name)
     }
     //Get list of completed projects
     getCompleted(){
@@ -51,7 +49,6 @@ export default class ProjectManager {
                     //Create project
                     const project = new Project(data.name)
                     project.setDescription(data.description)
-
                     //Create tasks for project
                     if(data.tasks){
                         data.tasks.forEach(taskData => {
@@ -91,6 +88,8 @@ export default class ProjectManager {
                 localStorage.setItem('projectsData', JSON.stringify(projects))
             } catch (error) {
                 console.error(error)
+            } finally{
+                
             }
         }
         else 
@@ -114,8 +113,15 @@ export default class ProjectManager {
     //Update modified project ie when new task is added
     updateProject(project){
         //remove copy of project from projectlist
-        this.#projects = this.#filterProjects(project)
+        this.removeProject(project)
         this.addToProjectList(project)//Push new copy
+    }
+    addTask(project, task){
+        this.#projects.forEach(element =>{
+            if(element.name === project.name)
+                project.addTask(task)
+        })
+        this.#setLocalStorage(this.#projects)
     }
     
 }
