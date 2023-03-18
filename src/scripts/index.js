@@ -283,8 +283,9 @@ window.addEventListener('load', (e) =>{
         } else {
             displayNewTask(task)
         }
+        //Close form after adding new task
+        document.querySelector('#task-form').classList.add('hidden')
         })
-    
     //Display Current project
     window.addEventListener('hashchange', () =>{
         displayCurrentProject()
