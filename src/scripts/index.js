@@ -271,11 +271,10 @@ window.addEventListener('load', (e) =>{
         const task = createNewTask()
         //Get current project and add task to project tasklist
         const  currentProject = getCurrentProject()
-        const modifiedcurrentProject = projectManager.addTask(currentProject, task)
-
-        //Display tasks
-        displayTasks(modifiedcurrentProject.getTasks())
-        
+        //Add task to current project tasks
+        projectManager.addTask(currentProject, task)
+        //Display new task task
+        displayNewTask(task)
         })
     
     //Display Current project
