@@ -86,7 +86,7 @@ addToCompleted(project){
             }
             
         } catch (error) {
-            console.error(`Something went wrong ${error}`)
+            console.error(`Something went wrong While getting projects from local Storage ${error}`)
         }
         finally{
             return projects
@@ -137,16 +137,17 @@ addToCompleted(project){
         }
     }
     #updateLocalStorage(project){
+        const projects = this.getProjects()
         try {
-            if(!this.projects.find(item => item.name === project.name))
-                this.projects.push(project)//Add new project
-            else if((this.projects.find(item => item.name === project.name) && project.name.trim() !== 'Today'))
+            if(!projects.find(item => item.name === project.name))
+                projects.push(project)//Add new project
+            else if((projects.find(item => item.name === project.name) && project.name.trim() !== 'Today'))
                 alert(`Project named ${project.name} already exists`)            
         } catch (error) {
             console.error(error)
         }
         finally{
-            this.#setLocalStorage(this.projects)//put projects back to localstorage
+            this.#setLocalStorage(projects)//put projects back to localstorage
         }
     }  
 }
