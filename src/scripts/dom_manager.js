@@ -5,6 +5,10 @@ export default class DOMManager {
   constructor () {
 
   }
+  closeForm(id){
+    document.querySelector(id).classList.add('hidden')
+    this.resetForm(id)
+  }
   //Add Icon
   createAddButton () {
 
@@ -245,5 +249,10 @@ export default class DOMManager {
       const contentContainer = document.querySelector('#content')
       contentContainer.appendChild(content)
     }
+  resetForm(id){
+    document.querySelectorAll(`${id} input`).forEach(
+      inputElement => inputElement.value = ''
+    )
+  }
     
 }

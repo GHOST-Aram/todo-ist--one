@@ -29,11 +29,24 @@ export default class ProjectManager {
             //Set local starage to array with the modifed project
             this.#setLocalStorage(this.#projects)
     }
-
-//Update completed projects
-addToCompleted(project){
-        this.#completedProjects.push(project)
-        this.removeProject(project)
+    // Remove task from project task likst
+    removeTask(project, task){
+        // Search for the targe project in the list
+        this.projects.forEach(element =>{
+            //If found
+            if(element.name = project.name){
+                //filter tasks list
+                const newList = element.removeTask(task)
+                //Assign tasks to filtered list
+                element.tasks = newList
+            }
+            element.tasks
+        })
+    }
+    //Update completed projects
+    addToCompleted(project){
+            this.#completedProjects.push(project)
+            this.removeProject(project)
     }
     //Add new project to projects list and save to local storage
     addToProjectList (newProject) {

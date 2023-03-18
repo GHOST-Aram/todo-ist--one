@@ -3,14 +3,14 @@ export default class TaskManager {
     Task manager class performs operations with and on Task objects
     Used together with Task class
     */
-    #taskList = []
+    taskList = []
     #completedTasks = []
     constructor () {
 
     }
     //Add to list
     addTask(task){
-        this.#taskList.push(task)
+        this.taskList.push(task)
     }
     //Update completed tasks
     addToCompleted(task){
@@ -23,16 +23,17 @@ export default class TaskManager {
     }
     //get tasks
     getTasks(){
-        return this.#taskList
+        return this.taskList
     }
     //remove task from list
-    removeTask(Task){
-        this.#taskList = this.#taskList.filter(task => {
-            if(task === Task)
+    removeTask(task){
+        const tasks = this.taskList.filter(element => {
+            if(element.id === task.id)
                 return false
             else
                 return true
         })
+        return tasks
     }
-
+   
 }

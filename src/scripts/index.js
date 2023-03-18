@@ -39,34 +39,33 @@ function activateMarkAsCompleteBtn(task){
 function activateEditBtns(task) {
     //Get button
     const btn = document.querySelector(`#${task.id}-edit`)
-
     //Add event listener
     btn.addEventListener('click', (e) =>{
-        console.log(btn)
         //Change Task Form heading
         document.querySelector('#task-form h1').textContent = 'Edit Task'
 
         //Change form-id
-        document.querySelector('#task-form').id = 'edit-task-form'
         //Populate form with data
         document.querySelector('#task-title-input').value = task.title //Title
-
+        
         // /Description
         document.querySelector('#task-description-input').value = task.getDescription()
-
+        
         //Due date
         document.querySelector('#duedate-input').value = task.getDueDate() 
-
+        
         //Display Form
-        domManager.displayForm('#edit-task-form')
-
-        //Delete the task task from current Project
+        domManager.displayForm('#task-form')
+        //Submit and change task
+        
+        editTask(task)
+        //Set id back to task form
     })
+
 }
 
 //CTREATE NEW TASK
 function createNewTask (input) {
-    
     // Create new task
     const task = new Task(input[0])
     task.setDescription(input[1])
@@ -154,6 +153,33 @@ function displayTasks(tasks) {
         tasksContainer.appendChild(par)
     }
 } 
+
+//Edit task on submit 
+function editTask (oldTask) {
+    const form = document.querySelector('#task-form')
+    //Add submit event to task-edit form
+    form.addEventListener('submit', (e) =>{
+        //Get data
+        const data = domManager.getFormData('#task-form')
+        console.log(data)
+        //Create task
+        const newTask = createNewTask(data)
+        //remove old task from list
+        projectManager.removeTask(getCurrentProject(), oldTask)
+        //Add new task
+        projectManager.addTask(getCurrentProject(), newTask)
+        //Display new task
+        displayNewTask(newTask)
+        //Restore form heading
+        document.querySelector('#task-form h1').textContent = 'Task Form'
+        //close form
+        domManager.closeForm('#task-form')
+        
+        
+    })
+
+}
+//Searchfor current displaying project projects
 function getCurrentProject(){
     const projectName = window.location.hash.substring(1).replaceAll('-', ' ')
     if(projectName)
@@ -236,13 +262,14 @@ const defaultProject = new Project('Today')
 window.addEventListener('load', (e) =>{
     //Display Project List
     renderProjects(projects)
+
+    //Dispatch click event on form close btns
     activateFormCloseBtns()
     
     //DISPLAY PROJECT CREATION FORM
     addBtn.addEventListener('click', (e) =>{
         domManager.displayForm('#project-form')
     })
-    //CLOSE FORM ON CANCELL
     
     //SUBMIT NEW PROJECT
     document.querySelector('form#project-form').addEventListener('submit', (event) =>{
@@ -262,6 +289,7 @@ window.addEventListener('load', (e) =>{
         //Display Form
         domManager.displayForm('#task-form')
     })
+   
    
     //CREATE TASK and submit new task
     document.querySelector('#task-form').addEventListener('submit', (e) =>{
