@@ -14,7 +14,14 @@ window.location.hash =''
 const projectList = document.createElement('div')
 projectList.className = 'flex flex-col gap-2'
 
-
+function activateFormCloseBtns() {
+    document.querySelectorAll('.hide-form').forEach(btn =>{
+      btn.addEventListener('click', (e) =>{
+          document.querySelectorAll('form').forEach(form =>
+              form.classList.add('hidden'))
+      })
+    }) 
+  }
 //MARK TASK AS COMPLETE
 function activateMarkAsCompleteBtn(task){
     const btn = document.querySelector(`#${task.id}-complete`)
@@ -225,15 +232,14 @@ const defaultProject = new Project('Today')
 window.addEventListener('load', (e) =>{
     //Display Project List
     renderProjects(projects)
-
+    activateFormCloseBtns()
+    
     //DISPLAY PROJECT CREATION FORM
     addBtn.addEventListener('click', (e) =>{
         domManager.displayForm('#project-form')
     })
     //CLOSE FORM ON CANCELL
-    document.querySelector('#hide-project-form').addEventListener('click', () =>{
-        domManager.hideForm('#project-form')
-    })
+    
     //SUBMIT NEW PROJECT
     document.querySelector('form#project-form').addEventListener('submit', (event) =>{
         event.preventDefault()
@@ -245,18 +251,14 @@ window.addEventListener('load', (e) =>{
         projects = projectManager.getProjects()
         //Rerender all projects
         
-        domManager.hideForm('#project-form') //hide project form
-    })
+        })
 
     //NewTask
     document.querySelector('#new-task-btn').addEventListener('click', () =>{
         //Display Form
         domManager.displayForm('#task-form')
     })
-    //Hide form on btn click
-    document.querySelector('#hide-task-form').addEventListener('click', () =>{
-        domManager.hideForm('#task-form')
-    })
+   
     //CREATE TASK and submit new task
     document.querySelector('#task-form').addEventListener('submit', (e) =>{
         e.preventDefault()
@@ -269,8 +271,7 @@ window.addEventListener('load', (e) =>{
         //Display tasks
         displayTasks(modifiedcurrentProject.getTasks())
         
-        domManager.hideForm('#task-form')
-    })
+        })
     
     //Display Current project
     window.addEventListener('hashchange', () =>{

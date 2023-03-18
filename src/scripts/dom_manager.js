@@ -239,9 +239,7 @@ export default class DOMManager {
     })
     return data
   } 
-  hideForm(hashFormId) {
-    document.querySelector(hashFormId).classList.add('hidden')
-  }
+  
   //Append to DOM
   render (content) {
       const contentContainer = document.querySelector('#content')
