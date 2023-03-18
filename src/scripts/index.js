@@ -77,13 +77,19 @@ function displayProjectCredentials(){
 
 function displayCurrentProject () {
     const currentProject = getCurrentProject()
-    document.querySelector('#content-container #project-name').textContent = currentProject.name
-    document.querySelector('#project-description p').textContent = currentProject.getDescription()
-    displayTasks(currentProject.getTasks())
+    try {
+        document.querySelector('#content-container #project-name').textContent = currentProject.name
+        document.querySelector('#project-description p').textContent = currentProject.getDescription()
+        displayTasks(currentProject.getTasks())
+        
+    } catch (error) {
+        console.log('Error occured')
+    }
 }
 
 //Get currenttly displaying project from localstorage
 function getCurrentProject(){
+
     const projectName = window.location.hash.substring(1).replaceAll('-', ' ')
     if(projectName)
         return projects.find(project => project.name === projectName)
