@@ -143,18 +143,18 @@ export default class DOMManager {
     
     //Dscription
     const description = document.createElement('p')
-    try {
-      description.textContent = `${task.getDescription()}`
-    } catch (error) {
-        console.error(`Error occured while Formating date for ${task}`)
-    }
+    description.textContent = `${task.getDescription()}`
     description.className = 'px-4'
     taskDiv.appendChild(description)
     
     //Duedate
     const dueDate = document.createElement('p')
     const date = task.getDueDate().replaceAll('-',', ')
-    dueDate.innerHTML = `<strong>Due in :</strong> ${formatDistanceToNow(new Date(date))}`
+    try {
+      dueDate.innerHTML = `<strong>Due in :</strong> ${formatDistanceToNow(new Date(date))}`
+    } catch (error) {
+      console.error(`Error occured while Formating date for ${task}`)
+    }
     dueDate.className = 'px-4'
     taskDiv.appendChild(dueDate)
 

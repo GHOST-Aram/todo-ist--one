@@ -4,7 +4,7 @@ import Project from './project.js'
 import ProjectManager from './project_manager.js'
 import Task from './task.js'
 
-// localStorage.clear()
+localStorage.clear()
 const domManager = new DOMManager()
 const projectManager = new ProjectManager()
 let projects = projectManager.getProjects()//Get projects
