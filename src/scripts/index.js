@@ -33,10 +33,12 @@ function displayTasks(tasks) {
         tasks.forEach(task =>{
             const taskDiv = domManager.createTaskDiv(task)
             //Btns
-            const btns = domManager.createTaskManagementBtns()
+            const btns = domManager.createTaskManagementBtns(task)
 
+            //aPPEND EVENTS
             taskDiv.appendChild(btns)
             tasksContainer.appendChild(taskDiv)
+            appendMarkAsCompleteEvent(task)
         })
     }else{
         //No tasks to display
@@ -91,7 +93,21 @@ function getCurrentProject(){
     else 
         return projects.find(project => project.name === 'Today')
 }
-    
+//MARK TASK AS COMPLETE
+function appendMarkAsCompleteEvent(task){
+    const btn = document.querySelector(`#${task.id}`)
+    btn.addEventListener('click', 
+    (e) => {
+        //Mrk complete
+        task.markAsComplete()
+        //Remove old bg-color
+        btn.classList.toggle('bg-slate-500')
+        //Add new bg-color
+        btn.classList.toggle('bg-green-500')
+    })
+        
+}  
+
 function renderProjects(projects){
     projectList.innerHTML = ''
     projects.forEach(project => displayNewProject(project))
@@ -218,7 +234,8 @@ window.addEventListener('load', (e) =>{
         
         domManager.hideForm('#task-form')
     })
-    // addEventListenerToProject()//Add event listener to project every time page is loaded
+    //MARK TASK AS COMPLETE
+    
     //Display Current project
     window.addEventListener('hashchange', () =>{
         displayCurrentProject()

@@ -20,17 +20,25 @@ export default class ProjectManager {
         else return []
     }
     addTask(project, task){
+        // Initialize modified project
         let modifiedProject = null
+
+        //Find unmodified project
         this.#projects.forEach(element =>{
             if(element.name === project.name)
+            //Modify project by adding task to task list
                 element.addTask(task)
+            //Change value of modified project to current project    
                 modifiedProject = element
             })
+            //Set local starage to array with the modifed project
             this.#setLocalStorage(this.#projects)
+            //Return modifed project to be displayed as modified
             return modifiedProject
     }
-    //Update completed projects
-    addToCompleted(project){
+
+//Update completed projects
+addToCompleted(project){
         this.#completedProjects.push(project)
         this.removeProject(project)
     }
@@ -52,7 +60,6 @@ export default class ProjectManager {
         this.#projects = []//Initialize to empty
         //Get project data from localstorage
         const projectData = this.#accessLocalStorage() 
-        console.log('Project Data', projectData)
         if(Array.isArray(projectData)){
             //Create projects for every piece of data
             projectData.forEach(data => 
@@ -79,6 +86,31 @@ export default class ProjectManager {
         return this.#projects
     }
 
+    //Mark ptoject task as complete
+    markTaskAsComplete(currentProject, completedTask) {
+        let modifiedProject = null
+        //Get projects
+        const projects = this.getProjects()
+        projects.forEach(project =>{
+            //Find current project in list
+            if (project.name === currentProject.name){
+                //Get project tasks
+                project.getTasks().forEach(task =>{
+                    //Find completed task from tasks
+                    if(task.id === completedTask.id){
+                        //Mark this tas as complete
+                        task.markAsComplete()
+                    }
+                    
+                })
+                //Reasign value to modified project
+                modifiedProject = project
+            }
+        })
+        //Update localStorage
+        this.#setLocalStorage(projects)
+        console.log(projects)
+    }
     //remove project from list
     removeProject(project){
         //Filter out project
@@ -119,8 +151,5 @@ export default class ProjectManager {
         finally{
             this.#setLocalStorage(projects)//put projects back to localstorage
         }
-    }
-
-   
-    
+    }  
 }

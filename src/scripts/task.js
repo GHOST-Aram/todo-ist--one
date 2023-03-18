@@ -13,6 +13,8 @@ export default class Task {
     //Task.priority
     constructor(title){
         this.title = title
+        this.id = this.generateId()
+
     }
     //Edit task properties
     edit(data){
@@ -28,6 +30,10 @@ export default class Task {
     //return due date
     getDueDate(){
         return this.#dueDate
+    }
+    //Genrate id
+    generateId(){
+        return this.title.replaceAll(' ', '-').toLowerCase()
     }
     //Check if complete
     isComplete(){
