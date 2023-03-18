@@ -65,9 +65,8 @@ function activateEditBtns(task) {
 }
 
 //CTREATE NEW TASK
-function createNewTask () {
-    //get data
-    const input = domManager.getFormData('#task-form')
+function createNewTask (input) {
+    
     // Create new task
     const task = new Task(input[0])
     task.setDescription(input[1])
@@ -267,14 +266,23 @@ window.addEventListener('load', (e) =>{
     //CREATE TASK and submit new task
     document.querySelector('#task-form').addEventListener('submit', (e) =>{
         e.preventDefault()
+        //Get input
+        //get data
+        const input = domManager.getFormData('#task-form')
         //Create task and retunr value
-        const task = createNewTask()
+        const task = createNewTask(input)
         //Get current project and add task to project tasklist
         const  currentProject = getCurrentProject()
         //Add task to current project tasks
         projectManager.addTask(currentProject, task)
         //Display new task task
-        displayNewTask(task)
+
+        if(currentProject.getTasks().length === 0){
+            tasksContainer.innerHTML = ''
+            displayNewTask(task)
+        } else {
+            displayNewTask(task)
+        }
         })
     
     //Display Current project
