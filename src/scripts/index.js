@@ -31,7 +31,30 @@ function activateMarkAsCompleteBtn(task){
 
 function activateEditBtns(task) {
     //Get button
-    const btn = document.querySelector('')
+    const btn = document.querySelector(`#${task.id}-edit`)
+
+    //Add event listener
+    btn.addEventListener('click', (e) =>{
+        console.log(btn)
+        //Change Task Form heading
+        document.querySelector('#task-form h1').textContent = 'Edit Task'
+
+        //Change form-id
+        document.querySelector('#task-form').id = 'edit-task-form'
+        //Populate form with data
+        document.querySelector('#task-title-input').value = task.title //Title
+
+        // /Description
+        document.querySelector('#task-description-input').value = task.getDescription()
+
+        //Due date
+        document.querySelector('#duedate-input').value = task.getDueDate() 
+
+        //Display Form
+        domManager.displayForm('#edit-task-form')
+
+        //Delete the task task from current Project
+    })
 }
 
 //CTREATE NEW TASK
@@ -99,10 +122,17 @@ function displayTasks(tasks) {
             //Btns
             const btns = domManager.createTaskManagementBtns(task)
 
-            //aPPEND EVENTS
+            //Append buttons to task div
             taskDiv.appendChild(btns)
+
+            // append taskdiv to task container
             tasksContainer.appendChild(taskDiv)
+
+            //Activate Mark as complete buttons
             activateMarkAsCompleteBtn(task)
+
+            //Activate edit button
+            activateEditBtns(task)
         })
     }else{
         //No tasks to display
@@ -220,6 +250,7 @@ window.addEventListener('load', (e) =>{
 
     //NewTask
     document.querySelector('#new-task-btn').addEventListener('click', () =>{
+        //Display Form
         domManager.displayForm('#task-form')
     })
     //Hide form on btn click

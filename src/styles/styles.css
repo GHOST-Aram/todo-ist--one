@@ -560,8 +560,8 @@ video {
   margin-right: 1rem;
 }
 
-.mt-8 {
-  margin-top: 2rem;
+.mt-4 {
+  margin-top: 1rem;
 }
 
 .flex {
@@ -899,6 +899,7 @@ header {
   grid-template-columns: repeat( 2, 1fr);
 }
 
+#edit-task-form,
 #task-form {
   left: calc(40vw);
   top: 16.8rem;
