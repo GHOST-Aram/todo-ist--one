@@ -74,6 +74,12 @@ function createNewTask () {
     task.setDueDate(input[2])
     return task    
 }
+function displayCurrentProject () {
+    const currentProject = getCurrentProject()
+    document.querySelector('#content-container #project-name').textContent = currentProject.name
+    document.querySelector('#project-description p').textContent = currentProject.getDescription()
+    displayTasks(currentProject.getTasks())
+}
 //dISPLAY ON SIDEBAR
 function displayNewProject(project){
     
@@ -81,14 +87,27 @@ function displayNewProject(project){
     const container = domManager.createProjectContainer(project.name)
     // Append to list
     projectList.appendChild(container)
-
-    //Display tasks
+    
 }
-function displayCurrentProject () {
-    const currentProject = getCurrentProject()
-    document.querySelector('#content-container #project-name').textContent = currentProject.name
-    document.querySelector('#project-description p').textContent = currentProject.getDescription()
-    displayTasks(currentProject.getTasks())
+
+//Display new Task
+function displayNewTask(task){
+    const taskDiv = domManager.createTaskDiv(task)
+    //Btns
+    const btns = domManager.createTaskManagementBtns(task)
+
+    //Append buttons to task div
+    taskDiv.appendChild(btns)
+
+    // append taskdiv to task container
+    tasksContainer.appendChild(taskDiv)
+
+    //Activate Mark as complete buttons
+    activateMarkAsCompleteBtn(task)
+
+    //Activate edit button
+    activateEditBtns(task)
+    return taskDiv
 }
 //cREATE AND APPEND TO DOM FRAMEWORK FOR DISPLAYING PROJECTS 
 function displayProjectCredentials(){
@@ -125,21 +144,7 @@ function displayTasks(tasks) {
     tasksContainer.innerHTML = ''
     if(tasks && tasks.length > 0){
         tasks.forEach(task =>{
-            const taskDiv = domManager.createTaskDiv(task)
-            //Btns
-            const btns = domManager.createTaskManagementBtns(task)
-
-            //Append buttons to task div
-            taskDiv.appendChild(btns)
-
-            // append taskdiv to task container
-            tasksContainer.appendChild(taskDiv)
-
-            //Activate Mark as complete buttons
-            activateMarkAsCompleteBtn(task)
-
-            //Activate edit button
-            activateEditBtns(task)
+            displayNewTask(task)
         })
     }else{
         //No tasks to display
