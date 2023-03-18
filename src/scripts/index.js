@@ -17,8 +17,8 @@ projectList.className = 'flex flex-col gap-2'
 
 
 //MARK TASK AS COMPLETE
-function appendMarkAsCompleteEvent(task){
-    const btn = document.querySelector(`#${task.id}`)
+function activateMarkAsCompleteBtn(task){
+    const btn = document.querySelector(`#${task.id}-complete`)
     btn.addEventListener('click', 
     (e) => {
         //Mrk complete
@@ -28,8 +28,12 @@ function appendMarkAsCompleteEvent(task){
         //Add new bg-color
         btn.classList.add('bg-green-500')
     })
-    
-}  
+} 
+
+function activateEditBtns(task) {
+    //Get button
+    const btn = document.querySelector('')
+}
 
 //CTREATE NEW TASK
 function createNewTask () {
@@ -99,7 +103,7 @@ function displayTasks(tasks) {
             //aPPEND EVENTS
             taskDiv.appendChild(btns)
             tasksContainer.appendChild(taskDiv)
-            appendMarkAsCompleteEvent(task)
+            activateMarkAsCompleteBtn(task)
         })
     }else{
         //No tasks to display
@@ -231,13 +235,12 @@ window.addEventListener('load', (e) =>{
         //Get current project and add task to project tasklist
         const  currentProject = getCurrentProject()
         const modifiedcurrentProject = projectManager.addTask(currentProject, task)
-        
+
         //Display tasks
         displayTasks(modifiedcurrentProject.getTasks())
         
         domManager.hideForm('#task-form')
     })
-    //MARK TASK AS COMPLETE
     
     //Display Current project
     window.addEventListener('hashchange', () =>{
