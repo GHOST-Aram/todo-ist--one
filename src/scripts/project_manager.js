@@ -20,17 +20,25 @@ export default class ProjectManager {
         else return []
     }
     addTask(project, task){
+        // Initialize modified project
         let modifiedProject = null
+
+        //Find unmodified project
         this.#projects.forEach(element =>{
             if(element.name === project.name)
+            //Modify project by adding task to task list
                 element.addTask(task)
+            //Change value of modified project to current project    
                 modifiedProject = element
             })
+            //Set local starage to array with the modifed project
             this.#setLocalStorage(this.#projects)
+            //Return modifed project to be displayed as modified
             return modifiedProject
     }
-    //Update completed projects
-    addToCompleted(project){
+
+//Update completed projects
+addToCompleted(project){
         this.#completedProjects.push(project)
         this.removeProject(project)
     }
@@ -49,65 +57,87 @@ export default class ProjectManager {
     }
     //get projects
     getProjects(){
-        this.#projects = []//Initialize to empty
+        const projects = []//Initialize to empty
         //Get project data from localstorage
-        const projectData = this.#accessLocalStorage() 
-        console.log('Project Data', projectData)
-        if(Array.isArray(projectData)){
-            //Create projects for every piece of data
-            projectData.forEach(data => 
-                {
-                    //Create project
-                    const project = new Project(data.name)
-                    project.setDescription(data.description)
-                    //Create tasks for project
-                    if(data.tasks){
-                        data.tasks.forEach(taskData => {
-                            const task = new Task(taskData.title)
-                            task.setDescription(taskData.description)
-                            task.setDueDate(taskData.dueDate)
-    
-                            //Add task to project
-                            project.addTask(task)
-                        })
-                    }
-                    //Add to project list
-                    this.#projects.push(project)
-                    
-                })
+        try {
+            const projectData = this.#accessLocalStorage() 
+            if(Array.isArray(projectData)){
+                //Create projects for every piece of data
+                projectData.forEach(data => 
+                    {
+                        //Create project
+                        const project = new Project(data.name)
+                        project.setDescription(data.description)
+                        //Create tasks for project
+                        if(data.tasks){
+                            data.tasks.forEach(taskData => {
+                                const task = new Task(taskData.title)
+                                task.setDescription(taskData.description)
+                                task.setDueDate(taskData.dueDate)
+                                task.complete = taskData.complete
+                                //Add task to project
+                                project.addTask(task)
+                            })
+                        }
+                        //Add to project list
+                        projects.push(project)
+                        
+                    })
+            }
+            
+        } catch (error) {
+            console.error(`Something went wrong While getting projects from local Storage ${error}`)
         }
-        return this.#projects
+        finally{
+            return projects
+        }
     }
 
+    //Mark project task as complete
+    markTaskAsComplete(currentProject, completedTask) {
+        this.#projects.forEach(project =>{
+            //Find current project in list
+            if (project.name === currentProject.name){
+                //Get project tasks
+                project.getTasks().forEach(task =>{
+                    //Find completed task from tasks
+                    if(task.id === completedTask.id){
+                        //Mark this tas as complete
+                        task.markAsComplete()
+                    }
+                    
+                })
+                //Reasign value to modified project
+            }
+        })
+        //Update localStorage
+        this.#setLocalStorage(this.#projects)
+    }
     //remove project from list
     removeProject(project){
         //Filter out project
         this.#projects = this.#filterProjects(project)
         //Update local storage
         this.#updateLocalStorage()
-
+        
         return this.#projects
-
-
+        
+        
     }
     #setLocalStorage(projects){
-        if(projects.length >= 1){
-            try {
-                projects.forEach(
-                    project => project.toJSON()//Convert to JSON format
-                )
-                localStorage.setItem('projectsData', JSON.stringify(projects))
-            } catch (error) {
-                console.error(error)
-            } finally{
-                
-            }
+        try {
+            const  serializedProjects = projects.map(project => project.toJSON())//Convert to JSON format
+            localStorage.setItem('projectsData', JSON.stringify(serializedProjects))
+            console.log(serializedProjects)
+        } catch (error) {
+            console.error(error)
+        } finally{
+            localStorage.setItem('projectsData', JSON.stringify(projects))
+            
         }
-        else 
-            localStorage.setItem('projectsData', projects)
     }
     #updateLocalStorage(project){
-        const projects = this.getProjects()//Pull projects from local storage
+        const projects = this.getProjects()
         try {
             if(!projects.find(item => item.name === project.name))
                 projects.push(project)//Add new project
@@ -119,8 +149,5 @@ export default class ProjectManager {
         finally{
             this.#setLocalStorage(projects)//put projects back to localstorage
         }
-    }
-
-   
-    
+    }  
 }

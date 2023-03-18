@@ -8,11 +8,13 @@ export default class Task {
 
     //Task.duedate
     #dueDate = null
-    #complete = false
 
     //Task.priority
     constructor(title){
         this.title = title
+        this.id = this.generateId()
+        this.complete = false
+
     }
     //Edit task properties
     edit(data){
@@ -29,18 +31,22 @@ export default class Task {
     getDueDate(){
         return this.#dueDate
     }
+    //Genrate id
+    generateId(){
+        return this.title.replaceAll(' ', '-').toLowerCase()
+    }
     //Check if complete
     isComplete(){
-        return this.#complete
+        return this.complete
     }
     //Mark as complete
     markAsComplete(){
-        this.#complete = true
+        this.complete = true
     }
     //Mark as incomplete
     markAsIncomplete(){
-        if(this.#complete)
-            this.#complete = false
+        if(this.complete)
+            this.complete = false
     }
     //initialize descripion
     setDescription(description){

@@ -3,6 +3,7 @@ import DOMManager from './dom_manager.js'
 import Project from './project.js'
 import ProjectManager from './project_manager.js'
 import Task from './task.js'
+import { formatDistanceToNow } from 'date-fns'
 
 // localStorage.clear()
 const domManager = new DOMManager()
@@ -15,37 +16,36 @@ const projectList = document.createElement('div')
 projectList.className = 'flex flex-col gap-2'
 
 
+//MARK TASK AS COMPLETE
+function appendMarkAsCompleteEvent(task){
+    const btn = document.querySelector(`#${task.id}`)
+    btn.addEventListener('click', 
+    (e) => {
+        //Mrk complete
+        projectManager.markTaskAsComplete(getCurrentProject(), task)
+        //Remove old bg-color
+        btn.classList.remove('bg-slate-500')
+        //Add new bg-color
+        btn.classList.add('bg-green-500')
+    })
+    
+}  
+//dISPLAY ON SIDEBAR
 function displayNewProject(project){
     
-    //Display Default Project
+    //Create project contsiner
     const container = domManager.createProjectContainer(project.name)
     // Append to list
     projectList.appendChild(container)
 
     //Display tasks
 }
-//Dispaly project tasks tasks
-function displayTasks(tasks) {
-    tasksContainer.innerHTML = ''
-    console.log('Tasks ', tasks)
-    if(tasks && tasks.length > 0){
-        tasks.forEach(task =>{
-            const taskDiv = domManager.createTaskDiv(task)
-            //Btns
-            const btns = domManager.createTaskManagementBtns()
-
-            taskDiv.appendChild(btns)
-            tasksContainer.appendChild(taskDiv)
-        })
-    }else{
-        //No tasks to display
-        const par = document.createElement('p')
-        par.className = 'text-slate-200 text-center text-3xl font-medium'
-        par.id = 'no-tasks'
-        par.textContent = 'No Tasks to Display'
-        tasksContainer.appendChild(par)
-    }
-} 
+function displayCurrentProject () {
+    const currentProject = getCurrentProject()
+    document.querySelector('#content-container #project-name').textContent = currentProject.name
+    document.querySelector('#project-description p').textContent = currentProject.getDescription()
+    displayTasks(currentProject.getTasks())
+}
 //cREATE AND APPEND TO DOM FRAMEWORK FOR DISPLAYING PROJECTS 
 function displayProjectCredentials(){
     const projectHeader = domManager.createProjectHeader('')
@@ -67,27 +67,38 @@ function displayProjectCredentials(){
     
     //Display btn
     descNBtnContainer.appendChild(button)
-    container.appendChild(descNBtnContainer)
-    
+    container.appendChild(descNBtnContainer)  
 }
 
 
 // Zreate container for a single task
 // Div contains task informatiion
 
-function displayCurrentProject () {
-    const currentProject = getCurrentProject()
-    try {
-        document.querySelector('#content-container #project-name').textContent = currentProject.name
-        document.querySelector('#project-description p').textContent = currentProject.getDescription()
-        displayTasks(currentProject.getTasks())
-        
-    } catch (error) {
-        console.log('Error occured')
-    }
-}
 
 //Get currenttly displaying project from localstorage
+//Dispaly project tasks tasks
+function displayTasks(tasks) {
+    tasksContainer.innerHTML = ''
+    if(tasks && tasks.length > 0){
+        tasks.forEach(task =>{
+            const taskDiv = domManager.createTaskDiv(task)
+            //Btns
+            const btns = domManager.createTaskManagementBtns(task)
+
+            //aPPEND EVENTS
+            taskDiv.appendChild(btns)
+            tasksContainer.appendChild(taskDiv)
+            appendMarkAsCompleteEvent(task)
+        })
+    }else{
+        //No tasks to display
+        const par = document.createElement('p')
+        par.className = 'text-slate-200 text-center text-3xl font-medium'
+        par.id = 'no-tasks'
+        par.textContent = 'No Tasks to Display'
+        tasksContainer.appendChild(par)
+    }
+} 
 function getCurrentProject(){
 
     const projectName = window.location.hash.substring(1).replaceAll('-', ' ')
@@ -96,7 +107,7 @@ function getCurrentProject(){
     else 
         return projects.find(project => project.name === 'Today')
 }
-    
+
 function renderProjects(projects){
     projectList.innerHTML = ''
     projects.forEach(project => displayNewProject(project))
@@ -210,7 +221,7 @@ window.addEventListener('load', (e) =>{
         // Create new task
         const task = new Task(input[0])
         task.setDescription(input[1])
-        task.setDueDate(input[2])
+        task.setDueDate(formatDistanceToNow (new Date(input[2].replaceAll('-', ', '))))
         
         
         //Get current project and add task to project tasklist
@@ -223,7 +234,8 @@ window.addEventListener('load', (e) =>{
         
         domManager.hideForm('#task-form')
     })
-    // addEventListenerToProject()//Add event listener to project every time page is loaded
+    //MARK TASK AS COMPLETE
+    
     //Display Current project
     window.addEventListener('hashchange', () =>{
         displayCurrentProject()

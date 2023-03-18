@@ -151,25 +151,32 @@ export default class DOMManager {
 
     return taskDiv
   }
-  createTaskManagementBtns () {
+  createTaskManagementBtns (task) {
         //Task managment buttons
         const btnsDiv = document.createElement('div')
-        btnsDiv.className = 'flex flex-row justify-between px-4 w-full items-center mt-8'
+        btnsDiv.className = 'flex flex-row justify-between px-4 w-full items-center mt-4'
         //Mark as complete
         const markAsCompleteBtn =  document.createElement('button')
-            markAsCompleteBtn.id = 'mark-as-complete-btn'
-            markAsCompleteBtn.className = 'bg-slate-500 rounded-md py-2 px-8'
+            markAsCompleteBtn.id = task.id
+            markAsCompleteBtn.className = 'task-complete-btn  rounded-md py-2 px-8'
             //Check icon
             const checkIcon = document.createElement('i')
               checkIcon.className = 'text-bold text-slate-200 text-lg fa-solid fa-check'
 
             markAsCompleteBtn.appendChild(checkIcon)
+
+            //cHECK IF TASK COMPLETE
+            if(task.isComplete()){
+              markAsCompleteBtn.classList.add('bg-green-500')
+            } else {
+              markAsCompleteBtn.classList.add('bg-slate-500')
+            }
         btnsDiv.appendChild(markAsCompleteBtn)
     
         //Edit btn
         const editBtn =  document.createElement('button')
-            editBtn.id = 'task-edit-btn'
-            editBtn.className = 'bg-yellow-500 rounded-md py-2 px-8'
+            editBtn.id = task.id
+            editBtn.className = 'task-edit-btn bg-yellow-500 rounded-md py-2 px-8'
             //Check icon
             const editIcon = document.createElement('i')
             editIcon.className = 'text-bold text-slate-200 text-lg fa-solid fa-pen'
@@ -179,8 +186,8 @@ export default class DOMManager {
     
         //delete btn
         const deleteBtn =  document.createElement('button')
-            deleteBtn.id = 'task-delete-btn'
-            deleteBtn.className = 'bg-red-500 rounded-md py-2 px-8'
+            deleteBtn.id = task.id
+            deleteBtn.className = 'task-delete-btn bg-red-500 rounded-md py-2 px-8'
             //Check icon
             const deleteIcon = document.createElement('i')
             deleteIcon.className = 'text-bold text-slate-200 text-lg fa-solid fa-trash'
