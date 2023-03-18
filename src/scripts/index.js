@@ -30,6 +30,17 @@ function appendMarkAsCompleteEvent(task){
     })
     
 }  
+
+//CTREATE NEW TASK
+function createNewTask () {
+    //get data
+    const input = domManager.getFormData('#task-form')
+    // Create new task
+    const task = new Task(input[0])
+    task.setDescription(input[1])
+    task.setDueDate(formatDistanceToNow (new Date(input[2].replaceAll('-', ', '))))
+    return task    
+}
 //dISPLAY ON SIDEBAR
 function displayNewProject(project){
     
@@ -215,21 +226,14 @@ window.addEventListener('load', (e) =>{
     //CREATE TASK and submit new task
     document.querySelector('#task-form').addEventListener('submit', (e) =>{
         e.preventDefault()
-        //get data
-        const input = domManager.getFormData('#task-form')
-        // Create new task
-        const task = new Task(input[0])
-        task.setDescription(input[1])
-        task.setDueDate(formatDistanceToNow (new Date(input[2].replaceAll('-', ', '))))
-        
-        
+        //Create task and retunr value
+        const task = createNewTask()
         //Get current project and add task to project tasklist
-        let currentProject = getCurrentProject()
-        currentProject = projectManager.addTask(currentProject, task)
+        const  currentProject = getCurrentProject()
+        const modifiedcurrentProject = projectManager.addTask(currentProject, task)
         
-        
-        //DISPLAY TASKS
-        displayTasks(currentProject.getTasks())
+        //Display tasks
+        displayTasks(modifiedcurrentProject.getTasks())
         
         domManager.hideForm('#task-form')
     })
