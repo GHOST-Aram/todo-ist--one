@@ -165,9 +165,9 @@ function editTask (oldTask) {
         //remove old task from list
         //resasign current project
         currentProject = projectManager.removeTask(currentProject, oldTask)
-        projectManager.addTask(currentProject, newTask)
+        currentProject = projectManager.addTask(currentProject, newTask)
         //Display new task
-        displayNewTask(newTask)
+        displayTasks(currentProject.getTasks())
         //Restore form heading
         //close form
         domManager.closeForm('#edit-task-form')

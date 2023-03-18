@@ -20,14 +20,17 @@ export default class ProjectManager {
         else return []
     }
     addTask(project, task){
+        let modifiedProject = null
         //Find unmodified project
         this.#projects.forEach(element =>{
             if(element.name === project.name)
                  //Modify project by adding task to task list
                 element.addTask(task)
+                modifiedProject = element
             })
             //Set local starage to array with the modifed project
             this.#setLocalStorage(this.#projects)
+            return modifiedProject
     }
     //Update completed projects
     addToCompleted(project){
@@ -117,9 +120,9 @@ export default class ProjectManager {
     // Remove task from project task likst
     removeTask(project, task){
         let modifiedProject = null
-        const projects = this.getProjects()
+        // const projects = this.getProjects()
         // Search for the targe project in the list
-        projects.forEach(element =>{
+        this.#projects.forEach(element =>{
             //If found
             if(element.name = project.name){
                 //filter tasks list
@@ -134,7 +137,7 @@ export default class ProjectManager {
             
         })
         //set local storage
-        this.#setLocalStorage(projects)
+        this.#setLocalStorage(this.#projects)
         return modifiedProject
     }
     #setLocalStorage(projects){
