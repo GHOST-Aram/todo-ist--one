@@ -1,3 +1,4 @@
+import { formatDistanceToNow } from 'date-fns'
 
 export default class DOMManager {
 
@@ -144,7 +145,8 @@ export default class DOMManager {
     
     //Duedate
     const dueDate = document.createElement('p')
-    dueDate.innerHTML = `<strong>Due in :</strong> ${task.getDueDate()}`
+    const date = task.getDueDate().replaceAll('-',', ')
+    dueDate.innerHTML = `<strong>Due in :</strong> ${formatDistanceToNow(new Date(date))}`
     dueDate.className = 'px-4'
     taskDiv.appendChild(dueDate)
 
