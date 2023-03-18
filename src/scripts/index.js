@@ -41,21 +41,18 @@ function activateEditBtns(task) {
     const btn = document.querySelector(`#${task.id}-edit`)
     //Add event listener
     btn.addEventListener('click', (e) =>{
-        //Change Task Form heading
-        document.querySelector('#task-form h1').textContent = 'Edit Task'
 
-        //Change form-id
         //Populate form with data
-        document.querySelector('#task-title-input').value = task.title //Title
+        document.querySelector('#task-title-edit').value = task.title //Title
         
         // /Description
-        document.querySelector('#task-description-input').value = task.getDescription()
+        document.querySelector('#task-description-edit').value = task.getDescription()
         
         //Due date
-        document.querySelector('#duedate-input').value = task.getDueDate() 
+        document.querySelector('#duedate-edit').value = task.getDueDate() 
         
         //Display Form
-        domManager.displayForm('#task-form')
+        domManager.displayForm('#edit-task-form')
         //Submit and change task
         
         editTask(task)
@@ -156,26 +153,25 @@ function displayTasks(tasks) {
 
 //Edit task on submit 
 function editTask (oldTask) {
-    const form = document.querySelector('#task-form')
+    let currentProject = getCurrentProject()
+    const form = document.querySelector('#edit-task-form')
     //Add submit event to task-edit form
     form.addEventListener('submit', (e) =>{
+        e.preventDefault()
         //Get data
-        const data = domManager.getFormData('#task-form')
-        console.log(data)
+        const data = domManager.getFormData('#edit-task-form')
         //Create task
         const newTask = createNewTask(data)
         //remove old task from list
-        projectManager.removeTask(getCurrentProject(), oldTask)
-        //Add new task
-        projectManager.addTask(getCurrentProject(), newTask)
+        //resasign current project
+        currentProject = projectManager.removeTask(currentProject, oldTask)
+        projectManager.addTask(currentProject, newTask)
         //Display new task
         displayNewTask(newTask)
         //Restore form heading
-        document.querySelector('#task-form h1').textContent = 'Task Form'
         //close form
-        domManager.closeForm('#task-form')
-        
-        
+        domManager.closeForm('#edit-task-form')
+        //Restore id
     })
 
 }

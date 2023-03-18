@@ -24,7 +24,16 @@ export default class Project extends TaskManager {
     markAsComplete(){
         this.complete = true
     }
-    //Mark as incomplete
+    //remove task from list
+    removeTask(task){
+        const tasks = this.taskList.filter(element => {
+            if(element.id === task.id)
+                return false
+            else
+                return true
+        })
+        return tasks
+    }
    
     //initialize descripion
     setDescription(description){

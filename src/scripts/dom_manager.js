@@ -143,7 +143,11 @@ export default class DOMManager {
     
     //Dscription
     const description = document.createElement('p')
-    description.textContent = `${task.getDescription()}`
+    try {
+      description.textContent = `${task.getDescription()}`
+    } catch (error) {
+        console.error(`Error occured while Formating date for ${task}`)
+    }
     description.className = 'px-4'
     taskDiv.appendChild(description)
     

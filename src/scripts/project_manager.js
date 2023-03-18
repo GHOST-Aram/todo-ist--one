@@ -29,20 +29,6 @@ export default class ProjectManager {
             //Set local starage to array with the modifed project
             this.#setLocalStorage(this.#projects)
     }
-    // Remove task from project task likst
-    removeTask(project, task){
-        // Search for the targe project in the list
-        this.projects.forEach(element =>{
-            //If found
-            if(element.name = project.name){
-                //filter tasks list
-                const newList = element.removeTask(task)
-                //Assign tasks to filtered list
-                element.tasks = newList
-            }
-            element.tasks
-        })
-    }
     //Update completed projects
     addToCompleted(project){
             this.#completedProjects.push(project)
@@ -98,7 +84,7 @@ export default class ProjectManager {
             return projects
         }
     }
-
+    
     //Mark project task as complete
     markTaskAsComplete(currentProject, completedTask) {
         this.#projects.forEach(project =>{
@@ -127,14 +113,34 @@ export default class ProjectManager {
         this.#updateLocalStorage()
         
         return this.#projects
-        
-        
+    }
+    // Remove task from project task likst
+    removeTask(project, task){
+        let modifiedProject = null
+        const projects = this.getProjects()
+        // Search for the targe project in the list
+        projects.forEach(element =>{
+            //If found
+            if(element.name = project.name){
+                //filter tasks list
+                const newList = element.removeTask(task)
+
+                //Assign tasks to filtered list
+                element.taskList = newList
+
+                //Modified project
+                modifiedProject = element
+            }
+            
+        })
+        //set local storage
+        this.#setLocalStorage(projects)
+        return modifiedProject
     }
     #setLocalStorage(projects){
         try {
             const  serializedProjects = projects.map(project => project.toJSON())//Convert to JSON format
             localStorage.setItem('projectsData', JSON.stringify(serializedProjects))
-            console.log(serializedProjects)
         } catch (error) {
             console.error(error)
         } finally{
