@@ -154,16 +154,23 @@ export default class DOMManager {
   createTaskManagementBtns (task) {
         //Task managment buttons
         const btnsDiv = document.createElement('div')
-        btnsDiv.className = 'flex flex-row justify-between px-4 w-full items-center mt-8'
+        btnsDiv.className = 'flex flex-row justify-between px-4 w-full items-center mt-4'
         //Mark as complete
         const markAsCompleteBtn =  document.createElement('button')
             markAsCompleteBtn.id = task.id
-            markAsCompleteBtn.className = 'task-complete-btn bg-slate-500 rounded-md py-2 px-8'
+            markAsCompleteBtn.className = 'task-complete-btn  rounded-md py-2 px-8'
             //Check icon
             const checkIcon = document.createElement('i')
               checkIcon.className = 'text-bold text-slate-200 text-lg fa-solid fa-check'
 
             markAsCompleteBtn.appendChild(checkIcon)
+
+            //cHECK IF TASK COMPLETE
+            if(task.isComplete()){
+              markAsCompleteBtn.classList.add('bg-green-500')
+            } else {
+              markAsCompleteBtn.classList.add('bg-slate-500')
+            }
         btnsDiv.appendChild(markAsCompleteBtn)
     
         //Edit btn

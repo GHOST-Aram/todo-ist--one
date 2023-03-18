@@ -16,15 +16,66 @@ const projectList = document.createElement('div')
 projectList.className = 'flex flex-col gap-2'
 
 
+//MARK TASK AS COMPLETE
+function appendMarkAsCompleteEvent(task){
+    const btn = document.querySelector(`#${task.id}`)
+    btn.addEventListener('click', 
+    (e) => {
+        //Mrk complete
+        projectManager.markTaskAsComplete(getCurrentProject(), task)
+        //Remove old bg-color
+        btn.classList.remove('bg-slate-500')
+        //Add new bg-color
+        btn.classList.add('bg-green-500')
+    })
+    
+}  
+//dISPLAY ON SIDEBAR
 function displayNewProject(project){
     
-    //Display Default Project
+    //Create project contsiner
     const container = domManager.createProjectContainer(project.name)
     // Append to list
     projectList.appendChild(container)
 
     //Display tasks
 }
+function displayCurrentProject () {
+    const currentProject = getCurrentProject()
+    document.querySelector('#content-container #project-name').textContent = currentProject.name
+    document.querySelector('#project-description p').textContent = currentProject.getDescription()
+    displayTasks(currentProject.getTasks())
+}
+//cREATE AND APPEND TO DOM FRAMEWORK FOR DISPLAYING PROJECTS 
+function displayProjectCredentials(){
+    const projectHeader = domManager.createProjectHeader('')
+    container.appendChild(projectHeader)
+    //Project description and new task btn
+    const descNBtnContainer = domManager.createContainer()
+    descNBtnContainer.className = 'flex flex-row justify-between items-center w-full'
+    //DESCRIPTION
+    const projectDescription = domManager.createProjectDescription('')
+    projectDescription.id = 'project-description'
+    //Display description
+    descNBtnContainer.appendChild(projectDescription)
+    
+    //  New task button
+    const button = document.createElement('button')
+    button.textContent = 'New Task'
+    button.className = 'bg-slate-300 text-blue-700 py-2 px-4 rounded-md hover:bg-slate-100'
+    button.id = 'new-task-btn'
+    
+    //Display btn
+    descNBtnContainer.appendChild(button)
+    container.appendChild(descNBtnContainer)  
+}
+
+
+// Zreate container for a single task
+// Div contains task informatiion
+
+
+//Get currenttly displaying project from localstorage
 //Dispaly project tasks tasks
 function displayTasks(tasks) {
     tasksContainer.innerHTML = ''
@@ -48,43 +99,6 @@ function displayTasks(tasks) {
         tasksContainer.appendChild(par)
     }
 } 
-//cREATE AND APPEND TO DOM FRAMEWORK FOR DISPLAYING PROJECTS 
-function displayProjectCredentials(){
-    const projectHeader = domManager.createProjectHeader('')
-    container.appendChild(projectHeader)
-    //Project description and new task btn
-    const descNBtnContainer = domManager.createContainer()
-    descNBtnContainer.className = 'flex flex-row justify-between items-center w-full'
-    //DESCRIPTION
-    const projectDescription = domManager.createProjectDescription('')
-    projectDescription.id = 'project-description'
-    //Display description
-    descNBtnContainer.appendChild(projectDescription)
-    
-    //  New task button
-    const button = document.createElement('button')
-    button.textContent = 'New Task'
-    button.className = 'bg-slate-300 text-blue-700 py-2 px-4 rounded-md hover:bg-slate-100'
-    button.id = 'new-task-btn'
-    
-    //Display btn
-    descNBtnContainer.appendChild(button)
-    container.appendChild(descNBtnContainer)
-    
-}
-
-
-// Zreate container for a single task
-// Div contains task informatiion
-
-function displayCurrentProject () {
-    const currentProject = getCurrentProject()
-    document.querySelector('#content-container #project-name').textContent = currentProject.name
-    document.querySelector('#project-description p').textContent = currentProject.getDescription()
-    displayTasks(currentProject.getTasks())
-}
-
-//Get currenttly displaying project from localstorage
 function getCurrentProject(){
     const projectName = window.location.hash.substring(1).replaceAll('-', ' ')
     if(projectName)
@@ -92,20 +106,6 @@ function getCurrentProject(){
     else 
         return projects.find(project => project.name === 'Today')
 }
-//MARK TASK AS COMPLETE
-function appendMarkAsCompleteEvent(task){
-    const btn = document.querySelector(`#${task.id}`)
-    btn.addEventListener('click', 
-    (e) => {
-        //Mrk complete
-        projectManager.markTaskAsComplete(getCurrentProject(), task)
-        //Remove old bg-color
-        btn.classList.toggle('bg-slate-500')
-        //Add new bg-color
-        btn.classList.toggle('bg-green-500')
-    })
-        
-}  
 
 function renderProjects(projects){
     projectList.innerHTML = ''

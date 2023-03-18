@@ -109,7 +109,8 @@ addToCompleted(project){
         })
         //Update localStorage
         this.#setLocalStorage(projects)
-        //Gte updated items from locla storage
+        //Gte updated items from local storage
+        console.log(this.getProjects())
     }
     //remove project from list
     removeProject(project){
