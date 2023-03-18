@@ -57,41 +57,45 @@ addToCompleted(project){
     }
     //get projects
     getProjects(){
-        this.#projects = []//Initialize to empty
+        const projects = []//Initialize to empty
         //Get project data from localstorage
-        const projectData = this.#accessLocalStorage() 
-        if(Array.isArray(projectData)){
-            //Create projects for every piece of data
-            projectData.forEach(data => 
-                {
-                    //Create project
-                    const project = new Project(data.name)
-                    project.setDescription(data.description)
-                    //Create tasks for project
-                    if(data.tasks){
-                        data.tasks.forEach(taskData => {
-                            const task = new Task(taskData.title)
-                            task.setDescription(taskData.description)
-                            task.setDueDate(taskData.dueDate)
-                            task.complete = taskData.complete
-                            //Add task to project
-                            project.addTask(task)
-                        })
-                    }
-                    //Add to project list
-                    this.#projects.push(project)
-                    
-                })
+        try {
+            const projectData = this.#accessLocalStorage() 
+            if(Array.isArray(projectData)){
+                //Create projects for every piece of data
+                projectData.forEach(data => 
+                    {
+                        //Create project
+                        const project = new Project(data.name)
+                        project.setDescription(data.description)
+                        //Create tasks for project
+                        if(data.tasks){
+                            data.tasks.forEach(taskData => {
+                                const task = new Task(taskData.title)
+                                task.setDescription(taskData.description)
+                                task.setDueDate(taskData.dueDate)
+                                task.complete = taskData.complete
+                                //Add task to project
+                                project.addTask(task)
+                            })
+                        }
+                        //Add to project list
+                        projects.push(project)
+                        
+                    })
+            }
+            
+        } catch (error) {
+            console.error(`Something went wrong ${error}`)
         }
-        return this.#projects
+        finally{
+            return projects
+        }
     }
 
     //Mark project task as complete
     markTaskAsComplete(currentProject, completedTask) {
-        let modifiedProject = null
-        //Get projects
-        const projects = this.getProjects()
-        projects.forEach(project =>{
+        this.#projects.forEach(project =>{
             //Find current project in list
             if (project.name === currentProject.name){
                 //Get project tasks
@@ -104,13 +108,10 @@ addToCompleted(project){
                     
                 })
                 //Reasign value to modified project
-                modifiedProject = project
             }
         })
         //Update localStorage
-        this.#setLocalStorage(projects)
-        //Gte updated items from local storage
-        console.log(this.getProjects())
+        this.#setLocalStorage(this.#projects)
     }
     //remove project from list
     removeProject(project){
@@ -136,17 +137,16 @@ addToCompleted(project){
         }
     }
     #updateLocalStorage(project){
-        const projects = this.getProjects()//Pull projects from local storage
         try {
-            if(!projects.find(item => item.name === project.name))
-                projects.push(project)//Add new project
-            else if((projects.find(item => item.name === project.name) && project.name.trim() !== 'Today'))
+            if(!this.projects.find(item => item.name === project.name))
+                this.projects.push(project)//Add new project
+            else if((this.projects.find(item => item.name === project.name) && project.name.trim() !== 'Today'))
                 alert(`Project named ${project.name} already exists`)            
         } catch (error) {
             console.error(error)
         }
         finally{
-            this.#setLocalStorage(projects)//put projects back to localstorage
+            this.#setLocalStorage(this.projects)//put projects back to localstorage
         }
     }  
 }
