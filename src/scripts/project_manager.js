@@ -73,7 +73,7 @@ addToCompleted(project){
                             const task = new Task(taskData.title)
                             task.setDescription(taskData.description)
                             task.setDueDate(taskData.dueDate)
-    
+                            task.complete = taskData.complete
                             //Add task to project
                             project.addTask(task)
                         })
@@ -86,7 +86,7 @@ addToCompleted(project){
         return this.#projects
     }
 
-    //Mark ptoject task as complete
+    //Mark project task as complete
     markTaskAsComplete(currentProject, completedTask) {
         let modifiedProject = null
         //Get projects
@@ -109,7 +109,7 @@ addToCompleted(project){
         })
         //Update localStorage
         this.#setLocalStorage(projects)
-        console.log(projects)
+        //Gte updated items from locla storage
     }
     //remove project from list
     removeProject(project){
@@ -117,26 +117,22 @@ addToCompleted(project){
         this.#projects = this.#filterProjects(project)
         //Update local storage
         this.#updateLocalStorage()
-
+        
         return this.#projects
-
-
+        
+        
     }
     #setLocalStorage(projects){
-        if(projects.length >= 1){
-            try {
-                projects.forEach(
-                    project => project.toJSON()//Convert to JSON format
-                )
-                localStorage.setItem('projectsData', JSON.stringify(projects))
-            } catch (error) {
-                console.error(error)
-            } finally{
-                
-            }
+        try {
+            const  serializedProjects = projects.map(project => project.toJSON())//Convert to JSON format
+            localStorage.setItem('projectsData', JSON.stringify(serializedProjects))
+            console.log(serializedProjects)
+        } catch (error) {
+            console.error(error)
+        } finally{
+            localStorage.setItem('projectsData', JSON.stringify(projects))
+            
         }
-        else 
-            localStorage.setItem('projectsData', projects)
     }
     #updateLocalStorage(project){
         const projects = this.getProjects()//Pull projects from local storage

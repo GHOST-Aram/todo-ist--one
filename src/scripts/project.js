@@ -2,12 +2,11 @@ import TaskManager from "./task_manager.js";
 export default class Project extends TaskManager {
 
     //Project open
-    #complete = false
     #description = ''
-    #taskList = []
     constructor(name){
         super()
         this.name = name
+        this.complete = false
     }
     addTask(task){
         this.getTasks().push(task)
@@ -18,12 +17,12 @@ export default class Project extends TaskManager {
     }
     //is complete
     isComplete(){
-        return this.#complete
+        return this.complete
     }
     
     //Mark as complete
     markAsComplete(){
-        this.#complete = true
+        this.complete = true
     }
     //Mark as incomplete
    

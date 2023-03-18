@@ -28,7 +28,6 @@ function displayNewProject(project){
 //Dispaly project tasks tasks
 function displayTasks(tasks) {
     tasksContainer.innerHTML = ''
-    console.log('Tasks ', tasks)
     if(tasks && tasks.length > 0){
         tasks.forEach(task =>{
             const taskDiv = domManager.createTaskDiv(task)
@@ -99,7 +98,7 @@ function appendMarkAsCompleteEvent(task){
     btn.addEventListener('click', 
     (e) => {
         //Mrk complete
-        task.markAsComplete()
+        projectManager.markTaskAsComplete(getCurrentProject(), task)
         //Remove old bg-color
         btn.classList.toggle('bg-slate-500')
         //Add new bg-color
