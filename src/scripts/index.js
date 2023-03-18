@@ -3,6 +3,7 @@ import DOMManager from './dom_manager.js'
 import Project from './project.js'
 import ProjectManager from './project_manager.js'
 import Task from './task.js'
+import { formatDistanceToNow } from 'date-fns'
 
 // localStorage.clear()
 const domManager = new DOMManager()
@@ -204,7 +205,7 @@ window.addEventListener('load', (e) =>{
         // Create new task
         const task = new Task(input[0])
         task.setDescription(input[1])
-        task.setDueDate(input[2])
+        task.setDueDate(formatDistanceToNow (new Date(input[2].replaceAll('-', ', '))))
         
         
         //Get current project and add task to project tasklist
