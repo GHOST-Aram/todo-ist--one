@@ -70,6 +70,7 @@ header {
     display: grid;
     grid-template-columns: repeat( 2, 1fr);
 }
+#edit-task-form,
 #task-form {
     left: calc(40vw);
     top: 16.8rem;

@@ -1,8 +1,13 @@
+import { formatDistanceToNow } from 'date-fns'
 
 export default class DOMManager {
 
   constructor () {
 
+  }
+  closeForm(id){
+    document.querySelector(id).classList.add('hidden')
+    this.resetForm(id)
   }
   //Add Icon
   createAddButton () {
@@ -144,7 +149,8 @@ export default class DOMManager {
     
     //Duedate
     const dueDate = document.createElement('p')
-    dueDate.innerHTML = `<strong>Due in :</strong> ${task.getDueDate()}`
+    const date = task.getDueDate().replaceAll('-',', ')
+    dueDate.innerHTML = `<strong>Due in :</strong> ${formatDistanceToNow(new Date(date))}`
     dueDate.className = 'px-4'
     taskDiv.appendChild(dueDate)
 
@@ -157,8 +163,8 @@ export default class DOMManager {
         btnsDiv.className = 'flex flex-row justify-between px-4 w-full items-center mt-4'
         //Mark as complete
         const markAsCompleteBtn =  document.createElement('button')
-            markAsCompleteBtn.id = task.id
-            markAsCompleteBtn.className = 'task-complete-btn  rounded-md py-2 px-8'
+            markAsCompleteBtn.id = `${task.id}-complete`
+            markAsCompleteBtn.className = 'task-complete-btn rounded-md py-2 px-8'
             //Check icon
             const checkIcon = document.createElement('i')
               checkIcon.className = 'text-bold text-slate-200 text-lg fa-solid fa-check'
@@ -175,7 +181,7 @@ export default class DOMManager {
     
         //Edit btn
         const editBtn =  document.createElement('button')
-            editBtn.id = task.id
+            editBtn.id = `${task.id}-edit`
             editBtn.className = 'task-edit-btn bg-yellow-500 rounded-md py-2 px-8'
             //Check icon
             const editIcon = document.createElement('i')
@@ -186,7 +192,7 @@ export default class DOMManager {
     
         //delete btn
         const deleteBtn =  document.createElement('button')
-            deleteBtn.id = task.id
+            deleteBtn.id = `${task.id}-delete`
             deleteBtn.className = 'task-delete-btn bg-red-500 rounded-md py-2 px-8'
             //Check icon
             const deleteIcon = document.createElement('i')
@@ -237,13 +243,16 @@ export default class DOMManager {
     })
     return data
   } 
-  hideForm(hashFormId) {
-    document.querySelector(hashFormId).classList.add('hidden')
-  }
+  
   //Append to DOM
   render (content) {
       const contentContainer = document.querySelector('#content')
       contentContainer.appendChild(content)
     }
+  resetForm(id){
+    document.querySelectorAll(`${id} input`).forEach(
+      inputElement => inputElement.value = ''
+    )
+  }
     
 }

@@ -17,19 +17,19 @@
             <input  required id="project-description-input" type="text" placeholder="Project Description" class="border-b-2 focus:outline-none text-white border-solid border-blue-700 py-2 px-4 w-full bg-transparent">
             <div class="flex flex-row justify-between w-full bg-transparent">
                 <button type="reset"  class="bg-yellow-500 hover:bg-yellow-700 text-slate-200 py-2 px-4 rounded-md transition-all">Reset</button>
-                <button type="button" id="hide-project-form"  class="bg-red-500 hover:bg-red-700 text-slate-200 py-2 px-4 rounded-md transition-all">Close</button>
+                <button type="button" id="hide-project-form"  class="hide-form bg-red-500 hover:bg-red-700 text-slate-200 py-2 px-4 rounded-md transition-all">Close</button>
                 <button type="submit"  class="bg-blue-700 hover:bg-blue-600 text-slate-200 py-2 px-4 rounded-md transition-all">Save Changes</button>
             </div>
         </form>
         <form action="" method="post" id="task-form" class="p-4 rounded-md absolute flex hidden flex-col items-start gap-4 bg-slate-500">
             <h1 class="text-slate-200 bg-blue-700 px-4 py-2 w-full">New Task</h1>
-            <input required  id="project-name-input" type="text" placeholder="Task title" class="border-b-2 focus:outline-none text-white border-solid border-blue-700 py-2 px-4 w-full bg-transparent">
-            <input  required id="project-description-input" type="text" placeholder="Task description" class="border-b-2 focus:outline-none text-white border-solid border-blue-700 py-2 px-4 w-full bg-transparent">
+            <input required  id="task-title-input" type="text" placeholder="Task title" class="border-b-2 focus:outline-none text-white border-solid border-blue-700 py-2 px-4 w-full bg-transparent">
+            <input  required id="task-description-input" type="text" placeholder="Task description" class="border-b-2 focus:outline-none text-white border-solid border-blue-700 py-2 px-4 w-full bg-transparent">
             <label for="due-date" class="text-slate-200 pl-4">Due Date:</label>
-            <input  required id="project-description-input" type="date" placeholder="due-date" class="border-b-2 focus:outline-none text-white border-solid border-blue-700 py-2 px-4 w-full bg-transparent">
+            <input  required id="duedate-input" type="date" placeholder="due-date" class="border-b-2 focus:outline-none text-white border-solid border-blue-700 py-2 px-4 w-full bg-transparent">
             <div class="flex flex-row justify-between w-full bg-transparent">
                 <button type="reset"  class="bg-yellow-500 hover:bg-yellow-700 text-slate-200 py-2 px-4 rounded-md transition-all">Reset</button>
-                <button type="button" id="hide-task-form"  class="bg-red-500 hover:bg-red-700 text-slate-200 py-2 px-4 rounded-md transition-all">Close</button>
+                <button type="button" id="hide-task-form"  class="hide-form bg-red-500 hover:bg-red-700 text-slate-200 py-2 px-4 rounded-md transition-all">Close</button>
                 <button type="submit"  class="bg-blue-700 hover:bg-blue-600 text-slate-200 py-2 px-4 rounded-md transition-all">Save Changes</button>
             </div>
         </form>

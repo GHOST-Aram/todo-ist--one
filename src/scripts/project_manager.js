@@ -20,27 +20,33 @@ export default class ProjectManager {
         else return []
     }
     addTask(project, task){
-        // Initialize modified project
-        let modifiedProject = null
-
         //Find unmodified project
         this.#projects.forEach(element =>{
             if(element.name === project.name)
-            //Modify project by adding task to task list
+                 //Modify project by adding task to task list
                 element.addTask(task)
-            //Change value of modified project to current project    
-                modifiedProject = element
             })
             //Set local starage to array with the modifed project
             this.#setLocalStorage(this.#projects)
-            //Return modifed project to be displayed as modified
-            return modifiedProject
     }
-
-//Update completed projects
-addToCompleted(project){
-        this.#completedProjects.push(project)
-        this.removeProject(project)
+    // Remove task from project task likst
+    removeTask(project, task){
+        // Search for the targe project in the list
+        this.projects.forEach(element =>{
+            //If found
+            if(element.name = project.name){
+                //filter tasks list
+                const newList = element.removeTask(task)
+                //Assign tasks to filtered list
+                element.tasks = newList
+            }
+            element.tasks
+        })
+    }
+    //Update completed projects
+    addToCompleted(project){
+            this.#completedProjects.push(project)
+            this.removeProject(project)
     }
     //Add new project to projects list and save to local storage
     addToProjectList (newProject) {

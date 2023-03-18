@@ -3,7 +3,6 @@ import DOMManager from './dom_manager.js'
 import Project from './project.js'
 import ProjectManager from './project_manager.js'
 import Task from './task.js'
-import { formatDistanceToNow } from 'date-fns'
 
 // localStorage.clear()
 const domManager = new DOMManager()
@@ -15,10 +14,17 @@ window.location.hash =''
 const projectList = document.createElement('div')
 projectList.className = 'flex flex-col gap-2'
 
-
+function activateFormCloseBtns() {
+    document.querySelectorAll('.hide-form').forEach(btn =>{
+      btn.addEventListener('click', (e) =>{
+          document.querySelectorAll('form').forEach(form =>
+              form.classList.add('hidden'))
+      })
+    }) 
+  }
 //MARK TASK AS COMPLETE
-function appendMarkAsCompleteEvent(task){
-    const btn = document.querySelector(`#${task.id}`)
+function activateMarkAsCompleteBtn(task){
+    const btn = document.querySelector(`#${task.id}-complete`)
     btn.addEventListener('click', 
     (e) => {
         //Mrk complete
@@ -28,8 +34,50 @@ function appendMarkAsCompleteEvent(task){
         //Add new bg-color
         btn.classList.add('bg-green-500')
     })
-    
-}  
+} 
+
+function activateEditBtns(task) {
+    //Get button
+    const btn = document.querySelector(`#${task.id}-edit`)
+    //Add event listener
+    btn.addEventListener('click', (e) =>{
+        //Change Task Form heading
+        document.querySelector('#task-form h1').textContent = 'Edit Task'
+
+        //Change form-id
+        //Populate form with data
+        document.querySelector('#task-title-input').value = task.title //Title
+        
+        // /Description
+        document.querySelector('#task-description-input').value = task.getDescription()
+        
+        //Due date
+        document.querySelector('#duedate-input').value = task.getDueDate() 
+        
+        //Display Form
+        domManager.displayForm('#task-form')
+        //Submit and change task
+        
+        editTask(task)
+        //Set id back to task form
+    })
+
+}
+
+//CTREATE NEW TASK
+function createNewTask (input) {
+    // Create new task
+    const task = new Task(input[0])
+    task.setDescription(input[1])
+    task.setDueDate(input[2])
+    return task    
+}
+function displayCurrentProject () {
+    const currentProject = getCurrentProject()
+    document.querySelector('#content-container #project-name').textContent = currentProject.name
+    document.querySelector('#project-description p').textContent = currentProject.getDescription()
+    displayTasks(currentProject.getTasks())
+}
 //dISPLAY ON SIDEBAR
 function displayNewProject(project){
     
@@ -37,14 +85,27 @@ function displayNewProject(project){
     const container = domManager.createProjectContainer(project.name)
     // Append to list
     projectList.appendChild(container)
-
-    //Display tasks
+    
 }
-function displayCurrentProject () {
-    const currentProject = getCurrentProject()
-    document.querySelector('#content-container #project-name').textContent = currentProject.name
-    document.querySelector('#project-description p').textContent = currentProject.getDescription()
-    displayTasks(currentProject.getTasks())
+
+//Display new Task
+function displayNewTask(task){
+    const taskDiv = domManager.createTaskDiv(task)
+    //Btns
+    const btns = domManager.createTaskManagementBtns(task)
+
+    //Append buttons to task div
+    taskDiv.appendChild(btns)
+
+    // append taskdiv to task container
+    tasksContainer.appendChild(taskDiv)
+
+    //Activate Mark as complete buttons
+    activateMarkAsCompleteBtn(task)
+
+    //Activate edit button
+    activateEditBtns(task)
+    return taskDiv
 }
 //cREATE AND APPEND TO DOM FRAMEWORK FOR DISPLAYING PROJECTS 
 function displayProjectCredentials(){
@@ -81,14 +142,7 @@ function displayTasks(tasks) {
     tasksContainer.innerHTML = ''
     if(tasks && tasks.length > 0){
         tasks.forEach(task =>{
-            const taskDiv = domManager.createTaskDiv(task)
-            //Btns
-            const btns = domManager.createTaskManagementBtns(task)
-
-            //aPPEND EVENTS
-            taskDiv.appendChild(btns)
-            tasksContainer.appendChild(taskDiv)
-            appendMarkAsCompleteEvent(task)
+            displayNewTask(task)
         })
     }else{
         //No tasks to display
@@ -99,6 +153,33 @@ function displayTasks(tasks) {
         tasksContainer.appendChild(par)
     }
 } 
+
+//Edit task on submit 
+function editTask (oldTask) {
+    const form = document.querySelector('#task-form')
+    //Add submit event to task-edit form
+    form.addEventListener('submit', (e) =>{
+        //Get data
+        const data = domManager.getFormData('#task-form')
+        console.log(data)
+        //Create task
+        const newTask = createNewTask(data)
+        //remove old task from list
+        projectManager.removeTask(getCurrentProject(), oldTask)
+        //Add new task
+        projectManager.addTask(getCurrentProject(), newTask)
+        //Display new task
+        displayNewTask(newTask)
+        //Restore form heading
+        document.querySelector('#task-form h1').textContent = 'Task Form'
+        //close form
+        domManager.closeForm('#task-form')
+        
+        
+    })
+
+}
+//Searchfor current displaying project projects
 function getCurrentProject(){
 
     const projectName = window.location.hash.substring(1).replaceAll('-', ' ')
@@ -183,14 +264,14 @@ window.addEventListener('load', (e) =>{
     //Display Project List
     renderProjects(projects)
 
+    //Dispatch click event on form close btns
+    activateFormCloseBtns()
+    
     //DISPLAY PROJECT CREATION FORM
     addBtn.addEventListener('click', (e) =>{
         domManager.displayForm('#project-form')
     })
-    //CLOSE FORM ON CANCELL
-    document.querySelector('#hide-project-form').addEventListener('click', () =>{
-        domManager.hideForm('#project-form')
-    })
+    
     //SUBMIT NEW PROJECT
     document.querySelector('form#project-form').addEventListener('submit', (event) =>{
         event.preventDefault()
@@ -202,40 +283,38 @@ window.addEventListener('load', (e) =>{
         projects = projectManager.getProjects()
         //Rerender all projects
         
-        domManager.hideForm('#project-form') //hide project form
-    })
+        })
 
     //NewTask
     document.querySelector('#new-task-btn').addEventListener('click', () =>{
+        //Display Form
         domManager.displayForm('#task-form')
     })
-    //Hide form on btn click
-    document.querySelector('#hide-task-form').addEventListener('click', () =>{
-        domManager.hideForm('#task-form')
-    })
+   
+   
     //CREATE TASK and submit new task
     document.querySelector('#task-form').addEventListener('submit', (e) =>{
         e.preventDefault()
+        //Get input
         //get data
         const input = domManager.getFormData('#task-form')
-        // Create new task
-        const task = new Task(input[0])
-        task.setDescription(input[1])
-        task.setDueDate(formatDistanceToNow (new Date(input[2].replaceAll('-', ', '))))
-        
-        
+        //Create task and retunr value
+        const task = createNewTask(input)
         //Get current project and add task to project tasklist
-        let currentProject = getCurrentProject()
-        currentProject = projectManager.addTask(currentProject, task)
-        
-        
-        //DISPLAY TASKS
-        displayTasks(currentProject.getTasks())
-        
-        domManager.hideForm('#task-form')
-    })
-    //MARK TASK AS COMPLETE
-    
+        const  currentProject = getCurrentProject()
+        //Add task to current project tasks
+        projectManager.addTask(currentProject, task)
+        //Display new task task
+
+        if(currentProject.getTasks().length === 0){
+            tasksContainer.innerHTML = ''
+            displayNewTask(task)
+        } else {
+            displayNewTask(task)
+        }
+        //Close form after adding new task
+        document.querySelector('#task-form').classList.add('hidden')
+        })
     //Display Current project
     window.addEventListener('hashchange', () =>{
         displayCurrentProject()
