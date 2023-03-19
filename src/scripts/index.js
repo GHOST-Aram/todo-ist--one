@@ -9,6 +9,8 @@ const domManager = new DOMManager()
 const projectManager = new ProjectManager()
 let projects = projectManager.getProjects()//Get projects
 
+
+
 window.location.hash =''
 //Create Project list container
 const projectList = document.createElement('div')
@@ -25,7 +27,7 @@ function activateDeleteBtn(task){
 }
 function activateFormCloseBtns() {
     document.querySelectorAll('.hide-form').forEach(btn =>{
-      btn.addEventListener('click', (e) =>{
+        btn.addEventListener('click', (e) =>{
           document.querySelectorAll('form').forEach(form =>
               form.classList.add('hidden'))
       })
@@ -97,6 +99,7 @@ function displayNewProject(project){
 //Display new Task
 function displayNewTask(task){
     const taskDiv = domManager.createTaskDiv(task)
+    
     //Btns
     const btns = domManager.createTaskManagementBtns(task)
 
@@ -174,10 +177,18 @@ function editTask (oldTask) {
         const data = domManager.getFormData('#edit-task-form')
         //Create task
         const newTask = createNewTask(data)
+
+        //remove old task from DOM
+        const editedTaskDiv = document.querySelector(`#${oldTask.id}-container`)
+        tasksContainer.removeChild(editedTaskDiv)
+
         //remove old task from list
         currentProject = projectManager.removeTask(currentProject, oldTask)
+
         //resasign current project
         currentProject = projectManager.addTask(currentProject, newTask)
+
+        
         //Display new task
         displayTasks(currentProject.getTasks())
 
@@ -190,12 +201,12 @@ function editTask (oldTask) {
 }
 //Searchfor current displaying project projects
 function getCurrentProject(){
-
+    
     const projectName = window.location.hash.substring(1).replaceAll('-', ' ')
     if(projectName)
-        return projects.find(project => project.name === projectName)
+    return projects.find(project => project.name === projectName)
     else 
-        return projects.find(project => project.name === 'Today')
+    return projects.find(project => project.name === 'Today')
 }
 
 function renderProjects(projects){
@@ -214,11 +225,6 @@ const sidebar = domManager.createSidebar()
 domManager.render(sidebar)
 sidebar.id = 'main-side-bar'
 
-//Content container
-const container = domManager.createContainer()
-container.classList.add('bg-blue-700', 'flex','flex-col', 'items-start', 'justify-start', 'gap-2')
-container.id = 'content-container'
-domManager.render(container)
 
 //Footer
 const footer = domManager.createFooter()
@@ -234,10 +240,17 @@ import('../images/profile-pic.png').then(({default:pic}) =>{
     document.querySelector('#profile-picture').src = pic
 }).catch((error)=>console.error(`Error ocuured while importing profile pic: ${error}`))
 
+//Content container
+const container = domManager.createContainer()
+container.classList.add('bg-blue-700', 'flex','flex-col', 'items-start', 'justify-start', 'gap-2')
+container.id = 'content-container'
+domManager.render(container)
+
+
 //Projects header
 const projectsHeader = domManager.createContainer()
-    projectsHeader.className = 'flex flex-row items-center justify-between bg-blue-600 px-4 py-2'
-    projectsHeader.id = 'projects-header'
+projectsHeader.className = 'flex flex-row items-center justify-between bg-blue-600 px-4 py-2'
+projectsHeader.id = 'projects-header'
 
 //Heading
     const heading = domManager.createHeading('My Projects')
@@ -251,13 +264,13 @@ const projectsHeader = domManager.createContainer()
     
     sidebar.appendChild(projectsHeader) 
     sidebar.appendChild(projectList)//Container for listing projects
-
-// DEFAULT PROJECT
-//Create default Project and add to PromjectManager.Projects
-const defaultProject = new Project('Today')
+    
+    // DEFAULT PROJECT
+    //Create default Project and add to PromjectManager.Projects
+    const defaultProject = new Project('Today')
     defaultProject.setDescription('Today\'s Activities')
     projectManager.addToProjectList(defaultProject) //Add to projects
-   
+    
     
     //Display default project details
     displayProjectCredentials()
@@ -267,9 +280,9 @@ const defaultProject = new Project('Today')
     container.appendChild(tasksContainer)
     
     
-//PAGE ONLOAD
-// ___________________________________________________________________
-window.addEventListener('load', (e) =>{
+    //PAGE ONLOAD
+    // ___________________________________________________________________
+    window.addEventListener('load', (e) =>{
     //Display Project List
     renderProjects(projects)
 

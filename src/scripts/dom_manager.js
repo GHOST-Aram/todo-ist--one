@@ -135,6 +135,7 @@ export default class DOMManager {
   createTaskDiv (task) {
     const taskDiv = document.createElement('div')
     taskDiv.classList.add('bg-slate-200', 'rounded-md', 'task', 'pb-2', 'overflow-hidden')
+    taskDiv.id = `${task.id}-container`
     //title
     const taskName = document.createElement('p')
     taskName.textContent = `${task.title}`
