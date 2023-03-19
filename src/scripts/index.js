@@ -172,10 +172,6 @@ function editTask (oldTask) {
         e.preventDefault()
         //Get data
         const data = domManager.getFormData('#edit-task-form')
-        document.querySelectorAll('#edit-task-form input').forEach(input =>{
-            console.log(input.value)
-
-        })
         //Create task
         const newTask = createNewTask(data)
         //remove old task from list
@@ -184,10 +180,11 @@ function editTask (oldTask) {
         currentProject = projectManager.addTask(currentProject, newTask)
         //Display new task
         displayTasks(currentProject.getTasks())
-        //Restore form heading
+
         //close form
         domManager.closeForm('#edit-task-form')
         //Restore id
+        window.location.reload()
     })
 
 }
