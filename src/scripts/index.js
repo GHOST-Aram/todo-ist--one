@@ -297,17 +297,30 @@ projectsHeader.id = 'projects-header'
     //SUBMIT NEW PROJECT
     document.querySelector('form#project-form').addEventListener('submit', (event) =>{
         event.preventDefault()
-        const data = domManager.getFormData('#project-form')//Get data
-        const project = new Project(data[0])//Create new Project
-        project.setDescription(data[1])
-        projectManager.addToProjectList(project)//Add to project list
-        displayNewProject(project)
-        projects = projectManager.getProjects()
-        //Rerender all projects
-        
-        })
 
-    //NewTask
+        // Get form data
+        const data = domManager.getFormData('#project-form')//Get data
+        
+        // Create Project
+        const project = new Project(data[0])//Create new Project
+        
+        // Set Description
+        project.setDescription(data[1])
+        
+        // Store to local storage
+        projectManager.addToProjectList(project)//Add to project list
+
+        // Display new project
+        displayNewProject(project)
+
+        //Re-intialize projects array
+        projects = projectManager.getProjects()
+
+        //Close form
+        domManager.closeForm('#project-form')
+    })
+
+    // NEW TASK
     document.querySelector('#new-task-btn').addEventListener('click', () =>{
         //Display Form
         domManager.displayForm('#task-form')
@@ -335,8 +348,8 @@ projectsHeader.id = 'projects-header'
             displayNewTask(task)
         }
         //Close form after adding new task
-        document.querySelector('#task-form').classList.add('hidden')
-        })
+        domManager.closeForm('#task-form')
+    })
     //Display Current project
     window.addEventListener('hashchange', () =>{
         displayCurrentProject()
