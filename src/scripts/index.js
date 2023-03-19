@@ -4,7 +4,7 @@ import Project from './project.js'
 import ProjectManager from './project_manager.js'
 import Task from './task.js'
 
-localStorage.clear()
+// localStorage.clear()
 const domManager = new DOMManager()
 const projectManager = new ProjectManager()
 let projects = projectManager.getProjects()//Get projects
@@ -14,6 +14,15 @@ window.location.hash =''
 const projectList = document.createElement('div')
 projectList.className = 'flex flex-col gap-2'
 
+function activateDeleteBtn(task){
+    const btn = document.querySelector(`#${task.id}-delete`)
+    let currentProject = getCurrentProject()
+    btn.addEventListener('click', () => {
+         //Display new task
+         currentProject = projectManager.removeTask(currentProject, task)
+         displayTasks(currentProject.getTasks())
+    })
+}
 function activateFormCloseBtns() {
     document.querySelectorAll('.hide-form').forEach(btn =>{
       btn.addEventListener('click', (e) =>{
@@ -102,6 +111,9 @@ function displayNewTask(task){
 
     //Activate edit button
     activateEditBtns(task)
+
+    //Activate delete btns
+    activateDeleteBtn(task)
     return taskDiv
 }
 //cREATE AND APPEND TO DOM FRAMEWORK FOR DISPLAYING PROJECTS 
@@ -160,11 +172,15 @@ function editTask (oldTask) {
         e.preventDefault()
         //Get data
         const data = domManager.getFormData('#edit-task-form')
+        document.querySelectorAll('#edit-task-form input').forEach(input =>{
+            console.log(input.value)
+
+        })
         //Create task
         const newTask = createNewTask(data)
         //remove old task from list
-        //resasign current project
         currentProject = projectManager.removeTask(currentProject, oldTask)
+        //resasign current project
         currentProject = projectManager.addTask(currentProject, newTask)
         //Display new task
         displayTasks(currentProject.getTasks())
