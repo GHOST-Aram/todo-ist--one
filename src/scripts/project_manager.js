@@ -30,7 +30,7 @@ export default class ProjectManager {
             })
             //Set local starage to array with the modifed project
             this.#setLocalStorage(this.#projects)
-            return modifiedProject
+        return modifiedProject
     }
     //Update completed projects
     addToCompleted(project){

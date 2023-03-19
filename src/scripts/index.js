@@ -313,12 +313,12 @@ window.addEventListener('load', (e) =>{
         //Create task and retunr value
         const task = createNewTask(input)
         //Get current project and add task to project tasklist
-        const  currentProject = getCurrentProject()
+        let  currentProject = getCurrentProject()
         //Add task to current project tasks
-        projectManager.addTask(currentProject, task)
+        currentProject = projectManager.addTask(currentProject, task)
         //Display new task task
 
-        if(currentProject.getTasks().length === 0){
+        if(currentProject.getTasks().length < 2){
             tasksContainer.innerHTML = ''
             displayNewTask(task)
         } else {
