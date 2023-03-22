@@ -92,6 +92,10 @@ export default class DOMManager {
       hashLink.appendChild(projName)
       projCont.appendChild(hashLink)
 
+      //Append btns
+      const managebtns = this.createProjectManageBtns()
+      projCont.appendChild(managebtns)
+
       return projCont
   }
   //Description container
@@ -122,6 +126,35 @@ export default class DOMManager {
     container.appendChild(projectTitle)
 
     return container
+  }
+  //Create project management btns
+  createProjectManageBtns () {
+    //Create conatiner
+    const btnsDiv = this.createContainer()
+    btnsDiv.classList.add('hidden', 'manage-project','flex', 'flex-col','gap-2' ,'items-center', 'justify-between')
+
+    //Edit btn
+    const editBtn =  document.createElement('button')
+    editBtn.className = 'project-edit-btn bg-yellow-500 rounded-md py-2 px-8'
+    //Check icon
+    const editIcon = document.createElement('i')
+    editIcon.className = 'text-bold text-slate-200 text-lg fa-solid fa-pen'
+
+    //Append btns
+    editBtn.appendChild(editIcon)
+    btnsDiv.appendChild(editBtn)
+
+    //delete btn
+    const deleteBtn =  document.createElement('button')
+    deleteBtn.className = 'project-delete-btn bg-red-500 rounded-md py-2 px-8'
+    //Check icon
+    const deleteIcon = document.createElement('i')
+    deleteIcon.className = 'text-bold text-slate-200 text-lg fa-solid fa-trash'
+
+    deleteBtn.appendChild(deleteIcon)
+    btnsDiv.appendChild(deleteBtn)
+
+    return btnsDiv
   }
   //Side bar
   createSidebar () {

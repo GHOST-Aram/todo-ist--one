@@ -337,10 +337,11 @@ projectsHeader.id = 'projects-header'
         let  currentProject = getCurrentProject()
         //Add task to current project tasks
         currentProject = projectManager.addTask(currentProject, task)
-        //Display new task task
 
+        //Display new task task
+        //Check if no tasks are currently displaying
         if(currentProject.getTasks().length < 2){
-            tasksContainer.innerHTML = ''
+            tasksContainer.innerHTML = ''//Wipe the DOM
             displayNewTask(task)
         } else {
             displayNewTask(task)
@@ -350,12 +351,31 @@ projectsHeader.id = 'projects-header'
     })
     //Display Current project
     window.addEventListener('hashchange', () =>{
+        //Hide all currently displaying delete and edit buttons container
+        document.querySelectorAll('.manage-project').forEach(
+            div =>{
+                if(!div.classList.contains('hidden'))
+                    div.classList.add('hidden')
+            }
+        )
         displayCurrentProject()
+        //Current Parent project
+        const currentProject = getCurrentProject()
+        const projectName = currentProject.name
+
+        //Project container Id
+        const projectId = `${projectName.toLowerCase().replaceAll(' ', '-')}-container`
+
+        //Find edit and delete btns container
+        const container = document.querySelector(`#${projectId} .manage-project`)
+
+        //Show buttons container
+        container.classList.remove('hidden')
     })
     window.dispatchEvent(new Event('hashchange'))
 
 })
-
+console.log(projectManager.getProjects())
 /**_____________________________________________________________________________________________________
  *Open Project to view project details 
  * 
