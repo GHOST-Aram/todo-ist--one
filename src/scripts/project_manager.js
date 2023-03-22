@@ -42,6 +42,24 @@ export default class ProjectManager {
         this.#updateLocalStorage(newProject)
 
     }
+    //Edit Project: Take current project and data object 
+    // containing name and description as properties
+    editProject(currentProject, data) {
+        const projects = this.getProjects()
+
+        projects.forEach(
+            project =>{
+                if(project.name === currentProject.name){
+                    //Change name
+                    project.name = data.name
+                    //Change description
+                    project.setDescription(data.description)
+                }
+            }
+        )
+        //Update storage
+        this.#setLocalStorage(projects)
+    }
     //Filter project 
     #filterProjects(project){
         return this.#projects.filter(element => element.name !== project.name)
