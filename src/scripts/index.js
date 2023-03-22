@@ -194,8 +194,6 @@ function editTask (oldTask) {
 
         //close form
         domManager.closeForm('#edit-task-form')
-        //Restore id
-        window.location.reload()
     })
 
 }
