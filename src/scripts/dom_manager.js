@@ -94,7 +94,8 @@ export default class DOMManager {
 
       //Append btns
       const managebtns = this.createProjectManageBtns()
-      projCont.appendChild(managebtns)
+      if(projectName !== 'Today'){projCont.appendChild(managebtns)}
+      
 
       return projCont
   }

@@ -351,14 +351,22 @@ projectsHeader.id = 'projects-header'
     })
     //Display Current project
     window.addEventListener('hashchange', () =>{
-        //Hide all currently displaying delete and edit buttons container
-        document.querySelectorAll('.manage-project').forEach(
-            div =>{
-                if(!div.classList.contains('hidden'))
-                    div.classList.add('hidden')
-            }
-        )
+
+        //Display current project
         displayCurrentProject()
+        
+        try {
+            //Hide all currently displaying delete and edit buttons container
+            document.querySelectorAll('.manage-project').forEach(
+                div =>{
+                    if(!div.classList.contains('hidden'))
+                        div.classList.add('hidden')
+                }
+            )
+            
+        } catch (error) {
+            console.error(`Something went wrong ${error}`)
+        }
         //Current Parent project
         const currentProject = getCurrentProject()
         const projectName = currentProject.name
@@ -366,11 +374,25 @@ projectsHeader.id = 'projects-header'
         //Project container Id
         const projectId = `${projectName.toLowerCase().replaceAll(' ', '-')}-container`
 
-        //Find edit and delete btns container
-        const container = document.querySelector(`#${projectId} .manage-project`)
+        try {
+            //Find edit and delete btns container
+            const container = document.querySelector(`#${projectId} .manage-project`)
 
-        //Show buttons container
-        container.classList.remove('hidden')
+            //Show buttons container
+            container.classList.remove('hidden')
+            //EDIT PROJECT___________________________________________________
+            //get button
+            const editBtn = document.querySelector(`#${projectId} .project-edit-btn`)
+            //Add click event
+            editBtn.addEventListener('click', () =>{
+                projectManager.editProject(currentProject, {name: "English", description: "American"})
+                console.log(projectManager.getProjects())
+            })
+        } catch (error) {
+            console.error(`Something went wrong ${error}`)
+        }
+
+
     })
     window.dispatchEvent(new Event('hashchange'))
 

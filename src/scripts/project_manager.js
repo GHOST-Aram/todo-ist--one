@@ -59,6 +59,7 @@ export default class ProjectManager {
         )
         //Update storage
         this.#setLocalStorage(projects)
+        console.log(projects)
     }
     //Filter project 
     #filterProjects(project){
